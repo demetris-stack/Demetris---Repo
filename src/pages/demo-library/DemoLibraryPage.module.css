@@ -222,18 +222,25 @@
 .filterRight {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
-.searchPill {
+.comboPill {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  min-width: 140px;
+  border: 1px solid #e2dfd9;
+  background: #f5f3ef;
+  overflow: hidden;
+  height: 36px;
+}
+
+.comboSearch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  flex: 1;
+  min-width: 150px;
 }
 
 .searchInput {
@@ -246,31 +253,38 @@
 }
 
 .searchInput::placeholder {
-  color: #d1d5db;
+  color: #c4bfb8;
 }
 
-.searchChevron {
+.comboChevron {
   flex-shrink: 0;
 }
 
-.everywhereBtn {
+.comboDivider {
+  width: 1px;
+  height: 20px;
+  background: #d6d2cb;
+  flex-shrink: 0;
+}
+
+.comboEvery {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #f3f4f6;
+  padding: 0 16px;
+  height: 100%;
+  border: none;
+  background: transparent;
   font-size: 13px;
-  font-weight: 500;
-  color: #f97316;
+  font-weight: 400;
+  color: #6b7280;
   cursor: pointer;
-  transition: background .12s;
   white-space: nowrap;
+  transition: background .12s;
 }
 
-.everywhereBtn:hover {
-  background: #e9eaec;
+.comboEvery:hover {
+  background: #ede9e3;
 }
 
 /* ── Carousel ────────────────────────────────────────── */

@@ -130,18 +130,21 @@ function FilterBar() {
         </button>
       </div>
       <div className={styles.filterRight}>
-        <div className={styles.searchPill}>
-          <input className={styles.searchInput} type="text" placeholder="" />
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.searchChevron}>
-            <path d="M3 5l4 4 4-4" stroke="#999" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+        <div className={styles.comboPill}>
+          <div className={styles.comboSearch}>
+            <input className={styles.searchInput} type="text" placeholder="" />
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.comboChevron}>
+              <path d="M3 5l4 4 4-4" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className={styles.comboDivider} />
+          <button className={styles.comboEvery}>
+            Everywhere
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
-        <button className={styles.everywhereBtn}>
-          Everywhere
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-            <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
       </div>
     </div>
   )
