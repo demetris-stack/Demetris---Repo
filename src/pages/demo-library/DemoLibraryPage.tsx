@@ -244,13 +244,32 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   return (
     <div className={styles.tableSection}>
       {selectedCount > 0 && (
-        <div className={styles.selectionBar}>
-          <span className={styles.selectionCount}>{selectedCount} selected</span>
-          <button className={styles.selectionAction}>Share</button>
-          <button className={styles.selectionAction}>Download</button>
-          <button className={`${styles.selectionAction} ${styles.selectionDanger}`} onClick={() => setSelected(new Set())}>
-            Deselect all
+        <div className={styles.floatingBar}>
+          <span className={styles.floatingCount}>{selectedCount}</span>
+          <span className={styles.floatingLabel}>Selected</span>
+          <div className={styles.floatingDivider} />
+          <button className={styles.floatingBtn}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 14s-6-4.35-6-8a4 4 0 0 1 8 0c0 .34-.04.67-.1 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/><path d="M14 10c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4z" stroke="currentColor" strokeWidth="1.4"/><path d="M10 8v4M8 10h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+            Favorite
           </button>
+          <button className={styles.floatingBtn}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 2h8l4 4-6 6-6-6V2z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/><circle cx="5.5" cy="5.5" r="1" fill="currentColor"/></svg>
+            Tag
+          </button>
+          <button className={styles.floatingBtn}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M5 14h6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/><path d="M8 12v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+            Create DemoBoard
+          </button>
+          <button className={styles.floatingBtn}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3l3 3-3 3M6 13l-3-3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/><path d="M13 6H9a4 4 0 0 0-4 4v0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+            Public Link
+          </button>
+          <div className={styles.floatingDivider} />
+          <button className={`${styles.floatingBtn} ${styles.floatingDanger}`}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 5h10M6 5V3h4v2M13 5l-1 8H4L3 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Delete
+          </button>
+          <button className={styles.floatingClose} onClick={() => setSelected(new Set())}>✕</button>
         </div>
       )}
       <div className={styles.tableWrap}>
