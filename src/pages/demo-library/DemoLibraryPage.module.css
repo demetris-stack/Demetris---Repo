@@ -167,6 +167,112 @@
   font-size: 14px;
 }
 
+/* ── Filter bar ──────────────────────────────────────── */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.filterLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  background: #e9eaec;
+  border-color: #d1d5db;
+}
+
+.filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.filterRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.searchPill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  min-width: 140px;
+}
+
+.searchInput {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  color: #374151;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: #d1d5db;
+}
+
+.searchChevron {
+  flex-shrink: 0;
+}
+
+.everywhereBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  font-size: 13px;
+  font-weight: 500;
+  color: #f97316;
+  cursor: pointer;
+  transition: background .12s;
+  white-space: nowrap;
+}
+
+.everywhereBtn:hover {
+  background: #e9eaec;
+}
+
 /* ── Carousel ────────────────────────────────────────── */
 .carousel {
   padding-top: 4px;

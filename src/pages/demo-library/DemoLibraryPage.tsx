@@ -77,15 +77,74 @@ export default function DemoLibraryPage() {
 
 function TabContent({ tab }: { tab: Tab }) {
   if (tab === 'my-demos') {
-    return <VideoCarousel title="Recent" videos={MY_DEMOS_VIDEOS} />
+    return <>
+      <VideoCarousel title="Recent" videos={MY_DEMOS_VIDEOS} />
+      <FilterBar />
+    </>
   }
   if (tab === 'demo-library') {
-    return <VideoCarousel title="Recent" videos={DEMO_LIBRARY_VIDEOS} />
+    return <>
+      <VideoCarousel title="Recent" videos={DEMO_LIBRARY_VIDEOS} />
+      <FilterBar />
+    </>
   }
   if (tab === 'favorites') {
     return <div className={styles.empty}><p>No favorites yet.</p></div>
   }
   return <div className={styles.empty}><p>No promoted content.</p></div>
+}
+
+function FilterBar() {
+  return (
+    <div className={styles.filterBar}>
+      <div className={styles.filterLeft}>
+        <button className={styles.filterBtn}>
+          Applied Filters <span className={styles.filterCount}>4</span>
+        </button>
+        <button className={styles.filterBtn}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+            <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+          </svg>
+          Type
+        </button>
+        <button className={styles.filterBtn}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
+            <path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+          </svg>
+          Creator <span className={styles.filterCount}>2</span>
+        </button>
+        <button className={styles.filterBtn}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+            <circle cx="4.5" cy="4.5" r="1" fill="currentColor"/>
+          </svg>
+          Tags <span className={styles.filterCount}>4</span>
+        </button>
+        <button className={styles.filterBtn}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+          </svg>
+          All Filters
+        </button>
+      </div>
+      <div className={styles.filterRight}>
+        <div className={styles.searchPill}>
+          <input className={styles.searchInput} type="text" placeholder="" />
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.searchChevron}>
+            <path d="M3 5l4 4 4-4" stroke="#999" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <button className={styles.everywhereBtn}>
+          Everywhere
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+            <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  )
 }
 
 function VideoCarousel({ title, videos }: { title: string; videos: Video[] }) {
