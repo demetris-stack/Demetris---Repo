@@ -1,7 +1,18 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './AnalyticsPage.module.css'
 
+type Tab = 'summary' | 'sales' | 'marketing'
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: 'summary', label: 'Summary' },
+  { id: 'sales', label: 'Sales' },
+  { id: 'marketing', label: 'Marketing' },
+]
+
 export default function AnalyticsPage() {
+  const [activeTab, setActiveTab] = useState<Tab>('summary')
+
   return (
     <div className={styles.layout}>
       <Sidebar />
@@ -10,6 +21,19 @@ export default function AnalyticsPage() {
           <Link to="/menu" className={styles.breadcrumbLink}>Summary</Link>
         </div>
         <h1 className={styles.title}>Analytics</h1>
+
+        <nav className={styles.tabs}>
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              className={`${styles.tab} ${activeTab === tab.id ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+
         <div className={styles.content} />
       </main>
     </div>
