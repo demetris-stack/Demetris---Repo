@@ -707,6 +707,76 @@
   font-size: 13.5px;
 }
 
+/* ── Table footer / pagination ───────────────────────── */
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 4px 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pageSizeSelect {
+  padding: 4px 24px 4px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12.5px;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+}
+
+.footerText {
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.pageBtn {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12.5px;
+  color: #374151;
+  cursor: pointer;
+  transition: background .1s, border-color .1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageBtn:hover:not(:disabled) { background: #f3f4f6; }
+.pageBtn:disabled { color: #d1d5db; cursor: default; }
+
+.pageBtnActive {
+  background: #111 !important;
+  color: #fff !important;
+  border-color: #111 !important;
+}
+
+.pageEllipsis {
+  padding: 0 4px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
 /* ── Carousel ────────────────────────────────────────── */
 .carousel {
   padding-top: 4px;

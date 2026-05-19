@@ -207,6 +207,8 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [favorited, setFavorited] = useState<Set<string>>(new Set())
   const [starred, setStarred] = useState<Set<string>>(new Set())
+  const [pageSize, setPageSize] = useState(10)
+  const [page, setPage] = useState(1)
 
   const filtered = rows.filter((r) => {
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
@@ -215,17 +217,21 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
     return true
   })
 
-  const allSelected = filtered.length > 0 && filtered.every((r) => selected.has(r.id))
-  const someSelected = filtered.some((r) => selected.has(r.id))
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+  const safePage = Math.min(page, totalPages)
+  const paginated = filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
+
+  const allSelected = paginated.length > 0 && paginated.every((r) => selected.has(r.id))
+  const someSelected = paginated.some((r) => selected.has(r.id))
 
   function toggleRow(id: string) {
     setSelected((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   }
   function toggleAll() {
     if (allSelected) {
-      setSelected((prev) => { const n = new Set(prev); filtered.forEach((r) => n.delete(r.id)); return n })
+      setSelected((prev) => { const n = new Set(prev); paginated.forEach((r) => n.delete(r.id)); return n })
     } else {
-      setSelected((prev) => { const n = new Set(prev); filtered.forEach((r) => n.add(r.id)); return n })
+      setSelected((prev) => { const n = new Set(prev); paginated.forEach((r) => n.add(r.id)); return n })
     }
   }
   function toggleFav(id: string, e: React.MouseEvent) {
@@ -240,6 +246,12 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   const selectedCount = filtered.filter((r) => selected.has(r.id)).length
 
   const MAX_VISIBLE_TAGS = 2
+
+  const pageNumbers: (number | '…')[] = []
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || Math.abs(i - safePage) <= 1) pageNumbers.push(i)
+    else if (pageNumbers[pageNumbers.length - 1] !== '…') pageNumbers.push('…')
+  }
 
   return (
     <div className={styles.tableSection}>
@@ -298,10 +310,10 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {paginated.length === 0 ? (
               <tr><td colSpan={15} className={styles.tableEmpty}>No results match the selected filters.</td></tr>
             ) : (
-              filtered.map((row) => {
+              paginated.map((row) => {
                 const visibleTags = row.tags.slice(0, MAX_VISIBLE_TAGS)
                 const extraTags = row.tags.length - MAX_VISIBLE_TAGS
                 return (
@@ -352,6 +364,32 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className={styles.tableFooter}>
+        <div className={styles.footerLeft}>
+          <select
+            className={styles.pageSizeSelect}
+            value={pageSize}
+            onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1) }}
+          >
+            {[10, 25, 50].map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+          <span className={styles.footerText}>
+            Showing {filtered.length === 0 ? 0 : (safePage - 1) * pageSize + 1}–{Math.min(safePage * pageSize, filtered.length)} of {filtered.length} assets
+          </span>
+        </div>
+        <div className={styles.footerRight}>
+          <button className={styles.pageBtn} onClick={() => setPage(1)} disabled={safePage === 1}>«</button>
+          <button className={styles.pageBtn} onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={safePage === 1}>‹</button>
+          {pageNumbers.map((n, i) =>
+            n === '…'
+              ? <span key={`ellipsis-${i}`} className={styles.pageEllipsis}>…</span>
+              : <button key={n} className={`${styles.pageBtn} ${safePage === n ? styles.pageBtnActive : ''}`} onClick={() => setPage(n)}>{n}</button>
+          )}
+          <button className={styles.pageBtn} onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={safePage === totalPages}>›</button>
+          <button className={styles.pageBtn} onClick={() => setPage(totalPages)} disabled={safePage === totalPages}>»</button>
+        </div>
       </div>
     </div>
   )
