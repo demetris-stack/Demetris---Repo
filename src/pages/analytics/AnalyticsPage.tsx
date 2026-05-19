@@ -97,6 +97,9 @@ const BUYER_GROUP: Persona[] = [
   { id: 'p3', initials: 'SL', color: '#f59e0b', name: 'Sara Lin', title: 'Head of Ops', company: 'Acme Corp', role: 'Influencer', engagement: 64, lastActive: 'May 12' },
   { id: 'p4', initials: 'DJ', color: '#0ea5e9', name: 'Dan Jacobs', title: 'Sales Manager', company: 'Acme Corp', role: 'End User', engagement: 45, lastActive: 'May 10' },
   { id: 'p5', initials: 'PW', color: '#ec4899', name: 'Priya Wang', title: 'Legal Counsel', company: 'Acme Corp', role: 'Blocker', engagement: 22, lastActive: 'Apr 30' },
+  { id: 'p6', initials: 'JM', color: '#8b5cf6', name: 'James Monroe', title: 'Director of IT', company: 'Acme Corp', role: 'Influencer', engagement: 59, lastActive: 'May 8' },
+  { id: 'p7', initials: 'AC', color: '#14b8a6', name: 'Anna Chen', title: 'Product Manager', company: 'Acme Corp', role: 'End User', engagement: 76, lastActive: 'May 14' },
+  { id: 'p8', initials: 'RB', color: '#f97316', name: 'Ryan Brooks', title: 'CTO', company: 'Acme Corp', role: 'Economic Buyer', engagement: 83, lastActive: 'May 16' },
 ]
 
 type AccountSortKey = 'name' | 'contacts' | 'lastViewed' | 'engagement' | 'stage'
