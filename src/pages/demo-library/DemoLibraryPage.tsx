@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 
@@ -36,6 +36,10 @@ const DEMO_LIBRARY_VIDEOS: Video[] = [
   { id: 'l5', title: 'Enterprise Features', duration: '9:01', date: 'May 9', thumb: '#d1d5db' },
   { id: 'l6', title: 'Admin Console', duration: '5:33', date: 'May 5', thumb: '#c4c9d4' },
 ]
+
+const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar']
+const CREATOR_OPTIONS = ['Alex Morgan', 'Jamie Lee', 'Sam Rivera', 'Taylor Kim', 'Jordan Park']
+const TAG_OPTIONS = ['Onboarding', 'Product', 'Sales', 'API', 'Security', 'Mobile', 'Enterprise', 'Admin']
 
 export default function DemoLibraryPage() {
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
@@ -95,40 +99,64 @@ function TabContent({ tab }: { tab: Tab }) {
 }
 
 function FilterBar() {
+  const [types, setTypes] = useState<string[]>([])
+  const [creators, setCreators] = useState<string[]>([])
+  const [tags, setTags] = useState<string[]>([])
+
+  const totalApplied = types.length + creators.length + tags.length
+
+  function clearAll() {
+    setTypes([])
+    setCreators([])
+    setTags([])
+  }
+
+  function toggle(list: string[], setList: (v: string[]) => void, val: string) {
+    setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
+  }
+
   return (
     <div className={styles.filterBar}>
       <div className={styles.filterLeft}>
-        <button className={styles.filterBtn}>
-          Applied Filters <span className={styles.filterCount}>4</span>
+        <button
+          className={`${styles.filterBtn} ${totalApplied > 0 ? styles.filterBtnActive : ''}`}
+          onClick={clearAll}
+          title="Clear all filters"
+        >
+          Applied Filters
+          {totalApplied > 0 && <span className={styles.filterCount}>{totalApplied}</span>}
         </button>
+
+        <FilterDropdown
+          label="Type"
+          icon={<CircleIcon />}
+          options={TYPE_OPTIONS}
+          selected={types}
+          onToggle={(v) => toggle(types, setTypes, v)}
+        />
+
+        <FilterDropdown
+          label="Creator"
+          icon={<PersonIcon />}
+          options={CREATOR_OPTIONS}
+          selected={creators}
+          onToggle={(v) => toggle(creators, setCreators, v)}
+        />
+
+        <FilterDropdown
+          label="Tags"
+          icon={<TagIcon />}
+          options={TAG_OPTIONS}
+          selected={tags}
+          onToggle={(v) => toggle(tags, setTags, v)}
+        />
+
         <button className={styles.filterBtn}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-            <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
-          </svg>
-          Type
-        </button>
-        <button className={styles.filterBtn}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
-            <path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-          </svg>
-          Creator <span className={styles.filterCount}>2</span>
-        </button>
-        <button className={styles.filterBtn}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-            <path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
-            <circle cx="4.5" cy="4.5" r="1" fill="currentColor"/>
-          </svg>
-          Tags <span className={styles.filterCount}>4</span>
-        </button>
-        <button className={styles.filterBtn}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-            <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-          </svg>
+          <FunnelIcon />
           All Filters
         </button>
       </div>
+
       <div className={styles.filterRight}>
         <div className={styles.comboPill}>
           <div className={styles.comboSearch}>
@@ -146,6 +174,66 @@ function FilterBar() {
           </button>
         </div>
       </div>
+    </div>
+  )
+}
+
+interface FilterDropdownProps {
+  label: string
+  icon: React.ReactNode
+  options: string[]
+  selected: string[]
+  onToggle: (val: string) => void
+}
+
+function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDropdownProps) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  return (
+    <div className={styles.dropdownWrap} ref={ref}>
+      <button
+        className={`${styles.filterBtn} ${selected.length > 0 ? styles.filterBtnActive : ''}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        {icon}
+        {label}
+        {selected.length > 0 && <span className={styles.filterCount}>{selected.length}</span>}
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 2 }}>
+          <path d={open ? 'M2 8l4-4 4 4' : 'M2 4l4 4 4-4'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div className={styles.dropdown}>
+          {options.map((opt) => (
+            <label key={opt} className={styles.dropdownItem}>
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={selected.includes(opt)}
+                onChange={() => onToggle(opt)}
+              />
+              <span className={styles.dropdownLabel}>{opt}</span>
+            </label>
+          ))}
+          {selected.length > 0 && (
+            <button className={styles.clearBtn} onClick={() => selected.forEach(onToggle)}>
+              Clear
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -219,5 +307,40 @@ function Sidebar() {
         ))}
       </div>
     </aside>
+  )
+}
+
+function CircleIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+      <circle cx="7" cy="7" r="2.5" fill="currentColor"/>
+    </svg>
+  )
+}
+
+function PersonIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function TagIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+      <circle cx="4.5" cy="4.5" r="1" fill="currentColor"/>
+    </svg>
+  )
+}
+
+function FunnelIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
   )
 }
