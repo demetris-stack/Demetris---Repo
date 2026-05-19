@@ -122,19 +122,21 @@ function TabContent({ tab }: { tab: Tab }) {
   const [types, setTypes] = useState<string[]>([])
   const [creators, setCreators] = useState<string[]>([])
   const [tags, setTags] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   function toggle(list: string[], setList: (v: string[]) => void, val: string) {
     setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
   }
 
-  function clearAll() { setTypes([]); setCreators([]); setTags([]) }
+  function clearAll() { setTypes([]); setCreators([]); setTags([]); setSearchQuery('') }
 
-  const filters = { types, creators, tags }
+  const filters = { types, creators, tags, searchQuery }
   const filterActions = {
     toggleType: (v: string) => toggle(types, setTypes, v),
     toggleCreator: (v: string) => toggle(creators, setCreators, v),
     toggleTag: (v: string) => toggle(tags, setTags, v),
     clearAll,
+    setSearch: setSearchQuery,
   }
 
   if (tab === 'my-demos') return (
@@ -155,16 +157,17 @@ function TabContent({ tab }: { tab: Tab }) {
   return <div className={styles.empty}><p>No promoted content.</p></div>
 }
 
-interface Filters { types: string[]; creators: string[]; tags: string[] }
+interface Filters { types: string[]; creators: string[]; tags: string[]; searchQuery: string }
 interface FilterActions {
   toggleType: (v: string) => void
   toggleCreator: (v: string) => void
   toggleTag: (v: string) => void
   clearAll: () => void
+  setSearch: (v: string) => void
 }
 
 function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActions }) {
-  const { types, creators, tags } = filters
+  const { types, creators, tags, searchQuery } = filters
   const totalApplied = types.length + creators.length + tags.length
 
   const appliedGroups = [
@@ -185,10 +188,20 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
       <div className={styles.filterRight}>
         <div className={styles.comboPill}>
           <div className={styles.comboSearch}>
-            <input className={styles.searchInput} type="text" placeholder="" />
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.comboChevron}>
-              <path d="M3 5l4 4 4-4" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
+              <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
+              <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
             </svg>
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="Search…"
+              value={searchQuery}
+              onChange={(e) => actions.setSearch(e.target.value)}
+            />
+            {searchQuery && (
+              <button className={styles.searchClear} onClick={() => actions.setSearch('')}>✕</button>
+            )}
           </div>
           <div className={styles.comboDivider} />
           <button className={styles.comboEvery}>
@@ -210,10 +223,16 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   const [pageSize, setPageSize] = useState(10)
   const [page, setPage] = useState(1)
 
+  const q = filters.searchQuery.toLowerCase().trim()
+
   const filtered = rows.filter((r) => {
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
     if (filters.creators.length > 0 && !filters.creators.includes(r.creator)) return false
-    if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t))) return false
+    if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t.toLowerCase()))) return false
+    if (q) {
+      const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
+      if (!haystack.includes(q)) return false
+    }
     return true
   })
 
