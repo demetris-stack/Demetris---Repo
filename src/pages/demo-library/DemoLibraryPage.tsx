@@ -20,21 +20,21 @@ interface Video {
 }
 
 const MY_DEMOS_VIDEOS: Video[] = [
-  { id: 'v1', title: 'Onboarding Flow Walkthrough', duration: '3:42', date: 'May 18', thumb: '#6366f1' },
-  { id: 'v2', title: 'Dashboard Overview', duration: '5:10', date: 'May 15', thumb: '#8b5cf6' },
-  { id: 'v3', title: 'Analytics Deep Dive', duration: '7:23', date: 'May 12', thumb: '#ec4899' },
-  { id: 'v4', title: 'Settings & Permissions', duration: '2:55', date: 'May 10', thumb: '#f59e0b' },
-  { id: 'v5', title: 'Integrations Setup', duration: '4:18', date: 'May 7', thumb: '#10b981' },
-  { id: 'v6', title: 'Reporting Basics', duration: '6:04', date: 'May 3', thumb: '#0ea5e9' },
+  { id: 'v1', title: 'Onboarding Flow Walkthrough', duration: '3:42', date: 'May 18', thumb: '#d1d5db' },
+  { id: 'v2', title: 'Dashboard Overview', duration: '5:10', date: 'May 15', thumb: '#c4c9d4' },
+  { id: 'v3', title: 'Analytics Deep Dive', duration: '7:23', date: 'May 12', thumb: '#d1d5db' },
+  { id: 'v4', title: 'Settings & Permissions', duration: '2:55', date: 'May 10', thumb: '#c4c9d4' },
+  { id: 'v5', title: 'Integrations Setup', duration: '4:18', date: 'May 7', thumb: '#d1d5db' },
+  { id: 'v6', title: 'Reporting Basics', duration: '6:04', date: 'May 3', thumb: '#c4c9d4' },
 ]
 
 const DEMO_LIBRARY_VIDEOS: Video[] = [
-  { id: 'l1', title: 'Product Tour 2026', duration: '8:30', date: 'May 19', thumb: '#14b8a6' },
-  { id: 'l2', title: 'Security & Compliance', duration: '4:45', date: 'May 17', thumb: '#ef4444' },
-  { id: 'l3', title: 'API Walkthrough', duration: '6:12', date: 'May 14', thumb: '#f97316' },
-  { id: 'l4', title: 'Mobile App Demo', duration: '3:58', date: 'May 11', thumb: '#a855f7' },
-  { id: 'l5', title: 'Enterprise Features', duration: '9:01', date: 'May 9', thumb: '#6366f1' },
-  { id: 'l6', title: 'Admin Console', duration: '5:33', date: 'May 5', thumb: '#84cc16' },
+  { id: 'l1', title: 'Product Tour 2026', duration: '8:30', date: 'May 19', thumb: '#d1d5db' },
+  { id: 'l2', title: 'Security & Compliance', duration: '4:45', date: 'May 17', thumb: '#c4c9d4' },
+  { id: 'l3', title: 'API Walkthrough', duration: '6:12', date: 'May 14', thumb: '#d1d5db' },
+  { id: 'l4', title: 'Mobile App Demo', duration: '3:58', date: 'May 11', thumb: '#c4c9d4' },
+  { id: 'l5', title: 'Enterprise Features', duration: '9:01', date: 'May 9', thumb: '#d1d5db' },
+  { id: 'l6', title: 'Admin Console', duration: '5:33', date: 'May 5', thumb: '#c4c9d4' },
 ]
 
 export default function DemoLibraryPage() {
