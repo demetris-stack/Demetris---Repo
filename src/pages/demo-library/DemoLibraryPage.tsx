@@ -23,11 +23,17 @@ interface DemoRow {
   id: string
   title: string
   type: string
+  theme: string
+  published: string
   creator: string
+  creatorInitials: string
+  creatorColor: string
   tags: string[]
+  freshness: number
+  usage: number
+  created: string
+  modified: string
   duration: string
-  date: string
-  views: number
 }
 
 const MY_DEMOS_VIDEOS: Video[] = [
@@ -49,25 +55,25 @@ const DEMO_LIBRARY_VIDEOS: Video[] = [
 ]
 
 const MY_DEMOS_ROWS: DemoRow[] = [
-  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Walkthrough', creator: 'Alex Morgan', tags: ['Onboarding', 'Product'], duration: '3:42', date: 'May 18, 2026', views: 142 },
-  { id: 'r2', title: 'Dashboard Overview', type: 'Demo', creator: 'Jamie Lee', tags: ['Product', 'Sales'], duration: '5:10', date: 'May 15, 2026', views: 98 },
-  { id: 'r3', title: 'Analytics Deep Dive', type: 'Tutorial', creator: 'Alex Morgan', tags: ['Product', 'Admin'], duration: '7:23', date: 'May 12, 2026', views: 211 },
-  { id: 'r4', title: 'Settings & Permissions', type: 'Demo', creator: 'Sam Rivera', tags: ['Admin', 'Security'], duration: '2:55', date: 'May 10, 2026', views: 57 },
-  { id: 'r5', title: 'Integrations Setup', type: 'Walkthrough', creator: 'Taylor Kim', tags: ['API', 'Onboarding'], duration: '4:18', date: 'May 7, 2026', views: 176 },
-  { id: 'r6', title: 'Reporting Basics', type: 'Tutorial', creator: 'Jordan Park', tags: ['Sales', 'Product'], duration: '6:04', date: 'May 3, 2026', views: 89 },
-  { id: 'r7', title: 'Mobile Walkthrough', type: 'Walkthrough', creator: 'Jamie Lee', tags: ['Mobile', 'Onboarding'], duration: '3:15', date: 'Apr 28, 2026', views: 64 },
-  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', creator: 'Sam Rivera', tags: ['Enterprise', 'Admin'], duration: '9:45', date: 'Apr 22, 2026', views: 130 },
+  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product', 'getting-started'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42' },
+  { id: 'r2', title: 'Dashboard Overview', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10' },
+  { id: 'r3', title: 'Analytics Deep Dive', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23' },
+  { id: 'r4', title: 'Settings & Permissions', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', duration: '2:55' },
+  { id: 'r5', title: 'Integrations Setup', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', duration: '4:18' },
+  { id: 'r6', title: 'Reporting Basics', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04' },
+  { id: 'r7', title: 'Mobile Walkthrough', type: 'Tour', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15' },
+  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45' },
 ]
 
 const DEMO_LIBRARY_ROWS: DemoRow[] = [
-  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', creator: 'Alex Morgan', tags: ['Product', 'Sales'], duration: '8:30', date: 'May 19, 2026', views: 304 },
-  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', creator: 'Taylor Kim', tags: ['Security', 'Enterprise'], duration: '4:45', date: 'May 17, 2026', views: 187 },
-  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', creator: 'Jordan Park', tags: ['API'], duration: '6:12', date: 'May 14, 2026', views: 256 },
-  { id: 'l4', title: 'Mobile App Demo', type: 'Demo', creator: 'Jamie Lee', tags: ['Mobile', 'Product'], duration: '3:58', date: 'May 11, 2026', views: 143 },
-  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', creator: 'Sam Rivera', tags: ['Enterprise', 'Admin'], duration: '9:01', date: 'May 9, 2026', views: 412 },
-  { id: 'l6', title: 'Admin Console', type: 'Tutorial', creator: 'Alex Morgan', tags: ['Admin'], duration: '5:33', date: 'May 5, 2026', views: 99 },
-  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', creator: 'Taylor Kim', tags: ['Onboarding', 'Product'], duration: '7:20', date: 'Apr 30, 2026', views: 338 },
-  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', creator: 'Jordan Park', tags: ['Sales'], duration: '12:05', date: 'Apr 25, 2026', views: 275 },
+  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30' },
+  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45' },
+  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12' },
+  { id: 'l4', title: 'Mobile App Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', duration: '3:58' },
+  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01' },
+  { id: 'l6', title: 'Admin Console', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33' },
+  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20' },
+  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05' },
 ]
 
 const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar']
@@ -199,6 +205,8 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
 
 function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [favorited, setFavorited] = useState<Set<string>>(new Set())
+  const [starred, setStarred] = useState<Set<string>>(new Set())
 
   const filtered = rows.filter((r) => {
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
@@ -211,30 +219,27 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
   const someSelected = filtered.some((r) => selected.has(r.id))
 
   function toggleRow(id: string) {
-    setSelected((prev) => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
+    setSelected((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   }
-
   function toggleAll() {
     if (allSelected) {
-      setSelected((prev) => {
-        const next = new Set(prev)
-        filtered.forEach((r) => next.delete(r.id))
-        return next
-      })
+      setSelected((prev) => { const n = new Set(prev); filtered.forEach((r) => n.delete(r.id)); return n })
     } else {
-      setSelected((prev) => {
-        const next = new Set(prev)
-        filtered.forEach((r) => next.add(r.id))
-        return next
-      })
+      setSelected((prev) => { const n = new Set(prev); filtered.forEach((r) => n.add(r.id)); return n })
     }
+  }
+  function toggleFav(id: string, e: React.MouseEvent) {
+    e.stopPropagation()
+    setFavorited((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+  }
+  function toggleStar(id: string, e: React.MouseEvent) {
+    e.stopPropagation()
+    setStarred((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   }
 
   const selectedCount = filtered.filter((r) => selected.has(r.id)).length
+
+  const MAX_VISIBLE_TAGS = 2
 
   return (
     <div className={styles.tableSection}>
@@ -243,8 +248,7 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
           <span className={styles.selectionCount}>{selectedCount} selected</span>
           <button className={styles.selectionAction}>Share</button>
           <button className={styles.selectionAction}>Download</button>
-          <button className={`${styles.selectionAction} ${styles.selectionDanger}`}
-            onClick={() => setSelected(new Set())}>
+          <button className={`${styles.selectionAction} ${styles.selectionDanger}`} onClick={() => setSelected(new Set())}>
             Deselect all
           </button>
         </div>
@@ -254,64 +258,78 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
           <thead>
             <tr>
               <th className={styles.thCheck}>
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  checked={allSelected}
+                <input type="checkbox" className={styles.checkbox} checked={allSelected}
                   ref={(el) => { if (el) el.indeterminate = someSelected && !allSelected }}
-                  onChange={toggleAll}
-                />
+                  onChange={toggleAll} />
               </th>
+              <th className={styles.thIcon} />
+              <th className={styles.thIcon} />
+              <th className={styles.thIcon} />
               <th className={styles.th}>Title</th>
               <th className={styles.th}>Type</th>
-              <th className={styles.th}>Creator</th>
+              <th className={styles.th}>Theme</th>
+              <th className={styles.th}>Published</th>
               <th className={styles.th}>Tags</th>
+              <th className={styles.th}>Freshness</th>
+              <th className={styles.th}>Usage</th>
+              <th className={styles.th}>Created ↓</th>
+              <th className={styles.th}>Modified</th>
+              <th className={styles.th}>Creator</th>
               <th className={styles.th}>Duration</th>
-              <th className={styles.th}>Views</th>
-              <th className={styles.th}>Date</th>
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr>
-                <td colSpan={8} className={styles.tableEmpty}>No results match the selected filters.</td>
-              </tr>
+              <tr><td colSpan={15} className={styles.tableEmpty}>No results match the selected filters.</td></tr>
             ) : (
-              filtered.map((row) => (
-                <tr
-                  key={row.id}
-                  className={`${styles.tr} ${selected.has(row.id) ? styles.trSelected : ''}`}
-                  onClick={() => toggleRow(row.id)}
-                >
-                  <td className={styles.tdCheck} onClick={(e) => e.stopPropagation()}>
-                    <input
-                      type="checkbox"
-                      className={styles.checkbox}
-                      checked={selected.has(row.id)}
-                      onChange={() => toggleRow(row.id)}
-                    />
-                  </td>
-                  <td className={styles.td}>
-                    <span className={styles.rowTitle}>{row.title}</span>
-                  </td>
-                  <td className={styles.td}>
-                    <span className={styles.typeBadge}>{row.type}</span>
-                  </td>
-                  <td className={styles.td}>
-                    <span className={styles.creatorName}>{row.creator}</span>
-                  </td>
-                  <td className={styles.td}>
-                    <div className={styles.tagList}>
-                      {row.tags.map((t) => (
-                        <span key={t} className={styles.tag}>{t}</span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className={styles.tdMeta}>{row.duration}</td>
-                  <td className={styles.tdMeta}>{row.views.toLocaleString()}</td>
-                  <td className={styles.tdMeta}>{row.date}</td>
-                </tr>
-              ))
+              filtered.map((row) => {
+                const visibleTags = row.tags.slice(0, MAX_VISIBLE_TAGS)
+                const extraTags = row.tags.length - MAX_VISIBLE_TAGS
+                return (
+                  <tr key={row.id} className={`${styles.tr} ${selected.has(row.id) ? styles.trSelected : ''}`} onClick={() => toggleRow(row.id)}>
+                    <td className={styles.tdCheck} onClick={(e) => e.stopPropagation()}>
+                      <input type="checkbox" className={styles.checkbox} checked={selected.has(row.id)} onChange={() => toggleRow(row.id)} />
+                    </td>
+                    <td className={styles.tdIcon} onClick={(e) => toggleFav(row.id, e)}>
+                      <span className={`${styles.iconBtn} ${favorited.has(row.id) ? styles.iconBtnActive : ''}`}>♥</span>
+                    </td>
+                    <td className={styles.tdIcon} onClick={(e) => toggleStar(row.id, e)}>
+                      <span className={`${styles.iconBtn} ${starred.has(row.id) ? styles.iconBtnStarred : ''}`}>★</span>
+                    </td>
+                    <td className={styles.tdIcon}>
+                      <span className={styles.creatorAvatar} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
+                    </td>
+                    <td className={styles.td}><span className={styles.rowTitle}>{row.title}</span></td>
+                    <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>
+                    <td className={styles.tdMeta}>{row.theme || '—'}</td>
+                    <td className={styles.tdMeta}>{row.published || '—'}</td>
+                    <td className={styles.td}>
+                      <div className={styles.tagList}>
+                        {visibleTags.map((t) => <span key={t} className={styles.tag}>{t}</span>)}
+                        {extraTags > 0 && <span className={styles.tagExtra}>+{extraTags}</span>}
+                      </div>
+                    </td>
+                    <td className={styles.td}>
+                      <div className={styles.freshnessCell}>
+                        <div className={styles.freshnessBar}>
+                          <div className={styles.freshnessFill} style={{ width: `${Math.min(row.freshness * 6, 100)}%` }} />
+                        </div>
+                        <span className={styles.freshnessPct}>{row.freshness}%</span>
+                      </div>
+                    </td>
+                    <td className={styles.tdMeta}>{row.usage}</td>
+                    <td className={styles.tdMeta}>{row.created}</td>
+                    <td className={styles.tdMeta}>{row.modified}</td>
+                    <td className={styles.td}>
+                      <div className={styles.creatorCell}>
+                        <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
+                        <span className={styles.creatorFirstName}>{row.creator}</span>
+                      </div>
+                    </td>
+                    <td className={styles.tdMeta}>{row.duration}</td>
+                  </tr>
+                )
+              })
             )}
           </tbody>
         </table>

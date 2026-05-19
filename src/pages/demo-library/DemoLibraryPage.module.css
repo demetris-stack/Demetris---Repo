@@ -464,31 +464,35 @@
 .tableWrap {
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 900px;
 }
 
-.thCheck, .tdCheck {
-  width: 40px;
-  padding: 10px 0 10px 14px;
-  text-align: center;
+.thCheck {
+  width: 36px;
+  padding: 9px 0 9px 12px;
+}
+
+.thIcon {
+  width: 28px;
+  padding: 9px 0;
 }
 
 .th {
-  padding: 10px 14px;
+  padding: 9px 12px;
   text-align: left;
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 500;
   color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
   background: #fafafa;
   border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
+  user-select: none;
 }
 
 .tr {
@@ -499,32 +503,71 @@
 
 .tr:last-child { border-bottom: none; }
 .tr:hover { background: #f9fafb; }
-.trSelected { background: #f0f0f8 !important; }
+.trSelected { background: #f5f5fd !important; }
+
+.tdCheck {
+  width: 36px;
+  padding: 0 0 0 12px;
+  vertical-align: middle;
+}
+
+.tdIcon {
+  width: 28px;
+  padding: 0 4px;
+  vertical-align: middle;
+  text-align: center;
+}
 
 .td {
-  padding: 12px 14px;
+  padding: 10px 12px;
   vertical-align: middle;
 }
 
 .tdMeta {
-  padding: 12px 14px;
+  padding: 10px 12px;
   vertical-align: middle;
-  font-size: 13px;
+  font-size: 12.5px;
   color: #6b7280;
   white-space: nowrap;
 }
 
+.iconBtn {
+  font-size: 13px;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color .12s;
+  user-select: none;
+}
+
+.iconBtn:hover { color: #9ca3af; }
+.iconBtnActive { color: #f87171 !important; }
+.iconBtnStarred { color: #fbbf24 !important; }
+
+.creatorAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
 .rowTitle {
-  font-size: 13.5px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 400;
   color: #111;
+  white-space: nowrap;
 }
 
 .typeBadge {
   display: inline-flex;
   padding: 2px 9px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   background: #f3f4f6;
   color: #374151;
@@ -532,26 +575,81 @@
   white-space: nowrap;
 }
 
-.creatorName {
-  font-size: 13px;
-  color: #374151;
-  white-space: nowrap;
-}
-
 .tagList {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 4px;
+  flex-wrap: nowrap;
 }
 
 .tag {
   display: inline-flex;
-  padding: 2px 7px;
+  padding: 2px 6px;
   border-radius: 4px;
-  font-size: 11.5px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 400;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.tagExtra {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.freshnessCell {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 90px;
+}
+
+.freshnessBar {
+  flex: 1;
+  height: 4px;
   background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.freshnessFill {
+  height: 100%;
+  background: #9ca3af;
+  border-radius: 2px;
+}
+
+.freshnessPct {
+  font-size: 11.5px;
+  color: #6b7280;
+  min-width: 26px;
+}
+
+.creatorCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.creatorAvatarSm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.creatorFirstName {
+  font-size: 12.5px;
   color: #374151;
+  white-space: nowrap;
 }
 
 .tableEmpty {
