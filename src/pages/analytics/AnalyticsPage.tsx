@@ -17,9 +17,7 @@ export default function AnalyticsPage() {
     <div className={styles.layout}>
       <Sidebar />
       <main className={styles.main}>
-        <div className={styles.breadcrumb}>
-          <Link to="/menu" className={styles.breadcrumbLink}>Summary</Link>
-        </div>
+        <Link to="/menu" className={styles.backLink}>← Back to Menu</Link>
         <h1 className={styles.title}>Analytics</h1>
 
         <nav className={styles.tabs}>
