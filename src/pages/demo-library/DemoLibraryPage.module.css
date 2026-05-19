@@ -358,10 +358,10 @@
   display: flex;
   align-items: center;
   border-radius: 999px;
-  border: 1px solid #e2dfd9;
-  background: #f5f3ef;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
   overflow: hidden;
-  height: 36px;
+  height: 34px;
 }
 
 .comboSearch {
@@ -392,8 +392,8 @@
 
 .comboDivider {
   width: 1px;
-  height: 20px;
-  background: #d6d2cb;
+  height: 18px;
+  background: #e5e7eb;
   flex-shrink: 0;
 }
 
@@ -406,7 +406,7 @@
   border: none;
   background: transparent;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   color: #6b7280;
   cursor: pointer;
   white-space: nowrap;
@@ -414,7 +414,7 @@
 }
 
 .comboEvery:hover {
-  background: #ede9e3;
+  background: #e9eaec;
 }
 
 /* ── Table ───────────────────────────────────────────── */
