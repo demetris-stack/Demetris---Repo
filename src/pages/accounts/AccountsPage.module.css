@@ -7,6 +7,23 @@
   gap: 0;
 }
 
+/* ── Back link ───────────────────────────────────────── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color .12s;
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
 /* ── Header ─────────────────────────────────────────── */
 .header {
   display: flex;
@@ -238,49 +255,6 @@
   margin-top: 1px;
 }
 
-/* ── Type badges ─────────────────────────────────────── */
-.badgePerson {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  background: var(--person-bg);
-  color: var(--person-text);
-  border: 1px solid var(--person-border);
-}
-
-.badgeAccount {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  background: var(--account-bg);
-  color: var(--account-text);
-  border: 1px solid var(--account-border);
-}
-
-/* ── Details cell ────────────────────────────────────── */
-.detailsCell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.detailMain {
-  font-size: 13.5px;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.detailSub {
-  font-size: 12.5px;
-  color: var(--text-secondary);
-}
-
 /* ── Status badges ───────────────────────────────────── */
 .status_active {
   display: inline-flex;
@@ -343,6 +317,25 @@
   border-radius: 50%;
   background: var(--status-prospect-text);
   flex-shrink: 0;
+}
+
+/* ── Industry badge ──────────────────────────────────── */
+.industryBadge {
+  display: inline-flex;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #f3f4f6;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+/* ── Numeric cell ────────────────────────────────────── */
+.numCell {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  font-size: 13.5px;
 }
 
 /* ── Date cell ───────────────────────────────────────── */

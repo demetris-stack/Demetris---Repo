@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react'
-import { ROWS, type Row, type RecordType, type Status } from '../data'
-import styles from './Table.module.css'
+import { Link } from 'react-router-dom'
+import { ACCOUNTS, type Account, type Status } from './data'
+import styles from './AccountsPage.module.css'
 
-type FilterType = 'all' | RecordType
-type SortKey = 'name' | 'type' | 'status' | 'lastActivity'
+type SortKey = 'name' | 'industry' | 'employees' | 'arr' | 'status' | 'lastActivity'
 type SortDir = 'asc' | 'desc'
+type FilterStatus = 'all' | Status
 
 const STATUS_LABEL: Record<Status, string> = {
   active: 'Active',
@@ -24,12 +25,7 @@ function formatARR(n: number) {
 }
 
 function initials(name: string) {
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase()
+  return name.split(' ').slice(0, 2).map((w) => w[0]).join('').toUpperCase()
 }
 
 const AVATAR_COLORS = [
@@ -43,50 +39,48 @@ function avatarColor(id: string) {
   return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]
 }
 
-export default function Table() {
-  const [filter, setFilter] = useState<FilterType>('all')
+export default function AccountsPage() {
+  const [statusFilter, setStatusFilter] = useState<FilterStatus>('all')
   const [search, setSearch] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('lastActivity')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
   const counts = useMemo(() => ({
-    all: ROWS.length,
-    person: ROWS.filter((r) => r.type === 'person').length,
-    account: ROWS.filter((r) => r.type === 'account').length,
+    all: ACCOUNTS.length,
+    active: ACCOUNTS.filter((a) => a.status === 'active').length,
+    prospect: ACCOUNTS.filter((a) => a.status === 'prospect').length,
+    inactive: ACCOUNTS.filter((a) => a.status === 'inactive').length,
   }), [])
 
   const rows = useMemo(() => {
-    let data = ROWS.slice()
+    let data = ACCOUNTS.slice()
 
-    if (filter !== 'all') data = data.filter((r) => r.type === filter)
+    if (statusFilter !== 'all') data = data.filter((a) => a.status === statusFilter)
 
     if (search.trim()) {
       const q = search.toLowerCase()
-      data = data.filter((r) => {
-        if (r.name.toLowerCase().includes(q)) return true
-        if (r.type === 'person') {
-          return r.email.toLowerCase().includes(q) ||
-            r.title.toLowerCase().includes(q) ||
-            r.company.toLowerCase().includes(q)
-        }
-        return r.industry.toLowerCase().includes(q) || r.website.toLowerCase().includes(q)
-      })
+      data = data.filter((a) =>
+        a.name.toLowerCase().includes(q) ||
+        a.industry.toLowerCase().includes(q) ||
+        a.website.toLowerCase().includes(q)
+      )
     }
 
     data.sort((a, b) => {
-      let av: string, bv: string
+      let cmp = 0
       switch (sortKey) {
-        case 'name': av = a.name; bv = b.name; break
-        case 'type': av = a.type; bv = b.type; break
-        case 'status': av = a.status; bv = b.status; break
-        case 'lastActivity': av = a.lastActivity; bv = b.lastActivity; break
+        case 'name': cmp = a.name.localeCompare(b.name); break
+        case 'industry': cmp = a.industry.localeCompare(b.industry); break
+        case 'employees': cmp = a.employees - b.employees; break
+        case 'arr': cmp = a.arr - b.arr; break
+        case 'status': cmp = a.status.localeCompare(b.status); break
+        case 'lastActivity': cmp = a.lastActivity.localeCompare(b.lastActivity); break
       }
-      const cmp = av.localeCompare(bv)
       return sortDir === 'asc' ? cmp : -cmp
     })
 
     return data
-  }, [filter, search, sortKey, sortDir])
+  }, [statusFilter, search, sortKey, sortDir])
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -104,12 +98,12 @@ export default function Table() {
 
   return (
     <div className={styles.page}>
+      <Link to="/menu" className={styles.back}>← Back to Menu</Link>
+
       <header className={styles.header}>
         <div>
-          <h1 className={styles.title}>People &amp; Accounts</h1>
-          <p className={styles.subtitle}>
-            {counts.person} people · {counts.account} accounts
-          </p>
+          <h1 className={styles.title}>Accounts</h1>
+          <p className={styles.subtitle}>{ACCOUNTS.length} accounts total</p>
         </div>
         <div className={styles.searchWrap}>
           <span className={styles.searchIcon}>
@@ -121,7 +115,7 @@ export default function Table() {
           <input
             className={styles.search}
             type="text"
-            placeholder="Search by name, email, company…"
+            placeholder="Search by name, industry, website…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -130,14 +124,14 @@ export default function Table() {
 
       <div className={styles.toolbar}>
         <div className={styles.tabs}>
-          {(['all', 'person', 'account'] as const).map((t) => (
+          {(['all', 'active', 'prospect', 'inactive'] as const).map((t) => (
             <button
               key={t}
-              className={`${styles.tab} ${filter === t ? styles.tabActive : ''}`}
-              onClick={() => setFilter(t)}
+              className={`${styles.tab} ${statusFilter === t ? styles.tabActive : ''}`}
+              onClick={() => setStatusFilter(t)}
             >
-              {t === 'all' ? 'All' : t === 'person' ? 'People' : 'Accounts'}
-              <span className={`${styles.tabCount} ${filter === t ? styles.tabCountActive : ''}`}>
+              {t === 'all' ? 'All' : STATUS_LABEL[t as Status]}
+              <span className={`${styles.tabCount} ${statusFilter === t ? styles.tabCountActive : ''}`}>
                 {counts[t]}
               </span>
             </button>
@@ -150,12 +144,17 @@ export default function Table() {
           <thead>
             <tr>
               <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('name')}>
-                Name <SortIcon col="name" />
+                Account <SortIcon col="name" />
               </th>
-              <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('type')}>
-                Type <SortIcon col="type" />
+              <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('industry')}>
+                Industry <SortIcon col="industry" />
               </th>
-              <th className={styles.th}>Details</th>
+              <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('employees')}>
+                Employees <SortIcon col="employees" />
+              </th>
+              <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('arr')}>
+                ARR <SortIcon col="arr" />
+              </th>
               <th className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort('status')}>
                 Status <SortIcon col="status" />
               </th>
@@ -167,73 +166,54 @@ export default function Table() {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={5} className={styles.empty}>
-                  No results found for &ldquo;{search}&rdquo;
+                <td colSpan={6} className={styles.empty}>
+                  No accounts found{search ? ` for "${search}"` : ''}
                 </td>
               </tr>
             ) : (
-              rows.map((row) => <TableRow key={row.id} row={row} />)
+              rows.map((account) => <AccountRow key={account.id} account={account} />)
             )}
           </tbody>
         </table>
       </div>
 
       <footer className={styles.footer}>
-        Showing {rows.length} of {ROWS.length} records
+        Showing {rows.length} of {ACCOUNTS.length} accounts
       </footer>
     </div>
   )
 }
 
-function TableRow({ row }: { row: Row }) {
+function AccountRow({ account }: { account: Account }) {
   return (
     <tr className={styles.tr}>
       <td className={styles.td}>
         <div className={styles.nameCell}>
-          <span
-            className={styles.avatar}
-            style={{ background: avatarColor(row.id) }}
-          >
-            {initials(row.name)}
+          <span className={styles.avatar} style={{ background: avatarColor(account.id) }}>
+            {initials(account.name)}
           </span>
           <div>
-            <div className={styles.nameText}>{row.name}</div>
-            {row.type === 'person' && (
-              <div className={styles.nameSubtext}>{row.email}</div>
-            )}
-            {row.type === 'account' && (
-              <div className={styles.nameSubtext}>{row.website}</div>
-            )}
+            <div className={styles.nameText}>{account.name}</div>
+            <div className={styles.nameSubtext}>{account.website}</div>
           </div>
         </div>
       </td>
       <td className={styles.td}>
-        <span className={row.type === 'person' ? styles.badgePerson : styles.badgeAccount}>
-          {row.type === 'person' ? 'Person' : 'Account'}
-        </span>
+        <span className={styles.industryBadge}>{account.industry}</span>
+      </td>
+      <td className={`${styles.td} ${styles.numCell}`}>
+        {account.employees.toLocaleString()}
+      </td>
+      <td className={`${styles.td} ${styles.numCell}`}>
+        {formatARR(account.arr)}
       </td>
       <td className={styles.td}>
-        {row.type === 'person' ? (
-          <div className={styles.detailsCell}>
-            <span className={styles.detailMain}>{row.title}</span>
-            <span className={styles.detailSub}>{row.company}</span>
-          </div>
-        ) : (
-          <div className={styles.detailsCell}>
-            <span className={styles.detailMain}>{row.industry}</span>
-            <span className={styles.detailSub}>
-              {row.employees.toLocaleString()} employees · {formatARR(row.arr)} ARR
-            </span>
-          </div>
-        )}
-      </td>
-      <td className={styles.td}>
-        <span className={styles[`status_${row.status}` as keyof typeof styles]}>
-          {STATUS_LABEL[row.status]}
+        <span className={styles[`status_${account.status}` as keyof typeof styles]}>
+          {STATUS_LABEL[account.status]}
         </span>
       </td>
       <td className={`${styles.td} ${styles.dateCell}`}>
-        {formatDate(row.lastActivity)}
+        {formatDate(account.lastActivity)}
       </td>
     </tr>
   )
