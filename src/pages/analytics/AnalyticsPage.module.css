@@ -402,3 +402,16 @@
   font-weight: 500;
   white-space: nowrap;
 }
+
+/* ── Links Sent ──────────────────────────────────────── */
+.linkDemoName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.linkDemoType {
+  font-size: 11.5px;
+  color: #9ca3af;
+  margin-top: 1px;
+}

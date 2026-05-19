@@ -135,6 +135,7 @@ function SalesTab() {
         <BuyerGroup />
         <AccountTable />
       </div>
+      <LinksSentTable />
     </div>
   )
 }
@@ -424,6 +425,145 @@ function AccountTable() {
                   <td className={styles.td}>
                     <span className={styles.stageBadge} style={{ background: stageStyle.bg, color: stageStyle.text }}>
                       {row.stage}
+                    </span>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
+
+// ─── Links Sent ───────────────────────────────────────────
+
+interface LinkRow {
+  id: string
+  demo: string
+  type: string
+  sentTo: string
+  sentToInitials: string
+  sentToColor: string
+  account: string
+  sentDate: string
+  views: number
+  engagement: number
+  lastViewed: string
+  status: 'Opened' | 'Not Opened' | 'Expired'
+}
+
+const LINKS_SENT: LinkRow[] = [
+  { id: 'lk1', demo: 'Onboarding Flow Walkthrough', type: 'Sim', sentTo: 'Maya Rodriguez', sentToInitials: 'MR', sentToColor: '#6366f1', account: 'Acme Corp', sentDate: 'May 16', views: 12, engagement: 88, lastViewed: 'May 18', status: 'Opened' },
+  { id: 'lk2', demo: 'Product Tour 2026', type: 'Demo', sentTo: 'Tom Keane', sentToInitials: 'TK', sentToColor: '#10b981', account: 'Acme Corp', sentDate: 'May 15', views: 7, engagement: 71, lastViewed: 'May 17', status: 'Opened' },
+  { id: 'lk3', demo: 'Enterprise Features', type: 'Presentation', sentTo: 'Ryan Brooks', sentToInitials: 'RB', sentToColor: '#f97316', account: 'Acme Corp', sentDate: 'May 14', views: 5, engagement: 83, lastViewed: 'May 16', status: 'Opened' },
+  { id: 'lk4', demo: 'API Walkthrough', type: 'Walkthrough', sentTo: 'James Monroe', sentToInitials: 'JM', sentToColor: '#8b5cf6', account: 'Acme Corp', sentDate: 'May 13', views: 3, engagement: 59, lastViewed: 'May 15', status: 'Opened' },
+  { id: 'lk5', demo: 'Dashboard Overview', type: 'Video', sentTo: 'Anna Chen', sentToInitials: 'AC', sentToColor: '#14b8a6', account: 'Acme Corp', sentDate: 'May 12', views: 8, engagement: 76, lastViewed: 'May 14', status: 'Opened' },
+  { id: 'lk6', demo: 'Security & Compliance', type: 'Presentation', sentTo: 'Priya Wang', sentToInitials: 'PW', sentToColor: '#ec4899', account: 'Acme Corp', sentDate: 'May 11', views: 1, engagement: 22, lastViewed: 'May 11', status: 'Opened' },
+  { id: 'lk7', demo: 'Sales Enablement Kit', type: 'Webinar', sentTo: 'Sara Lin', sentToInitials: 'SL', sentToColor: '#f59e0b', account: 'Acme Corp', sentDate: 'May 10', views: 4, engagement: 64, lastViewed: 'May 12', status: 'Opened' },
+  { id: 'lk8', demo: 'Mobile App Demo', type: 'Demo', sentTo: 'Dan Jacobs', sentToInitials: 'DJ', sentToColor: '#0ea5e9', account: 'Acme Corp', sentDate: 'May 9', views: 2, engagement: 45, lastViewed: 'May 10', status: 'Opened' },
+  { id: 'lk9', demo: 'ROI Calculator Walkthrough', type: 'Walkthrough', sentTo: 'Maya Rodriguez', sentToInitials: 'MR', sentToColor: '#6366f1', account: 'Globex Industries', sentDate: 'May 8', views: 6, engagement: 74, lastViewed: 'May 11', status: 'Opened' },
+  { id: 'lk10', demo: 'Competitive Battlecard Demo', type: 'Demo', sentTo: 'Tom Keane', sentToInitials: 'TK', sentToColor: '#10b981', account: 'Globex Industries', sentDate: 'May 7', views: 0, engagement: 0, lastViewed: '—', status: 'Not Opened' },
+  { id: 'lk11', demo: 'Platform Overview', type: 'Demo', sentTo: 'Anna Chen', sentToInitials: 'AC', sentToColor: '#14b8a6', account: 'Initech Solutions', sentDate: 'May 6', views: 9, engagement: 61, lastViewed: 'May 9', status: 'Opened' },
+  { id: 'lk12', demo: 'Quick Start Guide', type: 'Walkthrough', sentTo: 'Ryan Brooks', sentToInitials: 'RB', sentToColor: '#f97316', account: 'Hooli Technologies', sentDate: 'May 5', views: 11, engagement: 83, lastViewed: 'May 8', status: 'Opened' },
+  { id: 'lk13', demo: 'Analytics Deep Dive', type: 'Sim', sentTo: 'James Monroe', sentToInitials: 'JM', sentToColor: '#8b5cf6', account: 'Pied Piper Inc', sentDate: 'May 3', views: 0, engagement: 0, lastViewed: '—', status: 'Not Opened' },
+  { id: 'lk14', demo: 'Deal Closing Playbook', type: 'Demo', sentTo: 'Sara Lin', sentToInitials: 'SL', sentToColor: '#f59e0b', account: 'Vandelay Industries', sentDate: 'Apr 30', views: 3, engagement: 57, lastViewed: 'May 2', status: 'Expired' },
+]
+
+const LINK_STATUS_STYLES: Record<string, { bg: string; text: string }> = {
+  Opened: { bg: '#dcfce7', text: '#15803d' },
+  'Not Opened': { bg: '#f3f4f6', text: '#6b7280' },
+  Expired: { bg: '#fff7ed', text: '#c2410c' },
+}
+
+type LinkSortKey = 'demo' | 'sentTo' | 'account' | 'sentDate' | 'views' | 'engagement' | 'lastViewed' | 'status'
+
+function LinksSentTable() {
+  const [sortKey, setSortKey] = useState<LinkSortKey>('sentDate')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
+
+  function toggleSort(key: LinkSortKey) {
+    if (sortKey === key) setSortDir((d) => d === 'asc' ? 'desc' : 'asc')
+    else { setSortKey(key); setSortDir('asc') }
+  }
+
+  const rows = [...LINKS_SENT].sort((a, b) => {
+    let cmp = 0
+    if (sortKey === 'demo') cmp = a.demo.localeCompare(b.demo)
+    else if (sortKey === 'sentTo') cmp = a.sentTo.localeCompare(b.sentTo)
+    else if (sortKey === 'account') cmp = a.account.localeCompare(b.account)
+    else if (sortKey === 'sentDate') cmp = a.sentDate.localeCompare(b.sentDate)
+    else if (sortKey === 'views') cmp = a.views - b.views
+    else if (sortKey === 'engagement') cmp = a.engagement - b.engagement
+    else if (sortKey === 'lastViewed') cmp = a.lastViewed.localeCompare(b.lastViewed)
+    else if (sortKey === 'status') cmp = a.status.localeCompare(b.status)
+    return sortDir === 'asc' ? cmp : -cmp
+  })
+
+  function SortIcon({ col }: { col: LinkSortKey }) {
+    if (sortKey !== col) return <span className={styles.sortNeutral}>↕</span>
+    return <span className={styles.sortActive}>{sortDir === 'asc' ? '↑' : '↓'}</span>
+  }
+
+  return (
+    <section className={styles.section}>
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>Links Sent</h2>
+        <span className={styles.sectionCount}>{LINKS_SENT.length} links</span>
+      </div>
+      <div className={styles.tableWrap}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              {([
+                ['demo', 'Demo'],
+                ['sentTo', 'Sent To'],
+                ['account', 'Account'],
+                ['sentDate', 'Sent Date'],
+                ['views', 'Views'],
+                ['engagement', 'Engagement'],
+                ['lastViewed', 'Last Viewed'],
+                ['status', 'Status'],
+              ] as [LinkSortKey, string][]).map(([key, label]) => (
+                <th key={key} className={`${styles.th} ${styles.thSortable}`} onClick={() => toggleSort(key)}>
+                  {label} <SortIcon col={key} />
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const statusStyle = LINK_STATUS_STYLES[row.status]
+              return (
+                <tr key={row.id} className={styles.tr}>
+                  <td className={styles.td}>
+                    <div className={styles.linkDemoName}>{row.demo}</div>
+                    <div className={styles.linkDemoType}>{row.type}</div>
+                  </td>
+                  <td className={styles.td}>
+                    <div className={styles.personaCell}>
+                      <span className={styles.personaAvatar} style={{ background: row.sentToColor }}>{row.sentToInitials}</span>
+                      <span className={styles.personaName}>{row.sentTo}</span>
+                    </div>
+                  </td>
+                  <td className={styles.tdMeta}>{row.account}</td>
+                  <td className={styles.tdMeta}>{row.sentDate}</td>
+                  <td className={styles.tdNum}>{row.views}</td>
+                  <td className={styles.td}>
+                    {row.engagement > 0 ? (
+                      <div className={styles.engagementCell}>
+                        <div className={styles.engagementBar}>
+                          <div className={styles.engagementFill} style={{ width: `${row.engagement}%`, background: '#6366f1' }} />
+                        </div>
+                        <span className={styles.engagementPctSm}>{row.engagement}%</span>
+                      </div>
+                    ) : <span className={styles.tdMeta}>—</span>}
+                  </td>
+                  <td className={styles.tdMeta}>{row.lastViewed}</td>
+                  <td className={styles.td}>
+                    <span className={styles.stageBadge} style={{ background: statusStyle.bg, color: statusStyle.text }}>
+                      {row.status}
                     </span>
                   </td>
                 </tr>
