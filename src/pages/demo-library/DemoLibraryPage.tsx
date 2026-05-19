@@ -115,17 +115,20 @@ function FilterBar() {
     setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
   }
 
+  const appliedGroups = [
+    { label: 'Type', values: types, onToggle: (v: string) => toggle(types, setTypes, v) },
+    { label: 'Creator', values: creators, onToggle: (v: string) => toggle(creators, setCreators, v) },
+    { label: 'Tags', values: tags, onToggle: (v: string) => toggle(tags, setTags, v) },
+  ]
+
   return (
     <div className={styles.filterBar}>
       <div className={styles.filterLeft}>
-        <button
-          className={`${styles.filterBtn} ${totalApplied > 0 ? styles.filterBtnActive : ''}`}
-          onClick={clearAll}
-          title="Clear all filters"
-        >
-          Applied Filters
-          {totalApplied > 0 && <span className={styles.filterCount}>{totalApplied}</span>}
-        </button>
+        <AppliedFiltersDropdown
+          totalApplied={totalApplied}
+          groups={appliedGroups}
+          onClearAll={clearAll}
+        />
 
         <FilterDropdown
           label="Type"
@@ -174,6 +177,85 @@ function FilterBar() {
           </button>
         </div>
       </div>
+    </div>
+  )
+}
+
+interface AppliedGroup {
+  label: string
+  values: string[]
+  onToggle: (v: string) => void
+}
+
+function AppliedFiltersDropdown({
+  totalApplied,
+  groups,
+  onClearAll,
+}: {
+  totalApplied: number
+  groups: AppliedGroup[]
+  onClearAll: () => void
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  const hasAny = totalApplied > 0
+
+  return (
+    <div className={styles.dropdownWrap} ref={ref}>
+      <button
+        className={`${styles.filterBtn} ${hasAny ? styles.filterBtnActive : ''}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        Applied Filters
+        {hasAny && <span className={styles.filterCount}>{totalApplied}</span>}
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 2 }}>
+          <path d={open ? 'M2 8l4-4 4 4' : 'M2 4l4 4 4-4'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div className={styles.dropdown} style={{ minWidth: 240 }}>
+          {!hasAny ? (
+            <p className={styles.appliedEmpty}>No filters applied</p>
+          ) : (
+            <>
+              {groups.map((group) =>
+                group.values.length > 0 ? (
+                  <div key={group.label} className={styles.appliedGroup}>
+                    <div className={styles.appliedGroupLabel}>{group.label}</div>
+                    {group.values.map((val) => (
+                      <div key={val} className={styles.appliedChip}>
+                        <span className={styles.appliedChipText}>{val}</span>
+                        <button
+                          className={styles.appliedChipRemove}
+                          onClick={() => group.onToggle(val)}
+                          aria-label={`Remove ${val}`}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : null
+              )}
+              <div className={styles.appliedFooter}>
+                <button className={styles.clearBtn} onClick={() => { onClearAll(); setOpen(false) }}>
+                  Clear all filters
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </div>
   )
 }
