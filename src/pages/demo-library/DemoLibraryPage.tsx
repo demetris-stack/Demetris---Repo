@@ -121,7 +121,11 @@ const DEMO_LIBRARY_ROWS: DemoRow[] = [
 
 const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar']
 const CREATOR_OPTIONS = ['Alex Morgan', 'Jamie Lee', 'Sam Rivera', 'Taylor Kim', 'Jordan Park']
-const TAG_OPTIONS = ['Onboarding', 'Product', 'Sales', 'API', 'Security', 'Mobile', 'Enterprise', 'Admin']
+const TAG_OPTIONS = [
+  'Onboarding', 'Product', 'Sales', 'API', 'Security', 'Mobile', 'Enterprise', 'Admin',
+  'Reporting', 'Analytics', 'Compliance', 'Marketing', 'Engineering', 'Integrations',
+  'Getting Started', 'Advanced', 'Partner', 'Webinar', 'Demo', 'Tutorial',
+]
 
 export default function DemoLibraryPage() {
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
@@ -239,13 +243,24 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
   const { types, creators, tags, searchQuery, searchScope } = filters
   const totalApplied = types.length + creators.length + tags.length
   const [scopeOpen, setScopeOpen] = useState(false)
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false)
   const scopeRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    function h(e: MouseEvent) { if (scopeRef.current && !scopeRef.current.contains(e.target as Node)) setScopeOpen(false) }
+    function h(e: MouseEvent) {
+      if (scopeRef.current && !scopeRef.current.contains(e.target as Node)) {
+        setScopeOpen(false)
+        setSuggestionsOpen(false)
+      }
+    }
     document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
   }, [])
+
+  const suggestedTags = searchQuery.trim()
+    ? TAG_OPTIONS.filter((t) => t.toLowerCase().includes(searchQuery.trim().toLowerCase()))
+    : []
 
   const appliedGroups = [
     { label: 'Type', values: types, onToggle: actions.toggleType },
@@ -275,11 +290,14 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
                 <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
               </svg>
               <input
+                ref={inputRef}
                 className={styles.searchInput}
                 type="text"
                 placeholder="Search…"
                 value={searchQuery}
-                onChange={(e) => actions.setSearch(e.target.value)}
+                onChange={(e) => { actions.setSearch(e.target.value); setSuggestionsOpen(true) }}
+                onFocus={() => { if (searchQuery.trim()) setSuggestionsOpen(true) }}
+                onKeyDown={(e) => { if (e.key === 'Escape' || e.key === 'Enter') setSuggestionsOpen(false) }}
               />
               {searchQuery && (
                 <button className={styles.searchClear} onClick={() => actions.setSearch('')}>✕</button>
@@ -312,6 +330,35 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
                   )}
                 </button>
               ))}
+            </div>
+          )}
+          {suggestionsOpen && suggestedTags.length > 0 && (
+            <div className={styles.suggestionsDropdown}>
+              <div className={styles.suggestionsHeader}>
+                <span className={styles.suggestionsQuery}>Search for "{searchQuery}"</span>
+                <span className={styles.suggestionsHint}>Press Enter</span>
+              </div>
+              <div className={styles.suggestionsSection}>SUGGESTED TAGS</div>
+              {suggestedTags.map((tag) => {
+                const isActive = tags.includes(tag)
+                return (
+                  <div key={tag} className={styles.suggestionRow}>
+                    <span className={styles.suggestionTagIcon}>
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                        <path d="M1 1h6l6 6-6 6-6-6V1z" stroke="#9ca3af" strokeWidth="1.3" strokeLinejoin="round"/>
+                        <circle cx="4.5" cy="4.5" r="1" fill="#9ca3af"/>
+                      </svg>
+                    </span>
+                    <span className={styles.suggestionTagName}>{tag}</span>
+                    <button
+                      className={`${styles.suggestionAction} ${isActive ? styles.suggestionRemove : styles.suggestionAdd}`}
+                      onClick={() => { actions.toggleTag(tag); if (!isActive) setSuggestionsOpen(false) }}
+                    >
+                      {isActive ? 'Remove Filter' : 'Add Filter'}
+                    </button>
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>
