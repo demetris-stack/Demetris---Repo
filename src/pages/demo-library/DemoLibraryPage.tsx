@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 
 type Tab = 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
@@ -17,6 +18,7 @@ export default function DemoLibraryPage() {
     <div className={styles.layout}>
       <Sidebar />
       <main className={styles.main}>
+        <Link to="/menu" className={styles.backLink}>← Back to Menu</Link>
         <div className={styles.breadcrumb}>My Demos</div>
 
         <div className={styles.topBar}>
