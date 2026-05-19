@@ -10,10 +10,16 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    slug: 'accounts',
-    title: 'Accounts',
+    slug: 'analytics',
+    title: 'Analytics',
     description: 'Browse and filter a table of accounts with industry, ARR, headcount, and status.',
     accent: '#6366f1',
+  },
+  {
+    slug: 'demo-library',
+    title: 'Demo Library Filtering',
+    description: 'Coming soon.',
+    accent: '#10b981',
   },
 ]
 

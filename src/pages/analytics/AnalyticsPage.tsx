@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { ACCOUNTS, type Account, type Status } from './data'
-import styles from './AccountsPage.module.css'
+import styles from './AnalyticsPage.module.css'
 
 type SortKey = 'name' | 'industry' | 'employees' | 'arr' | 'status' | 'lastActivity'
 type SortDir = 'asc' | 'desc'
@@ -39,7 +39,7 @@ function avatarColor(id: string) {
   return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length]
 }
 
-export default function AccountsPage() {
+export default function AnalyticsPage() {
   const [statusFilter, setStatusFilter] = useState<FilterStatus>('all')
   const [search, setSearch] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('lastActivity')
@@ -102,7 +102,7 @@ export default function AccountsPage() {
 
       <header className={styles.header}>
         <div>
-          <h1 className={styles.title}>Accounts</h1>
+          <h1 className={styles.title}>Analytics</h1>
           <p className={styles.subtitle}>{ACCOUNTS.length} accounts total</p>
         </div>
         <div className={styles.searchWrap}>

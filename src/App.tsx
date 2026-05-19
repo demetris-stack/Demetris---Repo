@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Menu from './pages/Menu'
-import AccountsPage from './pages/accounts/AccountsPage'
+import AnalyticsPage from './pages/analytics/AnalyticsPage'
+import DemoLibraryPage from './pages/demo-library/DemoLibraryPage'
 
 export default function App() {
   return (
@@ -8,7 +9,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/menu" replace />} />
         <Route path="/menu" element={<Menu />} />
-        <Route path="/menu/accounts" element={<AccountsPage />} />
+        <Route path="/menu/analytics" element={<AnalyticsPage />} />
+        <Route path="/menu/demo-library" element={<DemoLibraryPage />} />
       </Routes>
     </BrowserRouter>
   )
