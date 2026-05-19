@@ -206,25 +206,25 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
         <button className={styles.filterBtn}><FunnelIcon />All Filters</button>
       </div>
       <div className={styles.filterRight}>
-        <div className={styles.comboPill}>
-          <div className={styles.comboSearch}>
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
-              <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
-              <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
-            </svg>
-            <input
-              className={styles.searchInput}
-              type="text"
-              placeholder="Search…"
-              value={searchQuery}
-              onChange={(e) => actions.setSearch(e.target.value)}
-            />
-            {searchQuery && (
-              <button className={styles.searchClear} onClick={() => actions.setSearch('')}>✕</button>
-            )}
-          </div>
-          <div className={styles.comboDivider} />
-          <div className={styles.scopeWrap} ref={scopeRef}>
+        <div className={styles.scopeWrap} ref={scopeRef}>
+          <div className={styles.comboPill}>
+            <div className={styles.comboSearch}>
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
+                <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
+                <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
+              </svg>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="Search…"
+                value={searchQuery}
+                onChange={(e) => actions.setSearch(e.target.value)}
+              />
+              {searchQuery && (
+                <button className={styles.searchClear} onClick={() => actions.setSearch('')}>✕</button>
+              )}
+            </div>
+            <div className={styles.comboDivider} />
             <button
               className={`${styles.comboEvery} ${searchScope !== 'everywhere' ? styles.comboEveryActive : ''}`}
               onClick={() => setScopeOpen((o) => !o)}
@@ -234,25 +234,25 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
                 <path d={scopeOpen ? 'M3 9l4-4 4 4' : 'M3 5l4 4 4-4'} stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
-            {scopeOpen && (
-              <div className={styles.scopeDropdown}>
-                {SCOPE_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.value}
-                    className={`${styles.scopeOption} ${searchScope === opt.value ? styles.scopeOptionActive : ''}`}
-                    onClick={() => { actions.setScope(opt.value); setScopeOpen(false) }}
-                  >
-                    {opt.label}
-                    {searchScope === opt.value && (
-                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ marginLeft: 'auto' }}>
-                        <path d="M2 7l4 4 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
+          {scopeOpen && (
+            <div className={styles.scopeDropdown}>
+              {SCOPE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  className={`${styles.scopeOption} ${searchScope === opt.value ? styles.scopeOptionActive : ''}`}
+                  onClick={() => { actions.setScope(opt.value); setScopeOpen(false) }}
+                >
+                  {opt.label}
+                  {searchScope === opt.value && (
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ marginLeft: 'auto' }}>
+                      <path d="M2 7l4 4 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
