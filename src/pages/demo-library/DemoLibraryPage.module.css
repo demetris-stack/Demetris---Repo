@@ -1,34 +1,151 @@
-.page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
+/* ── Full-page layout ────────────────────────────────── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f0f0;
 }
 
-.back {
-  display: inline-flex;
+/* ── Sidebar ─────────────────────────────────────────── */
+.sidebar {
+  width: 130px;
+  flex-shrink: 0;
+  background: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 16px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebarTop {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  margin-bottom: 32px;
-  transition: color .12s;
+  justify-content: flex-start;
+  padding: 4px 0;
 }
 
-.back:hover {
-  color: var(--accent);
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navItem {
+  height: 10px;
+  border-radius: 5px;
+  background: #ccc;
+  width: 100%;
+}
+
+.sidebarBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Main content ────────────────────────────────────── */
+.main {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 32px 40px;
+  min-height: 100vh;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────── */
+.breadcrumb {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+/* ── Top bar ─────────────────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.3px;
+  color: #111;
+  letter-spacing: -0.4px;
 }
 
-.subtitle {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 6px;
+.createBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.createBtn:hover {
+  background: #333;
+}
+
+.createPlus {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ── Tabs ────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.tab {
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color .12s, border-color .12s;
+}
+
+.tab:hover {
+  color: #111;
+}
+
+.tabActive {
+  color: #111;
+  border-bottom-color: #111;
+}
+
+/* ── Content area ────────────────────────────────────── */
+.content {
+  flex: 1;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  color: #9ca3af;
+  font-size: 14px;
 }
