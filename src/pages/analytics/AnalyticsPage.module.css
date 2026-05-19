@@ -230,43 +230,29 @@
   font-weight: 400;
 }
 
-/* ── Buyer Group ─────────────────────────────────────── */
-.personaGrid {
+/* ── Tables side-by-side row ─────────────────────────── */
+.tablesRow {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
 }
 
-.personaCard {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 18px 16px;
+/* ── Buyer Group (table) ─────────────────────────────── */
+.personaCell {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  transition: box-shadow .15s;
-}
-
-.personaCard:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.personaTop {
-  display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
 }
 
 .personaAvatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
@@ -274,7 +260,7 @@
 
 .personaName {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: #111827;
   line-height: 1.3;
 }
@@ -285,30 +271,13 @@
   margin-top: 1px;
 }
 
-.personaCompany {
-  font-size: 11px;
-  color: #9ca3af;
-}
-
-.personaBottom {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .roleBadge {
   display: inline-block;
   padding: 2px 9px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
-  align-self: flex-start;
-}
-
-.personaMeta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  white-space: nowrap;
 }
 
 .engagementBar {
@@ -323,19 +292,6 @@
   height: 100%;
   border-radius: 99px;
   transition: width .3s;
-}
-
-.engagementPct {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: #374151;
-  min-width: 28px;
-  text-align: right;
-}
-
-.personaDate {
-  font-size: 11px;
-  color: #9ca3af;
 }
 
 /* ── Account Table ───────────────────────────────────── */

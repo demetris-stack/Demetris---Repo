@@ -128,8 +128,10 @@ function SalesTab() {
     <div className={styles.salesTab}>
       <InsightsRow />
       <ChartsRow />
-      <BuyerGroup />
-      <AccountTable />
+      <div className={styles.tablesRow}>
+        <BuyerGroup />
+        <AccountTable />
+      </div>
     </div>
   )
 }
@@ -292,33 +294,47 @@ function BuyerGroup() {
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Buyer Group</h2>
-        <span className={styles.sectionCount}>{BUYER_GROUP.length} stakeholders</span>
       </div>
-      <div className={styles.personaGrid}>
-        {BUYER_GROUP.map((p) => (
-          <div key={p.id} className={styles.personaCard}>
-            <div className={styles.personaTop}>
-              <span className={styles.personaAvatar} style={{ background: p.color }}>{p.initials}</span>
-              <div>
-                <div className={styles.personaName}>{p.name}</div>
-                <div className={styles.personaTitle}>{p.title}</div>
-                <div className={styles.personaCompany}>{p.company}</div>
-              </div>
-            </div>
-            <div className={styles.personaBottom}>
-              <span className={styles.roleBadge} style={{ background: `${ROLE_COLORS[p.role]}18`, color: ROLE_COLORS[p.role] }}>
-                {p.role}
-              </span>
-              <div className={styles.personaMeta}>
-                <div className={styles.engagementBar}>
-                  <div className={styles.engagementFill} style={{ width: `${p.engagement}%`, background: ROLE_COLORS[p.role] }} />
-                </div>
-                <span className={styles.engagementPct}>{p.engagement}%</span>
-              </div>
-              <div className={styles.personaDate}>Last active {p.lastActive}</div>
-            </div>
-          </div>
-        ))}
+      <div className={styles.tableWrap}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.th}>Stakeholder</th>
+              <th className={styles.th}>Role</th>
+              <th className={styles.th}>Engagement</th>
+              <th className={styles.th}>Last Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {BUYER_GROUP.map((p) => (
+              <tr key={p.id} className={styles.tr}>
+                <td className={styles.td}>
+                  <div className={styles.personaCell}>
+                    <span className={styles.personaAvatar} style={{ background: p.color }}>{p.initials}</span>
+                    <div>
+                      <div className={styles.personaName}>{p.name}</div>
+                      <div className={styles.personaTitle}>{p.title}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className={styles.td}>
+                  <span className={styles.roleBadge} style={{ background: `${ROLE_COLORS[p.role]}18`, color: ROLE_COLORS[p.role] }}>
+                    {p.role}
+                  </span>
+                </td>
+                <td className={styles.td}>
+                  <div className={styles.engagementCell}>
+                    <div className={styles.engagementBar}>
+                      <div className={styles.engagementFill} style={{ width: `${p.engagement}%`, background: ROLE_COLORS[p.role] }} />
+                    </div>
+                    <span className={styles.engagementPctSm}>{p.engagement}%</span>
+                  </div>
+                </td>
+                <td className={styles.tdMeta}>{p.lastActive}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   )
@@ -366,7 +382,6 @@ function AccountTable() {
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Account Information</h2>
-        <span className={styles.sectionCount}>{ACCOUNT_ROWS.length} accounts</span>
       </div>
       <div className={styles.tableWrap}>
         <table className={styles.table}>
