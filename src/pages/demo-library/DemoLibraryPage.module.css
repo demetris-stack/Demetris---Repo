@@ -492,6 +492,56 @@
   margin-top: 24px;
 }
 
+/* ── Folder breadcrumb ───────────────────────────────── */
+.folderBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.breadcrumbBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background .12s, color .12s;
+}
+
+.breadcrumbBack:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.breadcrumbSep {
+  color: #d1d5db;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.breadcrumbFolder {
+  font-weight: 500;
+  color: #374151;
+}
+
+.trFolder {
+  cursor: pointer;
+}
+
+.trFolder:hover .rowTitle {
+  color: #4f46e5;
+  text-decoration: underline;
+  text-decoration-color: #c7d2fe;
+}
+
 .floatingBar {
   position: fixed;
   bottom: 32px;

@@ -34,6 +34,7 @@ interface DemoRow {
   created: string
   modified: string
   duration: string
+  parentFolder?: string
 }
 
 const MY_DEMOS_VIDEOS: Video[] = [
@@ -54,32 +55,41 @@ const DEMO_LIBRARY_VIDEOS: Video[] = [
   { id: 'l6', title: 'Admin Console', duration: '5:33', date: 'May 5', thumb: '#c4c9d4' },
 ]
 
+// Root-level rows have no parentFolder. Rows inside a folder have parentFolder set.
 const MY_DEMOS_ROWS: DemoRow[] = [
+  // Root level
   { id: 'r0a', title: 'Onboarding', type: 'Folder', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding'], freshness: 0, usage: 3, created: '02/01/26', modified: '05/10/26', duration: '—' },
-  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42' },
-  { id: 'r7', title: 'Mobile Walkthrough', type: 'Tour', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15' },
   { id: 'r0b', title: 'Product', type: 'Folder', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 0, usage: 2, created: '03/01/26', modified: '05/01/26', duration: '—' },
-  { id: 'r2', title: 'Dashboard Overview', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10' },
-  { id: 'r3', title: 'Analytics Deep Dive', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23' },
   { id: 'r0c', title: 'Sales Enablement', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 2, created: '01/10/26', modified: '04/22/26', duration: '—' },
-  { id: 'r6', title: 'Reporting Basics', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04' },
-  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45' },
   { id: 'r4', title: 'Settings & Permissions', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', duration: '2:55' },
   { id: 'r5', title: 'Integrations Setup', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', duration: '4:18' },
+  // Inside "Onboarding"
+  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42', parentFolder: 'Onboarding' },
+  { id: 'r7', title: 'Mobile Walkthrough', type: 'Tour', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15', parentFolder: 'Onboarding' },
+  // Inside "Product"
+  { id: 'r2', title: 'Dashboard Overview', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10', parentFolder: 'Product' },
+  { id: 'r3', title: 'Analytics Deep Dive', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23', parentFolder: 'Product' },
+  // Inside "Sales Enablement"
+  { id: 'r6', title: 'Reporting Basics', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04', parentFolder: 'Sales Enablement' },
+  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45', parentFolder: 'Sales Enablement' },
 ]
 
 const DEMO_LIBRARY_ROWS: DemoRow[] = [
+  // Root level
   { id: 'l0a', title: 'Global Library', type: 'Folder', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product'], freshness: 0, usage: 2, created: '01/01/26', modified: '05/18/26', duration: '—' },
-  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30' },
-  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20' },
   { id: 'l0b', title: 'Engineering', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api', 'security'], freshness: 0, usage: 2, created: '02/10/26', modified: '05/05/26', duration: '—' },
-  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45' },
-  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12' },
-  { id: 'l6', title: 'Admin Console', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33' },
   { id: 'l0c', title: 'Sales', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 2, created: '01/05/26', modified: '03/01/26', duration: '—' },
-  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01' },
-  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05' },
   { id: 'l4', title: 'Mobile App Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', duration: '3:58' },
+  { id: 'l6', title: 'Admin Console', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33' },
+  // Inside "Global Library"
+  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30', parentFolder: 'Global Library' },
+  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20', parentFolder: 'Global Library' },
+  // Inside "Engineering"
+  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45', parentFolder: 'Engineering' },
+  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12', parentFolder: 'Engineering' },
+  // Inside "Sales"
+  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01', parentFolder: 'Sales' },
+  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05', parentFolder: 'Sales' },
 ]
 
 const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar']
@@ -130,6 +140,7 @@ function TabContent({ tab }: { tab: Tab }) {
   const [tags, setTags] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchScope, setSearchScope] = useState<SearchScope>('everywhere')
+  const [openFolderName, setOpenFolderName] = useState<string | null>(null)
 
   function toggle(list: string[], setList: (v: string[]) => void, val: string) {
     setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
@@ -137,28 +148,42 @@ function TabContent({ tab }: { tab: Tab }) {
 
   function clearAll() { setTypes([]); setCreators([]); setTags([]); setSearchQuery(''); setSearchScope('everywhere') }
 
-  const filters = { types, creators, tags, searchQuery, searchScope }
-  const filterActions = {
+  function handleOpenFolder(name: string) {
+    setOpenFolderName(name)
+    setSearchQuery('')
+    setSearchScope('in-folder')
+  }
+
+  function handleCloseFolder() {
+    setOpenFolderName(null)
+    setSearchQuery('')
+    setSearchScope('everywhere')
+  }
+
+  const filters: Filters = { types, creators, tags, searchQuery, searchScope, openFolder: openFolderName }
+  const filterActions: FilterActions = {
     toggleType: (v: string) => toggle(types, setTypes, v),
     toggleCreator: (v: string) => toggle(creators, setCreators, v),
     toggleTag: (v: string) => toggle(tags, setTags, v),
     clearAll,
     setSearch: setSearchQuery,
     setScope: setSearchScope,
+    openFolder: handleOpenFolder,
+    closeFolder: handleCloseFolder,
   }
 
   if (tab === 'my-demos') return (
     <>
       <VideoCarousel title="Recent" videos={MY_DEMOS_VIDEOS} />
       <FilterBar filters={filters} actions={filterActions} />
-      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} />
+      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} />
     </>
   )
   if (tab === 'demo-library') return (
     <>
       <VideoCarousel title="Recent" videos={DEMO_LIBRARY_VIDEOS} />
       <FilterBar filters={filters} actions={filterActions} />
-      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} />
+      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} />
     </>
   )
   if (tab === 'favorites') return <div className={styles.empty}><p>No favorites yet.</p></div>
@@ -166,7 +191,7 @@ function TabContent({ tab }: { tab: Tab }) {
 }
 
 type SearchScope = 'everywhere' | 'in-folder'
-interface Filters { types: string[]; creators: string[]; tags: string[]; searchQuery: string; searchScope: SearchScope }
+interface Filters { types: string[]; creators: string[]; tags: string[]; searchQuery: string; searchScope: SearchScope; openFolder: string | null }
 interface FilterActions {
   toggleType: (v: string) => void
   toggleCreator: (v: string) => void
@@ -174,6 +199,8 @@ interface FilterActions {
   clearAll: () => void
   setSearch: (v: string) => void
   setScope: (v: SearchScope) => void
+  openFolder: (name: string) => void
+  closeFolder: () => void
 }
 
 const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
@@ -199,7 +226,9 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
     { label: 'Tags', values: tags, onToggle: actions.toggleTag },
   ]
 
-  const scopeLabel = SCOPE_OPTIONS.find((o) => o.value === searchScope)?.label ?? 'Everywhere'
+  const scopeLabel = filters.openFolder
+    ? `In "${filters.openFolder}"`
+    : (SCOPE_OPTIONS.find((o) => o.value === searchScope)?.label ?? 'Everywhere')
 
   return (
     <div className={styles.filterBar}>
@@ -264,7 +293,7 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
   )
 }
 
-function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
+function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filters; actions: FilterActions }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [favorited, setFavorited] = useState<Set<string>>(new Set())
   const [starred, setStarred] = useState<Set<string>>(new Set())
@@ -273,17 +302,18 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
 
   const q = filters.searchQuery.toLowerCase().trim()
 
-  const filtered = rows.filter((r) => {
+  // Determine which rows are in scope based on openFolder
+  const scopedRows = filters.openFolder
+    ? rows.filter((r) => r.parentFolder === filters.openFolder)
+    : rows.filter((r) => !r.parentFolder)
+
+  const filtered = scopedRows.filter((r) => {
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
     if (filters.creators.length > 0 && !filters.creators.includes(r.creator)) return false
     if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t.toLowerCase()))) return false
     if (q) {
-      if (filters.searchScope === 'in-folder') {
-        if (r.type !== 'Folder' || !r.title.toLowerCase().includes(q)) return false
-      } else {
-        const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
-        if (!haystack.includes(q)) return false
-      }
+      const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
+      if (!haystack.includes(q)) return false
     }
     return true
   })
@@ -324,8 +354,32 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
     else if (pageNumbers[pageNumbers.length - 1] !== '…') pageNumbers.push('…')
   }
 
+  function handleRowClick(row: DemoRow) {
+    if (row.type === 'Folder') {
+      setSelected(new Set())
+      actions.openFolder(row.title)
+    } else {
+      toggleRow(row.id)
+    }
+  }
+
   return (
     <div className={styles.tableSection}>
+      {filters.openFolder && (
+        <div className={styles.folderBreadcrumb}>
+          <button className={styles.breadcrumbBack} onClick={actions.closeFolder}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M9 11L4 7l5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Back
+          </button>
+          <span className={styles.breadcrumbSep}>/</span>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
+          </svg>
+          <span className={styles.breadcrumbFolder}>{filters.openFolder}</span>
+        </div>
+      )}
       {selectedCount > 0 && (
         <div className={styles.floatingBar}>
           <span className={styles.floatingCount}>{selectedCount}</span>
@@ -388,7 +442,7 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
                 const visibleTags = row.tags.slice(0, MAX_VISIBLE_TAGS)
                 const extraTags = row.tags.length - MAX_VISIBLE_TAGS
                 return (
-                  <tr key={row.id} className={`${styles.tr} ${selected.has(row.id) ? styles.trSelected : ''}`} onClick={() => toggleRow(row.id)}>
+                  <tr key={row.id} className={`${styles.tr} ${selected.has(row.id) ? styles.trSelected : ''} ${row.type === 'Folder' ? styles.trFolder : ''}`} onClick={() => handleRowClick(row)}>
                     <td className={styles.tdCheck} onClick={(e) => e.stopPropagation()}>
                       <input type="checkbox" className={styles.checkbox} checked={selected.has(row.id)} onChange={() => toggleRow(row.id)} />
                     </td>
