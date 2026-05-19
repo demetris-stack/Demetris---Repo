@@ -361,7 +361,6 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
               <th className={styles.thIcon} />
               <th className={styles.thIcon} />
               <th className={styles.th}>Title</th>
-              <th className={styles.th}>Folder</th>
               <th className={styles.th}>Type</th>
               <th className={styles.th}>Theme</th>
               <th className={styles.th}>Published</th>
@@ -376,7 +375,7 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
           </thead>
           <tbody>
             {paginated.length === 0 ? (
-              <tr><td colSpan={16} className={styles.tableEmpty}>No results match the selected filters.</td></tr>
+              <tr><td colSpan={15} className={styles.tableEmpty}>No results match the selected filters.</td></tr>
             ) : (
               paginated.map((row) => {
                 const visibleTags = row.tags.slice(0, MAX_VISIBLE_TAGS)
@@ -395,16 +394,20 @@ function DemoTable({ rows, filters }: { rows: DemoRow[]; filters: Filters }) {
                     <td className={styles.tdIcon}>
                       <span className={styles.creatorAvatar} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
                     </td>
-                    <td className={styles.td}><span className={styles.rowTitle}>{row.title}</span></td>
                     <td className={styles.td}>
-                      <span className={styles.folderCell}>
-                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
-                          <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" stroke="#9ca3af" strokeWidth="1.3" strokeLinejoin="round"/>
-                        </svg>
-                        {row.folder}
-                      </span>
+                      <div className={styles.titleCell}>
+                        <span className={styles.rowTitle}>{row.title}</span>
+                        {row.folder && (
+                          <span className={styles.titleFolder}>
+                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                              <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" stroke="#9ca3af" strokeWidth="1.3" strokeLinejoin="round"/>
+                            </svg>
+                            {row.folder}
+                          </span>
+                        )}
+                      </div>
                     </td>
-                    <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>
+                    <td className={styles.td}><span className={styles.typeBadge}>{row.folder ? 'Folder' : row.type}</span></td>
                     <td className={styles.tdMeta}>{row.theme || '—'}</td>
                     <td className={styles.tdMeta}>{row.published || '—'}</td>
                     <td className={styles.td}>
