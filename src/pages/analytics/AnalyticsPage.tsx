@@ -9,7 +9,7 @@ export default function AnalyticsPage() {
         <div className={styles.breadcrumb}>
           <Link to="/menu" className={styles.breadcrumbLink}>Summary</Link>
         </div>
-        <h1 className={styles.title}>Summary Analytics</h1>
+        <h1 className={styles.title}>Analytics</h1>
         <div className={styles.content} />
       </main>
     </div>
