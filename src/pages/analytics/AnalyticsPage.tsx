@@ -20,6 +20,8 @@ export default function AnalyticsPage() {
         <Link to="/menu" className={styles.backLink}>← Back to Menu</Link>
         <h1 className={styles.title}>Analytics</h1>
 
+        <AskInsights />
+
         <nav className={styles.tabs}>
           {TABS.map((tab) => (
             <button
@@ -38,6 +40,75 @@ export default function AnalyticsPage() {
           {activeTab === 'marketing' && <EmptyTab label="Marketing" />}
         </div>
       </main>
+    </div>
+  )
+}
+
+const SUGGESTED_PROMPTS = [
+  'Which accounts have the highest engagement this month?',
+  'Who are the top stakeholders across all deals?',
+  'Which demos are driving the most views?',
+  'Show me deals at risk based on low engagement',
+  'What content is most shared with buyers?',
+  'Which buyers haven\'t opened their links yet?',
+]
+
+function AskInsights() {
+  const [query, setQuery] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  function handleSubmit() {
+    if (query.trim()) setSubmitted(true)
+  }
+
+  function handlePrompt(prompt: string) {
+    setQuery(prompt)
+    setSubmitted(false)
+  }
+
+  return (
+    <div className={styles.askWrap}>
+      <div className={styles.askBox}>
+        <div className={styles.askIcon}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z" stroke="#6366f1" strokeWidth="1.4"/>
+            <path d="M6.5 6.5C6.5 5.67 7.17 5 8 5s1.5.67 1.5 1.5c0 .66-.4 1.22-.98 1.44L8 8.25V9.5" stroke="#6366f1" strokeWidth="1.4" strokeLinecap="round"/>
+            <circle cx="8" cy="11.5" r=".75" fill="#6366f1"/>
+          </svg>
+        </div>
+        <input
+          className={styles.askInput}
+          type="text"
+          placeholder="Ask for insights…"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setSubmitted(false) }}
+          onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+        />
+        {query && (
+          <button className={styles.askClear} onClick={() => { setQuery(''); setSubmitted(false) }}>✕</button>
+        )}
+        <button className={styles.askSubmit} onClick={handleSubmit} disabled={!query.trim()}>
+          Ask
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      {submitted ? (
+        <div className={styles.askResponse}>
+          <span className={styles.askResponseIcon}>✦</span>
+          <span className={styles.askResponseText}>Analyzing your data for: <em>"{query}"</em> — insights will appear here.</span>
+        </div>
+      ) : (
+        <div className={styles.suggestedPrompts}>
+          {SUGGESTED_PROMPTS.map((p) => (
+            <button key={p} className={styles.promptChip} onClick={() => handlePrompt(p)}>
+              {p}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

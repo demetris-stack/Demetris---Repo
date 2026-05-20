@@ -92,6 +92,142 @@
   color: #9ca3af;
 }
 
+/* ── Ask for Insights ────────────────────────────────── */
+.askWrap {
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.askBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid #e0e7ff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.07);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.askBox:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 2px 16px rgba(99,102,241,0.13);
+}
+
+.askIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.askInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #111827;
+  background: transparent;
+  min-width: 0;
+}
+
+.askInput::placeholder {
+  color: #9ca3af;
+}
+
+.askClear {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color .12s;
+}
+
+.askClear:hover {
+  color: #374151;
+}
+
+.askSubmit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .15s, opacity .15s;
+}
+
+.askSubmit:hover {
+  background: #4f46e5;
+}
+
+.askSubmit:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.askResponse {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f5f3ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.askResponseIcon {
+  color: #6366f1;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.askResponseText em {
+  color: #6366f1;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.suggestedPrompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.promptChip {
+  padding: 6px 13px;
+  background: #f5f3ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 99px;
+  font-size: 12.5px;
+  color: #4f46e5;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.promptChip:hover {
+  background: #ede9fe;
+  border-color: #c4b5fd;
+}
+
 /* ── Tabs ────────────────────────────────────────────── */
 .tabs {
   display: flex;
