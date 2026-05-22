@@ -119,13 +119,36 @@ const DEMO_LIBRARY_ROWS: DemoRow[] = [
   { id: 'l19', title: 'Event Booth Demo', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'enterprise'], freshness: 12, usage: 176, created: '03/12/26', modified: '05/05/26', duration: '4:25', parentFolder: 'Marketing' },
 ]
 
-const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar']
-const CREATOR_OPTIONS = ['Alex Morgan', 'Jamie Lee', 'Sam Rivera', 'Taylor Kim', 'Jordan Park']
+const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar', 'Sim', 'Tour', 'Video']
+const CREATOR_OPTIONS = ['Alex', 'Jamie', 'Sam', 'Taylor', 'Jordan']
 const TAG_OPTIONS = [
   'Onboarding', 'Product', 'Sales', 'API', 'Security', 'Mobile', 'Enterprise', 'Admin',
   'Reporting', 'Analytics', 'Compliance', 'Marketing', 'Engineering', 'Integrations',
   'Getting Started', 'Advanced', 'Partner', 'Webinar', 'Demo', 'Tutorial',
 ]
+const DURATION_OPTIONS = ['Short (< 5 min)', 'Medium (5–15 min)', 'Long (> 15 min)']
+const FRESHNESS_OPTIONS = ['High (> 70%)', 'Medium (30–70%)', 'Low (< 30%)']
+const PUBLISHED_OPTIONS = ['Published', 'Draft', 'Archived', 'Scheduled']
+const THEME_OPTIONS = ['Light', 'Dark', 'Custom', 'Default', 'Minimal']
+
+function parseDurationMins(d: string): number {
+  if (!d || d === '—') return 0
+  const parts = d.split(':')
+  return parts.length === 2 ? parseInt(parts[0]) + parseInt(parts[1]) / 60 : 0
+}
+function matchesDurationBucket(duration: string, bucket: string): boolean {
+  const m = parseDurationMins(duration)
+  if (bucket === 'Short (< 5 min)') return m > 0 && m < 5
+  if (bucket === 'Medium (5–15 min)') return m >= 5 && m <= 15
+  if (bucket === 'Long (> 15 min)') return m > 15
+  return false
+}
+function matchesFreshnessBucket(freshness: number, bucket: string): boolean {
+  if (bucket === 'High (> 70%)') return freshness > 70
+  if (bucket === 'Medium (30–70%)') return freshness >= 30 && freshness <= 70
+  if (bucket === 'Low (< 30%)') return freshness < 30
+  return false
+}
 
 export default function DemoLibraryPage() {
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
@@ -169,15 +192,25 @@ function TabContent({ tab }: { tab: Tab }) {
   const [types, setTypes] = useState<string[]>([])
   const [creators, setCreators] = useState<string[]>([])
   const [tags, setTags] = useState<string[]>([])
+  const [durationBuckets, setDurationBuckets] = useState<string[]>([])
+  const [freshnessBuckets, setFreshnessBuckets] = useState<string[]>([])
+  const [publishedStatuses, setPublishedStatuses] = useState<string[]>([])
+  const [themes, setThemes] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchScope, setSearchScope] = useState<SearchScope>('everywhere')
   const [openFolderName, setOpenFolderName] = useState<string | null>(null)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   function toggle(list: string[], setList: (v: string[]) => void, val: string) {
     setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
   }
 
-  function clearAll() { setTypes([]); setCreators([]); setTags([]); setSearchQuery(''); setSearchScope('everywhere') }
+  function clearAll() {
+    setTypes([]); setCreators([]); setTags([])
+    setDurationBuckets([]); setFreshnessBuckets([])
+    setPublishedStatuses([]); setThemes([])
+    setSearchQuery(''); setSearchScope('everywhere')
+  }
 
   function handleOpenFolder(name: string) {
     setOpenFolderName(name)
@@ -191,11 +224,18 @@ function TabContent({ tab }: { tab: Tab }) {
     setSearchScope('everywhere')
   }
 
-  const filters: Filters = { types, creators, tags, searchQuery, searchScope, openFolder: openFolderName }
+  const filters: Filters = {
+    types, creators, tags, durationBuckets, freshnessBuckets, publishedStatuses, themes,
+    searchQuery, searchScope, openFolder: openFolderName,
+  }
   const filterActions: FilterActions = {
-    toggleType: (v: string) => toggle(types, setTypes, v),
-    toggleCreator: (v: string) => toggle(creators, setCreators, v),
-    toggleTag: (v: string) => toggle(tags, setTags, v),
+    toggleType: (v) => toggle(types, setTypes, v),
+    toggleCreator: (v) => toggle(creators, setCreators, v),
+    toggleTag: (v) => toggle(tags, setTags, v),
+    toggleDurationBucket: (v) => toggle(durationBuckets, setDurationBuckets, v),
+    toggleFreshnessBucket: (v) => toggle(freshnessBuckets, setFreshnessBuckets, v),
+    togglePublishedStatus: (v) => toggle(publishedStatuses, setPublishedStatuses, v),
+    toggleTheme: (v) => toggle(themes, setThemes, v),
     clearAll,
     setSearch: setSearchQuery,
     setScope: setSearchScope,
@@ -203,30 +243,47 @@ function TabContent({ tab }: { tab: Tab }) {
     closeFolder: handleCloseFolder,
   }
 
-  if (tab === 'my-demos') return (
+  const content = tab === 'my-demos' ? (
     <>
       <VideoCarousel title="Recent" videos={MY_DEMOS_VIDEOS} />
-      <FilterBar filters={filters} actions={filterActions} />
+      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
       <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} />
     </>
-  )
-  if (tab === 'demo-library') return (
+  ) : tab === 'demo-library' ? (
     <>
       <VideoCarousel title="Recent" videos={DEMO_LIBRARY_VIDEOS} />
-      <FilterBar filters={filters} actions={filterActions} />
+      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
       <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} />
     </>
+  ) : tab === 'favorites' ? (
+    <div className={styles.empty}><p>No favorites yet.</p></div>
+  ) : (
+    <div className={styles.empty}><p>No promoted content.</p></div>
   )
-  if (tab === 'favorites') return <div className={styles.empty}><p>No favorites yet.</p></div>
-  return <div className={styles.empty}><p>No promoted content.</p></div>
+
+  return (
+    <>
+      {content}
+      <FilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} filters={filters} actions={filterActions} />
+    </>
+  )
 }
 
 type SearchScope = 'everywhere' | 'in-folder'
-interface Filters { types: string[]; creators: string[]; tags: string[]; searchQuery: string; searchScope: SearchScope; openFolder: string | null }
+interface Filters {
+  types: string[]; creators: string[]; tags: string[]
+  durationBuckets: string[]; freshnessBuckets: string[]
+  publishedStatuses: string[]; themes: string[]
+  searchQuery: string; searchScope: SearchScope; openFolder: string | null
+}
 interface FilterActions {
   toggleType: (v: string) => void
   toggleCreator: (v: string) => void
   toggleTag: (v: string) => void
+  toggleDurationBucket: (v: string) => void
+  toggleFreshnessBucket: (v: string) => void
+  togglePublishedStatus: (v: string) => void
+  toggleTheme: (v: string) => void
   clearAll: () => void
   setSearch: (v: string) => void
   setScope: (v: SearchScope) => void
@@ -239,9 +296,11 @@ const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
   { value: 'in-folder', label: 'In Folder' },
 ]
 
-function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActions }) {
-  const { types, creators, tags, searchQuery, searchScope } = filters
+function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actions: FilterActions; onOpenDrawer: () => void }) {
+  const { types, creators, tags, durationBuckets, freshnessBuckets, publishedStatuses, themes, searchQuery, searchScope } = filters
   const totalApplied = types.length + creators.length + tags.length
+  const totalExtra = durationBuckets.length + freshnessBuckets.length + publishedStatuses.length + themes.length
+  const totalAll = totalApplied + totalExtra
   const [scopeOpen, setScopeOpen] = useState(false)
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
   const scopeRef = useRef<HTMLDivElement>(null)
@@ -279,7 +338,10 @@ function FilterBar({ filters, actions }: { filters: Filters; actions: FilterActi
         <FilterDropdown label="Type" icon={<CircleIcon />} options={TYPE_OPTIONS} selected={types} onToggle={actions.toggleType} />
         <FilterDropdown label="Creator" icon={<PersonIcon />} options={CREATOR_OPTIONS} selected={creators} onToggle={actions.toggleCreator} />
         <FilterDropdown label="Tags" icon={<TagIcon />} options={TAG_OPTIONS} selected={tags} onToggle={actions.toggleTag} />
-        <button className={styles.filterBtn}><FunnelIcon />All Filters</button>
+        <button className={`${styles.filterBtn} ${totalExtra > 0 ? styles.filterBtnActive : ''}`} onClick={onOpenDrawer}>
+          <FunnelIcon />All Filters
+          {totalAll > 0 && <span className={styles.filterCount}>{totalAll}</span>}
+        </button>
       </div>
       <div className={styles.filterRight}>
         <div className={styles.scopeWrap} ref={scopeRef}>
@@ -385,6 +447,8 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
     if (filters.creators.length > 0 && !filters.creators.includes(r.creator)) return false
     if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t.toLowerCase()))) return false
+    if (filters.durationBuckets.length > 0 && !filters.durationBuckets.some((b) => matchesDurationBucket(r.duration, b))) return false
+    if (filters.freshnessBuckets.length > 0 && !filters.freshnessBuckets.some((b) => matchesFreshnessBucket(r.freshness, b))) return false
     if (q) {
       const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
       if (!haystack.includes(q)) return false
@@ -806,4 +870,152 @@ function TagIcon() {
 }
 function FunnelIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+}
+function ClockIcon() {
+  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M7 4v3.5l2.5 1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+}
+function SparkleIcon() {
+  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.3 3.7L12 7l-3.7 1.3L7 13l-1.3-3.7L2 7l3.7-1.3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>
+}
+function PublishedIcon() {
+  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.4"/><path d="M4 7l2.5 2.5L10 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+}
+function ThemeIcon() {
+  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M7 1.5v11M1.5 7h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+}
+
+/* ── Drawer Section ─────────────────────────────────── */
+interface DrawerSectionProps {
+  label: string
+  icon: React.ReactNode
+  options: string[]
+  selected: string[]
+  onToggle: (v: string) => void
+}
+
+function DrawerSection({ label, icon, options, selected, onToggle }: DrawerSectionProps) {
+  const [expanded, setExpanded] = useState(true)
+  const [search, setSearch] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const filteredOpts = search.trim()
+    ? options.filter((o) => o.toLowerCase().includes(search.toLowerCase()))
+    : options
+
+  return (
+    <div className={styles.drawerSection}>
+      <button className={styles.drawerSectionHeader} onClick={() => setExpanded((e) => !e)}>
+        <span className={styles.drawerSectionIcon}>{icon}</span>
+        <span className={styles.drawerSectionName}>{label}</span>
+        {selected.length > 0 && <span className={styles.drawerSectionCount}>{selected.length}</span>}
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 'auto', flexShrink: 0 }}>
+          <path d={expanded ? 'M2 8l4-4 4 4' : 'M2 4l4 4 4-4'} stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {expanded && (
+        <div className={styles.drawerSectionBody}>
+          <div className={styles.drawerSectionSearch}>
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, color: '#9ca3af' }}>
+              <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.4"/>
+              <path d="M9.5 9.5l2.5 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            <input
+              ref={inputRef}
+              className={styles.drawerSectionSearchInput}
+              type="text"
+              placeholder={`Search ${label.toLowerCase()}…`}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {search && (
+              <button className={styles.drawerSectionSearchClear} onClick={() => { setSearch(''); inputRef.current?.focus() }}>✕</button>
+            )}
+          </div>
+          <div className={styles.drawerSectionOptions}>
+            {filteredOpts.length === 0 ? (
+              <div className={styles.drawerSectionEmpty}>No results</div>
+            ) : (
+              filteredOpts.map((opt) => (
+                <label key={opt} className={styles.drawerSectionItem}>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    checked={selected.includes(opt)}
+                    onChange={() => onToggle(opt)}
+                  />
+                  <span className={styles.drawerSectionItemLabel}>{opt}</span>
+                </label>
+              ))
+            )}
+          </div>
+          {selected.length > 0 && (
+            <button className={styles.drawerSectionClear} onClick={() => selected.forEach(onToggle)}>
+              Clear {label.toLowerCase()}
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ── Filter Drawer ──────────────────────────────────── */
+function FilterDrawer({ open, onClose, filters, actions }: {
+  open: boolean
+  onClose: () => void
+  filters: Filters
+  actions: FilterActions
+}) {
+  useEffect(() => {
+    function h(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
+    if (open) document.addEventListener('keydown', h)
+    return () => document.removeEventListener('keydown', h)
+  }, [open, onClose])
+
+  const totalActive =
+    filters.types.length + filters.creators.length + filters.tags.length +
+    filters.durationBuckets.length + filters.freshnessBuckets.length +
+    filters.publishedStatuses.length + filters.themes.length
+
+  return (
+    <>
+      <div
+        className={`${styles.drawerOverlay} ${open ? styles.drawerOverlayVisible : ''}`}
+        onClick={onClose}
+      />
+      <div className={`${styles.drawer} ${open ? styles.drawerOpen : ''}`}>
+        <div className={styles.drawerHeader}>
+          <span className={styles.drawerTitle}>All Filters</span>
+          {totalActive > 0 && <span className={styles.drawerBadge}>{totalActive}</span>}
+          <div style={{ flex: 1 }} />
+          {totalActive > 0 && (
+            <button className={styles.drawerClearAll} onClick={actions.clearAll}>Clear all</button>
+          )}
+          <button className={styles.drawerClose} onClick={onClose}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles.drawerBody}>
+          <div className={styles.drawerGroupLabel}>Page Filters</div>
+          <DrawerSection label="Type" icon={<CircleIcon />} options={TYPE_OPTIONS} selected={filters.types} onToggle={actions.toggleType} />
+          <DrawerSection label="Creator" icon={<PersonIcon />} options={CREATOR_OPTIONS} selected={filters.creators} onToggle={actions.toggleCreator} />
+          <DrawerSection label="Tags" icon={<TagIcon />} options={TAG_OPTIONS} selected={filters.tags} onToggle={actions.toggleTag} />
+
+          <div className={styles.drawerDivider} />
+          <div className={styles.drawerGroupLabel}>Extra Filters</div>
+          <DrawerSection label="Duration" icon={<ClockIcon />} options={DURATION_OPTIONS} selected={filters.durationBuckets} onToggle={actions.toggleDurationBucket} />
+          <DrawerSection label="Freshness" icon={<SparkleIcon />} options={FRESHNESS_OPTIONS} selected={filters.freshnessBuckets} onToggle={actions.toggleFreshnessBucket} />
+          <DrawerSection label="Published Status" icon={<PublishedIcon />} options={PUBLISHED_OPTIONS} selected={filters.publishedStatuses} onToggle={actions.togglePublishedStatus} />
+          <DrawerSection label="Theme" icon={<ThemeIcon />} options={THEME_OPTIONS} selected={filters.themes} onToggle={actions.toggleTheme} />
+        </div>
+
+        <div className={styles.drawerFooter}>
+          <button className={styles.drawerDoneBtn} onClick={onClose}>Done</button>
+        </div>
+      </div>
+    </>
+  )
 }
