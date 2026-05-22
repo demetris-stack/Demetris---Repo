@@ -655,15 +655,36 @@ interface FilterDropdownProps { label: string; icon: React.ReactNode; options: s
 
 function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDropdownProps) {
   const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const ref = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
-    function h(e: MouseEvent) { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false) }
+    function h(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false)
+        setSearch('')
+      }
+    }
     document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
   }, [])
+
+  function handleOpen() {
+    setOpen((o) => {
+      if (!o) setTimeout(() => inputRef.current?.focus(), 0)
+      else setSearch('')
+      return !o
+    })
+  }
+
+  const filtered = search.trim()
+    ? options.filter((o) => o.toLowerCase().includes(search.toLowerCase()))
+    : options
+
   return (
     <div className={styles.dropdownWrap} ref={ref}>
-      <button className={`${styles.filterBtn} ${selected.length > 0 ? styles.filterBtnActive : ''}`} onClick={() => setOpen((o) => !o)}>
+      <button className={`${styles.filterBtn} ${selected.length > 0 ? styles.filterBtnActive : ''}`} onClick={handleOpen}>
         {icon}{label}
         {selected.length > 0 && <span className={styles.filterCount}>{selected.length}</span>}
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 2 }}>
@@ -672,13 +693,40 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
       </button>
       {open && (
         <div className={styles.dropdown}>
-          {options.map((opt) => (
-            <label key={opt} className={styles.dropdownItem}>
-              <input type="checkbox" className={styles.checkbox} checked={selected.includes(opt)} onChange={() => onToggle(opt)} />
-              <span className={styles.dropdownLabel}>{opt}</span>
-            </label>
-          ))}
-          {selected.length > 0 && <button className={styles.clearBtn} onClick={() => selected.forEach(onToggle)}>Clear</button>}
+          <div className={styles.dropdownSearch}>
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.dropdownSearchIcon}>
+              <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
+              <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
+            </svg>
+            <input
+              ref={inputRef}
+              className={styles.dropdownSearchInput}
+              type="text"
+              placeholder={`Search ${label.toLowerCase()}…`}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {search && (
+              <button className={styles.dropdownSearchClear} onClick={() => setSearch('')}>✕</button>
+            )}
+          </div>
+          <div className={styles.dropdownOptions}>
+            {filtered.length === 0 ? (
+              <div className={styles.dropdownEmpty}>No results</div>
+            ) : (
+              filtered.map((opt) => (
+                <label key={opt} className={styles.dropdownItem}>
+                  <input type="checkbox" className={styles.checkbox} checked={selected.includes(opt)} onChange={() => onToggle(opt)} />
+                  <span className={styles.dropdownLabel}>{opt}</span>
+                </label>
+              ))
+            )}
+          </div>
+          {selected.length > 0 && (
+            <div className={styles.dropdownFooter}>
+              <button className={styles.clearBtn} onClick={() => selected.forEach(onToggle)}>Clear all</button>
+            </div>
+          )}
         </div>
       )}
     </div>
