@@ -298,9 +298,10 @@ const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
 
 function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actions: FilterActions; onOpenDrawer: () => void }) {
   const { types, creators, tags, durationBuckets, freshnessBuckets, publishedStatuses, themes, searchQuery, searchScope } = filters
-  const totalApplied = types.length + creators.length + tags.length
+  const totalApplied = types.length + creators.length + tags.length +
+    durationBuckets.length + freshnessBuckets.length + publishedStatuses.length + themes.length
   const totalExtra = durationBuckets.length + freshnessBuckets.length + publishedStatuses.length + themes.length
-  const totalAll = totalApplied + totalExtra
+  const totalAll = totalApplied
   const [scopeOpen, setScopeOpen] = useState(false)
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
   const scopeRef = useRef<HTMLDivElement>(null)
@@ -325,6 +326,10 @@ function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actio
     { label: 'Type', values: types, onToggle: actions.toggleType },
     { label: 'Creator', values: creators, onToggle: actions.toggleCreator },
     { label: 'Tags', values: tags, onToggle: actions.toggleTag },
+    { label: 'Duration', values: filters.durationBuckets, onToggle: actions.toggleDurationBucket },
+    { label: 'Freshness', values: filters.freshnessBuckets, onToggle: actions.toggleFreshnessBucket },
+    { label: 'Published Status', values: filters.publishedStatuses, onToggle: actions.togglePublishedStatus },
+    { label: 'Theme', values: filters.themes, onToggle: actions.toggleTheme },
   ]
 
   const scopeLabel = filters.openFolder
