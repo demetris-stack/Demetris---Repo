@@ -127,6 +127,69 @@ const TAG_OPTIONS = [
   'Getting Started', 'Advanced', 'Partner', 'Webinar', 'Demo', 'Tutorial',
 ]
 const DURATION_OPTIONS = ['Short (< 5 min)', 'Medium (5–15 min)', 'Long (> 15 min)']
+
+/* ── Change history mock data ───────────────────────── */
+interface HistoryEvent {
+  id: string
+  date: string
+  actor: string
+  actorInitials: string
+  actorColor: string
+  type: 'edit' | 'publish' | 'add' | 'remove' | 'rename' | 'tag' | 'create'
+  description: string
+  detail?: string
+}
+
+const HISTORY_DATA: Record<string, HistoryEvent[]> = {
+  // Folders
+  'r0a': [
+    { id: 'h1', date: 'May 10, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'add', description: 'Added "Account Setup Tour" to folder', detail: 'Moved from root' },
+    { id: 'h2', date: 'Apr 28, 2026', actor: 'Jordan', actorInitials: 'JP', actorColor: '#b45309', type: 'add', description: 'Added "Welcome Webinar Replay" to folder' },
+    { id: 'h3', date: 'Apr 10, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'add', description: 'Added "Mobile Walkthrough" to folder' },
+    { id: 'h4', date: 'Mar 18, 2026', actor: 'Taylor', actorInitials: 'TK', actorColor: '#0369a1', type: 'add', description: 'Added "First Login Experience" to folder' },
+    { id: 'h5', date: 'Mar 05, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'create', description: 'Created folder "Onboarding"' },
+  ],
+  'r0b': [
+    { id: 'h1', date: 'May 07, 2026', actor: 'Sam', actorInitials: 'SR', actorColor: '#7c3aed', type: 'add', description: 'Added "Workspace Customization" to folder' },
+    { id: 'h2', date: 'Apr 30, 2026', actor: 'Jamie', actorInitials: 'JL', actorColor: '#1d4ed8', type: 'add', description: 'Added "Dashboard Overview" to folder' },
+    { id: 'h3', date: 'Apr 01, 2026', actor: 'Jordan', actorInitials: 'JP', actorColor: '#b45309', type: 'add', description: 'Added "Reporting Module Tour" to folder' },
+    { id: 'h4', date: 'Mar 22, 2026', actor: 'Jamie', actorInitials: 'JL', actorColor: '#1d4ed8', type: 'create', description: 'Created folder "Product"' },
+  ],
+  // Demos / other types
+  'r1': [
+    { id: 'h1', date: 'May 10, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'edit', description: 'Updated slide 4 — revised CTA copy', detail: '"Get started" → "Start free trial"' },
+    { id: 'h2', date: 'May 02, 2026', actor: 'Taylor', actorInitials: 'TK', actorColor: '#0369a1', type: 'tag', description: 'Added tag "product"' },
+    { id: 'h3', date: 'Apr 22, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'publish', description: 'Published demo', detail: 'Visibility set to Public' },
+    { id: 'h4', date: 'Apr 18, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'create', description: 'Created demo' },
+  ],
+  'r2': [
+    { id: 'h1', date: 'Apr 30, 2026', actor: 'Jamie', actorInitials: 'JL', actorColor: '#1d4ed8', type: 'edit', description: 'Replaced hero screenshot on slide 1' },
+    { id: 'h2', date: 'Apr 15, 2026', actor: 'Sam', actorInitials: 'SR', actorColor: '#7c3aed', type: 'tag', description: 'Added tags "sales", "product"' },
+    { id: 'h3', date: 'Mar 22, 2026', actor: 'Jamie', actorInitials: 'JL', actorColor: '#1d4ed8', type: 'create', description: 'Created demo' },
+  ],
+  'r3': [
+    { id: 'h1', date: 'May 01, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'edit', description: 'Added 3 new slides covering retention metrics' },
+    { id: 'h2', date: 'Apr 20, 2026', actor: 'Jordan', actorInitials: 'JP', actorColor: '#b45309', type: 'edit', description: 'Updated chart data on slides 6–8' },
+    { id: 'h3', date: 'Mar 14, 2026', actor: 'Alex', actorInitials: 'AM', actorColor: '#374151', type: 'create', description: 'Created demo' },
+  ],
+  'r4': [
+    { id: 'h1', date: 'May 08, 2026', actor: 'Sam', actorInitials: 'SR', actorColor: '#7c3aed', type: 'edit', description: 'Updated permission matrix screenshot' },
+    { id: 'h2', date: 'Apr 25, 2026', actor: 'Sam', actorInitials: 'SR', actorColor: '#7c3aed', type: 'publish', description: 'Published demo' },
+    { id: 'h3', date: 'Apr 05, 2026', actor: 'Sam', actorInitials: 'SR', actorColor: '#7c3aed', type: 'create', description: 'Created demo' },
+  ],
+  'r5': [
+    { id: 'h1', date: 'Apr 15, 2026', actor: 'Taylor', actorInitials: 'TK', actorColor: '#0369a1', type: 'edit', description: 'Refreshed API code snippet examples' },
+    { id: 'h2', date: 'Mar 10, 2026', actor: 'Taylor', actorInitials: 'TK', actorColor: '#0369a1', type: 'rename', description: 'Renamed demo', detail: '"API Integration" → "Integrations Setup"' },
+    { id: 'h3', date: 'Feb 28, 2026', actor: 'Taylor', actorInitials: 'TK', actorColor: '#0369a1', type: 'create', description: 'Created demo' },
+  ],
+}
+
+function getHistory(row: DemoRow): HistoryEvent[] {
+  return HISTORY_DATA[row.id] ?? [
+    { id: 'h1', date: row.modified, actor: row.creator, actorInitials: row.creatorInitials, actorColor: row.creatorColor, type: 'edit', description: 'Last modified' },
+    { id: 'h2', date: row.created, actor: row.creator, actorInitials: row.creatorInitials, actorColor: row.creatorColor, type: 'create', description: row.type === 'Folder' ? 'Created folder' : 'Created demo' },
+  ]
+}
 const FRESHNESS_OPTIONS = ['High (> 70%)', 'Medium (30–70%)', 'Low (< 30%)']
 const PUBLISHED_OPTIONS = ['Published', 'Draft', 'Archived', 'Scheduled']
 const THEME_OPTIONS = ['Light', 'Dark', 'Custom', 'Default', 'Minimal']
@@ -440,6 +503,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
   const [starred, setStarred] = useState<Set<string>>(new Set())
   const [pageSize, setPageSize] = useState(10)
   const [page, setPage] = useState(1)
+  const [historyRow, setHistoryRow] = useState<DemoRow | null>(null)
 
   const q = filters.searchQuery.toLowerCase().trim()
 
@@ -627,7 +691,14 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                     </td>
                     <td className={styles.tdMeta}>{row.usage}</td>
                     <td className={styles.tdMeta}>{row.created}</td>
-                    <td className={styles.tdMeta}>{row.modified}</td>
+                    <td className={styles.tdMeta} onClick={(e) => e.stopPropagation()}>
+                      <button
+                        className={styles.modifiedLink}
+                        onClick={() => setHistoryRow(row)}
+                      >
+                        {row.modified}
+                      </button>
+                    </td>
                     <td className={styles.td}>
                       <div className={styles.creatorCell}>
                         <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
@@ -668,6 +739,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
           <button className={styles.pageBtn} onClick={() => setPage(totalPages)} disabled={safePage === totalPages}>»</button>
         </div>
       </div>
+      <HistoryDrawer row={historyRow} onClose={() => setHistoryRow(null)} />
     </div>
   )
 }
@@ -861,6 +933,118 @@ function Sidebar() {
         {[...Array(3)].map((_, i) => <div key={i} className={styles.navItem} />)}
       </div>
     </aside>
+  )
+}
+
+/* ── History Drawer ─────────────────────────────────── */
+const EVENT_LABELS: Record<HistoryEvent['type'], string> = {
+  edit: 'Edited',
+  publish: 'Published',
+  add: 'Content added',
+  remove: 'Content removed',
+  rename: 'Renamed',
+  tag: 'Tags updated',
+  create: 'Created',
+}
+const EVENT_COLORS: Record<HistoryEvent['type'], string> = {
+  edit: '#6b7280',
+  publish: '#059669',
+  add: '#2563eb',
+  remove: '#dc2626',
+  rename: '#7c3aed',
+  tag: '#b45309',
+  create: '#374151',
+}
+
+function HistoryDrawer({ row, onClose }: { row: DemoRow | null; onClose: () => void }) {
+  const open = row !== null
+
+  useEffect(() => {
+    function h(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
+    if (open) document.addEventListener('keydown', h)
+    return () => document.removeEventListener('keydown', h)
+  }, [open, onClose])
+
+  const events = row ? getHistory(row) : []
+  const isFolder = row?.type === 'Folder'
+
+  return (
+    <>
+      <div
+        className={`${styles.drawerOverlay} ${open ? styles.drawerOverlayVisible : ''}`}
+        onClick={onClose}
+      />
+      <div className={`${styles.drawer} ${open ? styles.drawerOpen : ''}`}>
+        {row && (
+          <>
+            <div className={styles.drawerHeader}>
+              <div className={styles.historyHeaderLeft}>
+                <div className={styles.historyTitle}>
+                  {isFolder && (
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                      <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                  <span>{row.title}</span>
+                </div>
+                <div className={styles.historySubtitle}>
+                  {isFolder ? 'Folder activity' : `${row.type} · Change history`}
+                </div>
+              </div>
+              <button className={styles.drawerClose} onClick={onClose}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <div className={styles.drawerBody}>
+              <div className={styles.historyTimeline}>
+                {events.map((evt, i) => (
+                  <div key={evt.id} className={styles.historyItem}>
+                    <div className={styles.historyLineCol}>
+                      <div
+                        className={styles.historyDot}
+                        style={{ background: EVENT_COLORS[evt.type] }}
+                      />
+                      {i < events.length - 1 && <div className={styles.historyLine} />}
+                    </div>
+                    <div className={styles.historyContent}>
+                      <div className={styles.historyEventRow}>
+                        <span
+                          className={styles.historyEventType}
+                          style={{ color: EVENT_COLORS[evt.type] }}
+                        >
+                          {EVENT_LABELS[evt.type]}
+                        </span>
+                        <span className={styles.historyDate}>{evt.date}</span>
+                      </div>
+                      <div className={styles.historyDescription}>{evt.description}</div>
+                      {evt.detail && (
+                        <div className={styles.historyDetail}>{evt.detail}</div>
+                      )}
+                      <div className={styles.historyActor}>
+                        <span
+                          className={styles.historyAvatar}
+                          style={{ background: evt.actorColor }}
+                        >
+                          {evt.actorInitials}
+                        </span>
+                        <span className={styles.historyActorName}>{evt.actor}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.drawerFooter}>
+              <button className={styles.drawerDoneBtn} onClick={onClose}>Close</button>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   )
 }
 
