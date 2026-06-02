@@ -1000,10 +1000,15 @@
   left: 50%;
   transform: translateX(-50%);
   width: 220px;
+  min-width: 220px;
+  max-width: 220px;
   background: #1f2937;
   color: #f9fafb;
   border-radius: 8px;
   padding: 10px 12px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   z-index: 300;
   pointer-events: none;
@@ -1028,6 +1033,9 @@
   color: #d1d5db;
   line-height: 1.5;
   margin-bottom: 8px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .infoTooltipScale {
   display: flex;
