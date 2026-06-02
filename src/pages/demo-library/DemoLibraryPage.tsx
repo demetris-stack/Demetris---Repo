@@ -633,7 +633,27 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
               <th className={styles.th}>Theme</th>
               <th className={styles.th}>Published</th>
               <th className={styles.th}>Tags</th>
-              <th className={styles.th}>Freshness</th>
+              <th className={styles.th}>
+                <div className={styles.thWithInfo}>
+                  Freshness
+                  <span className={styles.infoIconWrap}>
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
+                      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                      <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                      <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
+                    </svg>
+                    <div className={styles.infoTooltip}>
+                      <div className={styles.infoTooltipTitle}>Freshness Score</div>
+                      <div className={styles.infoTooltipBody}>Measures how up-to-date a demo's content is based on last edit, screenshot age, and link validity.</div>
+                      <div className={styles.infoTooltipScale}>
+                        <span className={styles.infoScaleHigh}>● High &gt;70%</span>
+                        <span className={styles.infoScaleMid}>● Medium 30–70%</span>
+                        <span className={styles.infoScaleLow}>● Low &lt;30%</span>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </th>
               <th className={styles.th}>Usage</th>
               <th className={styles.th}>Created ↓</th>
               <th className={styles.th}>Modified</th>
@@ -684,9 +704,37 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                     <td className={styles.td}>
                       <div className={styles.freshnessCell}>
                         <div className={styles.freshnessBar}>
-                          <div className={styles.freshnessFill} style={{ width: `${Math.min(row.freshness * 6, 100)}%` }} />
+                          <div
+                            className={styles.freshnessFill}
+                            style={{
+                              width: `${Math.min(row.freshness * 6, 100)}%`,
+                              background: row.freshness > 70 ? '#059669' : row.freshness >= 30 ? '#b45309' : '#dc2626',
+                            }}
+                          />
                         </div>
                         <span className={styles.freshnessPct}>{row.freshness}%</span>
+                        <span className={styles.infoIconWrap}>
+                          <svg width="11" height="11" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
+                            <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                            <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                            <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
+                          </svg>
+                          <div className={`${styles.infoTooltip} ${styles.infoTooltipLeft}`}>
+                            <div className={styles.infoTooltipTitle}>Freshness Score</div>
+                            <div className={styles.infoTooltipBody}>
+                              {row.freshness > 70
+                                ? 'Content is up-to-date. Screenshots, links, and copy are current.'
+                                : row.freshness >= 30
+                                ? 'Some content may be stale. Consider reviewing screenshots or copy.'
+                                : 'Content is outdated. A full review is recommended.'}
+                            </div>
+                            <div className={styles.infoTooltipScale}>
+                              <span className={`${styles.infoScaleHigh} ${row.freshness > 70 ? styles.infoScaleActive : ''}`}>● High &gt;70%</span>
+                              <span className={`${styles.infoScaleMid} ${row.freshness >= 30 && row.freshness <= 70 ? styles.infoScaleActive : ''}`}>● Mid 30–70%</span>
+                              <span className={`${styles.infoScaleLow} ${row.freshness < 30 ? styles.infoScaleActive : ''}`}>● Low &lt;30%</span>
+                            </div>
+                          </div>
+                        </span>
                       </div>
                     </td>
                     <td className={styles.tdMeta}>{row.usage}</td>
