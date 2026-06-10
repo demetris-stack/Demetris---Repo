@@ -1131,7 +1131,7 @@ interface DrawerSectionProps {
 }
 
 function DrawerSection({ label, icon, options, selected, onToggle }: DrawerSectionProps) {
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
