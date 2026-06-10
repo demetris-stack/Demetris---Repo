@@ -504,6 +504,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
   const [pageSize, setPageSize] = useState(10)
   const [page, setPage] = useState(1)
   const [historyRow, setHistoryRow] = useState<DemoRow | null>(null)
+  const [viewMode, setViewMode] = useState<'table' | 'tile'>('table')
 
   const q = filters.searchQuery.toLowerCase().trim()
 
@@ -572,21 +573,51 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
 
   return (
     <div className={styles.tableSection}>
-      {filters.openFolder && (
-        <div className={styles.folderBreadcrumb}>
-          <button className={styles.breadcrumbBack} onClick={actions.closeFolder}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M9 11L4 7l5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Back
-          </button>
-          <span className={styles.breadcrumbSep}>/</span>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-            <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
-          </svg>
-          <span className={styles.breadcrumbFolder}>{filters.openFolder}</span>
+      <div className={styles.tableToolbar}>
+        <div className={styles.toolbarLeft}>
+          {filters.openFolder && (
+            <div className={styles.folderBreadcrumb} style={{ margin: 0 }}>
+              <button className={styles.breadcrumbBack} onClick={actions.closeFolder}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M9 11L4 7l5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Back
+              </button>
+              <span className={styles.breadcrumbSep}>/</span>
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
+              </svg>
+              <span className={styles.breadcrumbFolder}>{filters.openFolder}</span>
+            </div>
+          )}
         </div>
-      )}
+        <div className={styles.viewToggle}>
+          <button
+            className={`${styles.viewBtn} ${viewMode === 'table' ? styles.viewBtnActive : ''}`}
+            onClick={() => setViewMode('table')}
+            title="Table view"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="1" width="12" height="2.5" rx="1" fill="currentColor"/>
+              <rect x="1" y="5.5" width="12" height="2.5" rx="1" fill="currentColor"/>
+              <rect x="1" y="10" width="12" height="2.5" rx="1" fill="currentColor"/>
+            </svg>
+          </button>
+          <button
+            className={`${styles.viewBtn} ${viewMode === 'tile' ? styles.viewBtnActive : ''}`}
+            onClick={() => setViewMode('tile')}
+            title="Tile view"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+              <rect x="7.5" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+              <rect x="1" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+              <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       {selectedCount > 0 && (
         <div className={styles.floatingBar}>
           <span className={styles.floatingCount}>{selectedCount}</span>
@@ -616,7 +647,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
           <button className={styles.floatingClose} onClick={() => setSelected(new Set())}>✕</button>
         </div>
       )}
-      <div className={styles.tableWrap}>
+      {viewMode === 'table' && <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -760,7 +791,79 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
             )}
           </tbody>
         </table>
-      </div>
+      </div>}
+
+      {viewMode === 'tile' && (
+        <div className={styles.tileGrid}>
+          {paginated.length === 0 ? (
+            <div className={styles.tableEmpty} style={{ gridColumn: '1 / -1' }}>No results match the selected filters.</div>
+          ) : paginated.map((row) => (
+            <div
+              key={row.id}
+              className={`${styles.tileCard} ${selected.has(row.id) ? styles.tileCardSelected : ''} ${row.type === 'Folder' ? styles.tileCardFolder : ''}`}
+              onClick={() => handleRowClick(row)}
+            >
+              <div className={styles.tileThumb}>
+                {row.type === 'Folder' ? (
+                  <svg width="32" height="32" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
+                  </svg>
+                ) : (
+                  <svg width="28" height="28" viewBox="0 0 16 16" fill="none">
+                    <rect x="1" y="2" width="14" height="10" rx="1.5" fill="#e5e7eb" stroke="#d1d5db" strokeWidth="1"/>
+                    <path d="M6 5.5l4 2.5-4 2.5V5.5z" fill="#9ca3af"/>
+                  </svg>
+                )}
+              </div>
+
+              <div className={styles.tileBody}>
+                <div className={styles.tileTitleRow}>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    checked={selected.has(row.id)}
+                    onChange={() => toggleRow(row.id)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <span className={styles.tileTitle}>{row.title}</span>
+                </div>
+
+                <div className={styles.tileMeta}>
+                  <span className={styles.typeBadge}>{row.type}</span>
+                  {row.tags.slice(0, 2).map((t) => (
+                    <span key={t} className={styles.tag}>{t}</span>
+                  ))}
+                  {row.tags.length > 2 && <span className={styles.tagExtra}>+{row.tags.length - 2}</span>}
+                </div>
+
+                <div className={styles.tileFreshness}>
+                  <div className={styles.freshnessBar} style={{ flex: 1 }}>
+                    <div
+                      className={styles.freshnessFill}
+                      style={{
+                        width: `${Math.min(row.freshness * 6, 100)}%`,
+                        background: row.freshness > 70 ? '#059669' : row.freshness >= 30 ? '#b45309' : '#dc2626',
+                      }}
+                    />
+                  </div>
+                  <span className={styles.freshnessPct}>{row.freshness}%</span>
+                </div>
+
+                <div className={styles.tileFooter}>
+                  <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
+                  <span className={styles.tileCreator}>{row.creator}</span>
+                  <span className={styles.tileDot}>·</span>
+                  <button className={styles.modifiedLink} style={{ fontSize: 11.5 }} onClick={(e) => { e.stopPropagation(); setHistoryRow(row) }}>{row.modified}</button>
+                  <span className={styles.tileFavStar}>
+                    <span className={`${styles.iconBtn} ${favorited.has(row.id) ? styles.iconBtnActive : ''}`} onClick={(e) => toggleFav(row.id, e)}>♥</span>
+                    <span className={`${styles.iconBtn} ${starred.has(row.id) ? styles.iconBtnStarred : ''}`} onClick={(e) => toggleStar(row.id, e)}>★</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.tableFooter}>
         <div className={styles.footerLeft}>
