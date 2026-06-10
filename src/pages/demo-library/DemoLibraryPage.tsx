@@ -497,6 +497,20 @@ function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actio
   )
 }
 
+const COL_DEFS: { id: string; label: string; locked?: boolean }[] = [
+  { id: 'title',     label: 'Title',     locked: true },
+  { id: 'type',      label: 'Type' },
+  { id: 'theme',     label: 'Theme' },
+  { id: 'published', label: 'Published' },
+  { id: 'tags',      label: 'Tags' },
+  { id: 'freshness', label: 'Freshness' },
+  { id: 'usage',     label: 'Usage' },
+  { id: 'created',   label: 'Created' },
+  { id: 'modified',  label: 'Modified' },
+  { id: 'creator',   label: 'Creator' },
+  { id: 'duration',  label: 'Duration' },
+]
+
 function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filters; actions: FilterActions }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [favorited, setFavorited] = useState<Set<string>>(new Set())
@@ -505,6 +519,19 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
   const [page, setPage] = useState(1)
   const [historyRow, setHistoryRow] = useState<DemoRow | null>(null)
   const [viewMode, setViewMode] = useState<'table' | 'tile'>('table')
+  const [visibleCols, setVisibleCols] = useState<Set<string>>(
+    new Set(COL_DEFS.map((c) => c.id))
+  )
+
+  function toggleCol(id: string) {
+    setVisibleCols((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
+  const col = (id: string) => visibleCols.has(id)
 
   const q = filters.searchQuery.toLowerCase().trim()
 
@@ -591,30 +618,35 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
             </div>
           )}
         </div>
-        <div className={styles.viewToggle}>
-          <button
-            className={`${styles.viewBtn} ${viewMode === 'table' ? styles.viewBtnActive : ''}`}
-            onClick={() => setViewMode('table')}
-            title="Table view"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="1" y="1" width="12" height="2.5" rx="1" fill="currentColor"/>
-              <rect x="1" y="5.5" width="12" height="2.5" rx="1" fill="currentColor"/>
-              <rect x="1" y="10" width="12" height="2.5" rx="1" fill="currentColor"/>
-            </svg>
-          </button>
-          <button
-            className={`${styles.viewBtn} ${viewMode === 'tile' ? styles.viewBtnActive : ''}`}
-            onClick={() => setViewMode('tile')}
-            title="Tile view"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
-              <rect x="7.5" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
-              <rect x="1" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
-              <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
-            </svg>
-          </button>
+        <div className={styles.toolbarRight}>
+          {viewMode === 'table' && (
+            <ColumnSelector cols={COL_DEFS} visible={visibleCols} onToggle={toggleCol} />
+          )}
+          <div className={styles.viewToggle}>
+            <button
+              className={`${styles.viewBtn} ${viewMode === 'table' ? styles.viewBtnActive : ''}`}
+              onClick={() => setViewMode('table')}
+              title="Table view"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1" y="1" width="12" height="2.5" rx="1" fill="currentColor"/>
+                <rect x="1" y="5.5" width="12" height="2.5" rx="1" fill="currentColor"/>
+                <rect x="1" y="10" width="12" height="2.5" rx="1" fill="currentColor"/>
+              </svg>
+            </button>
+            <button
+              className={`${styles.viewBtn} ${viewMode === 'tile' ? styles.viewBtnActive : ''}`}
+              onClick={() => setViewMode('tile')}
+              title="Tile view"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+                <rect x="7.5" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+                <rect x="1" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+                <rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1.2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -660,36 +692,38 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
               <th className={styles.thIcon} />
               <th className={styles.thIcon} />
               <th className={styles.th}>Title</th>
-              <th className={styles.th}>Type</th>
-              <th className={styles.th}>Theme</th>
-              <th className={styles.th}>Published</th>
-              <th className={styles.th}>Tags</th>
-              <th className={styles.th}>
-                <div className={styles.thWithInfo}>
-                  Freshness
-                  <span className={styles.infoIconWrap}>
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
-                      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                      <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                      <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
-                    </svg>
-                    <div className={styles.infoTooltip}>
-                      <div className={styles.infoTooltipTitle}>Freshness Score</div>
-                      <div className={styles.infoTooltipBody}>Measures how up-to-date a demo's content is based on last edit, screenshot age, and link validity.</div>
-                      <div className={styles.infoTooltipScale}>
-                        <span className={styles.infoScaleHigh}>● High &gt;70%</span>
-                        <span className={styles.infoScaleMid}>● Medium 30–70%</span>
-                        <span className={styles.infoScaleLow}>● Low &lt;30%</span>
+              {col('type')      && <th className={styles.th}>Type</th>}
+              {col('theme')     && <th className={styles.th}>Theme</th>}
+              {col('published') && <th className={styles.th}>Published</th>}
+              {col('tags')      && <th className={styles.th}>Tags</th>}
+              {col('freshness') && (
+                <th className={styles.th}>
+                  <div className={styles.thWithInfo}>
+                    Freshness
+                    <span className={styles.infoIconWrap}>
+                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
+                        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                        <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                        <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
+                      </svg>
+                      <div className={styles.infoTooltip}>
+                        <div className={styles.infoTooltipTitle}>Freshness Score</div>
+                        <div className={styles.infoTooltipBody}>Measures how up-to-date a demo's content is based on last edit, screenshot age, and link validity.</div>
+                        <div className={styles.infoTooltipScale}>
+                          <span className={styles.infoScaleHigh}>● High &gt;70%</span>
+                          <span className={styles.infoScaleMid}>● Medium 30–70%</span>
+                          <span className={styles.infoScaleLow}>● Low &lt;30%</span>
+                        </div>
                       </div>
-                    </div>
-                  </span>
-                </div>
-              </th>
-              <th className={styles.th}>Usage</th>
-              <th className={styles.th}>Created ↓</th>
-              <th className={styles.th}>Modified</th>
-              <th className={styles.th}>Creator</th>
-              <th className={styles.th}>Duration</th>
+                    </span>
+                  </div>
+                </th>
+              )}
+              {col('usage')    && <th className={styles.th}>Usage</th>}
+              {col('created')  && <th className={styles.th}>Created ↓</th>}
+              {col('modified') && <th className={styles.th}>Modified</th>}
+              {col('creator')  && <th className={styles.th}>Creator</th>}
+              {col('duration') && <th className={styles.th}>Duration</th>}
             </tr>
           </thead>
           <tbody>
@@ -723,68 +757,73 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                         <span className={`${styles.rowTitle} ${row.type === 'Folder' ? styles.rowTitleFolder : ''}`}>{row.title}</span>
                       </div>
                     </td>
-                    <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>
-                    <td className={styles.tdMeta}>{row.theme || '—'}</td>
-                    <td className={styles.tdMeta}>{row.published || '—'}</td>
-                    <td className={styles.td}>
-                      <div className={styles.tagList}>
-                        {visibleTags.map((t) => <span key={t} className={styles.tag}>{t}</span>)}
-                        {extraTags > 0 && <span className={styles.tagExtra}>+{extraTags}</span>}
-                      </div>
-                    </td>
-                    <td className={styles.td}>
-                      <div className={styles.freshnessCell}>
-                        <div className={styles.freshnessBar}>
-                          <div
-                            className={styles.freshnessFill}
-                            style={{
-                              width: `${Math.min(row.freshness * 6, 100)}%`,
-                              background: row.freshness > 70 ? '#059669' : row.freshness >= 30 ? '#b45309' : '#dc2626',
-                            }}
-                          />
+                    {col('type')      && <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>}
+                    {col('theme')     && <td className={styles.tdMeta}>{row.theme || '—'}</td>}
+                    {col('published') && <td className={styles.tdMeta}>{row.published || '—'}</td>}
+                    {col('tags')      && (
+                      <td className={styles.td}>
+                        <div className={styles.tagList}>
+                          {visibleTags.map((t) => <span key={t} className={styles.tag}>{t}</span>)}
+                          {extraTags > 0 && <span className={styles.tagExtra}>+{extraTags}</span>}
                         </div>
-                        <span className={styles.freshnessPct}>{row.freshness}%</span>
-                        <span className={styles.infoIconWrap}>
-                          <svg width="11" height="11" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
-                            <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                            <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                            <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
-                          </svg>
-                          <div className={`${styles.infoTooltip} ${styles.infoTooltipLeft}`}>
-                            <div className={styles.infoTooltipTitle}>Freshness Score</div>
-                            <div className={styles.infoTooltipBody}>
-                              {row.freshness > 70
-                                ? 'Content is up-to-date. Screenshots, links, and copy are current.'
-                                : row.freshness >= 30
-                                ? 'Some content may be stale. Consider reviewing screenshots or copy.'
-                                : 'Content is outdated. A full review is recommended.'}
-                            </div>
-                            <div className={styles.infoTooltipScale}>
-                              <span className={`${styles.infoScaleHigh} ${row.freshness > 70 ? styles.infoScaleActive : ''}`}>● High &gt;70%</span>
-                              <span className={`${styles.infoScaleMid} ${row.freshness >= 30 && row.freshness <= 70 ? styles.infoScaleActive : ''}`}>● Mid 30–70%</span>
-                              <span className={`${styles.infoScaleLow} ${row.freshness < 30 ? styles.infoScaleActive : ''}`}>● Low &lt;30%</span>
-                            </div>
+                      </td>
+                    )}
+                    {col('freshness') && (
+                      <td className={styles.td}>
+                        <div className={styles.freshnessCell}>
+                          <div className={styles.freshnessBar}>
+                            <div
+                              className={styles.freshnessFill}
+                              style={{
+                                width: `${Math.min(row.freshness * 6, 100)}%`,
+                                background: row.freshness > 70 ? '#059669' : row.freshness >= 30 ? '#b45309' : '#dc2626',
+                              }}
+                            />
                           </div>
-                        </span>
-                      </div>
-                    </td>
-                    <td className={styles.tdMeta}>{row.usage}</td>
-                    <td className={styles.tdMeta}>{row.created}</td>
-                    <td className={styles.tdMeta} onClick={(e) => e.stopPropagation()}>
-                      <button
-                        className={styles.modifiedLink}
-                        onClick={() => setHistoryRow(row)}
-                      >
-                        {row.modified}
-                      </button>
-                    </td>
-                    <td className={styles.td}>
-                      <div className={styles.creatorCell}>
-                        <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
-                        <span className={styles.creatorFirstName}>{row.creator}</span>
-                      </div>
-                    </td>
-                    <td className={styles.tdMeta}>{row.duration}</td>
+                          <span className={styles.freshnessPct}>{row.freshness}%</span>
+                          <span className={styles.infoIconWrap}>
+                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
+                              <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                              <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                              <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
+                            </svg>
+                            <div className={`${styles.infoTooltip} ${styles.infoTooltipLeft}`}>
+                              <div className={styles.infoTooltipTitle}>Freshness Score</div>
+                              <div className={styles.infoTooltipBody}>
+                                {row.freshness > 70
+                                  ? 'Content is up-to-date. Screenshots, links, and copy are current.'
+                                  : row.freshness >= 30
+                                  ? 'Some content may be stale. Consider reviewing screenshots or copy.'
+                                  : 'Content is outdated. A full review is recommended.'}
+                              </div>
+                              <div className={styles.infoTooltipScale}>
+                                <span className={`${styles.infoScaleHigh} ${row.freshness > 70 ? styles.infoScaleActive : ''}`}>● High &gt;70%</span>
+                                <span className={`${styles.infoScaleMid} ${row.freshness >= 30 && row.freshness <= 70 ? styles.infoScaleActive : ''}`}>● Mid 30–70%</span>
+                                <span className={`${styles.infoScaleLow} ${row.freshness < 30 ? styles.infoScaleActive : ''}`}>● Low &lt;30%</span>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </td>
+                    )}
+                    {col('usage')    && <td className={styles.tdMeta}>{row.usage}</td>}
+                    {col('created')  && <td className={styles.tdMeta}>{row.created}</td>}
+                    {col('modified') && (
+                      <td className={styles.tdMeta} onClick={(e) => e.stopPropagation()}>
+                        <button className={styles.modifiedLink} onClick={() => setHistoryRow(row)}>
+                          {row.modified}
+                        </button>
+                      </td>
+                    )}
+                    {col('creator')  && (
+                      <td className={styles.td}>
+                        <div className={styles.creatorCell}>
+                          <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
+                          <span className={styles.creatorFirstName}>{row.creator}</span>
+                        </div>
+                      </td>
+                    )}
+                    {col('duration') && <td className={styles.tdMeta}>{row.duration}</td>}
                   </tr>
                 )
               })
@@ -1084,6 +1123,71 @@ function Sidebar() {
         {[...Array(3)].map((_, i) => <div key={i} className={styles.navItem} />)}
       </div>
     </aside>
+  )
+}
+
+/* ── Column Selector ────────────────────────────────── */
+function ColumnSelector({
+  cols, visible, onToggle,
+}: { cols: typeof COL_DEFS; visible: Set<string>; onToggle: (id: string) => void }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function h(e: MouseEvent) { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false) }
+    document.addEventListener('mousedown', h)
+    return () => document.removeEventListener('mousedown', h)
+  }, [])
+
+  const hiddenCount = cols.filter((c) => !c.locked && !visible.has(c.id)).length
+
+  return (
+    <div className={styles.dropdownWrap} ref={ref}>
+      <button
+        className={`${styles.colSelectorBtn} ${hiddenCount > 0 ? styles.colSelectorBtnActive : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        title="Customize columns"
+      >
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
+          <rect x="5.25" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
+          <rect x="9.5" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
+        </svg>
+        Columns
+        {hiddenCount > 0 && <span className={styles.filterCount}>{cols.filter((c) => !c.locked).length - hiddenCount} / {cols.filter((c) => !c.locked).length}</span>}
+      </button>
+      {open && (
+        <div className={`${styles.dropdown} ${styles.colSelectorDropdown}`}>
+          <div className={styles.colSelectorHeader}>
+            <span>Columns</span>
+            <button
+              className={styles.colSelectorReset}
+              onClick={() => cols.filter((c) => !c.locked && !visible.has(c.id)).forEach((c) => onToggle(c.id))}
+            >
+              Show all
+            </button>
+          </div>
+          <div className={styles.dropdownOptions}>
+            {cols.map((col) => (
+              <label
+                key={col.id}
+                className={`${styles.dropdownItem} ${col.locked ? styles.colItemLocked : ''}`}
+              >
+                <input
+                  type="checkbox"
+                  className={styles.checkbox}
+                  checked={visible.has(col.id)}
+                  disabled={col.locked}
+                  onChange={() => !col.locked && onToggle(col.id)}
+                />
+                <span className={styles.dropdownLabel}>{col.label}</span>
+                {col.locked && <span className={styles.colLockBadge}>Always on</span>}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 

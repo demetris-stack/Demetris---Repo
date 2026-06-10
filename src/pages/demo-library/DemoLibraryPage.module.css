@@ -668,6 +668,74 @@
   display: flex;
   align-items: center;
 }
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Column selector button ─────────────────────────── */
+.colSelectorBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.colSelectorBtn:hover {
+  background: #e9eaec;
+  border-color: #d1d5db;
+}
+.colSelectorBtnActive {
+  background: #e8e8f0;
+  border-color: #c7c7e0;
+}
+.colSelectorDropdown {
+  right: 0;
+  left: auto;
+  min-width: 200px;
+  padding: 0;
+}
+.colSelectorHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+.colSelectorReset {
+  border: none;
+  background: none;
+  font-size: 11.5px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  transition: color .1s;
+}
+.colSelectorReset:hover { color: #111; }
+.colItemLocked {
+  opacity: 0.5;
+  cursor: default;
+}
+.colLockBadge {
+  margin-left: auto;
+  font-size: 10px;
+  color: #9ca3af;
+  background: #f3f4f6;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
 .viewToggle {
   display: flex;
   align-items: center;
