@@ -831,6 +831,17 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.tileDescription {
+  font-size: 11.5px;
+  color: #6b7280;
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .tileMeta {
   display: flex;
   align-items: center;
@@ -1368,35 +1379,79 @@
 }
 
 /* ── Carousel ────────────────────────────────────────── */
-.carousel {
+/* ── Suggested assets section ────────────────────────── */
+.suggestedSection {
   padding-top: 4px;
+  margin-bottom: 4px;
 }
 
-.carouselHeader {
+.suggestedHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 14px;
+  flex-wrap: wrap;
 }
 
-.carouselTitle {
-  font-size: 15px;
+.suggestedToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.suggestedTitle {
+  font-size: 13.5px;
   font-weight: 600;
   color: #111;
+  white-space: nowrap;
+}
+
+.suggestedTabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.suggestedTab {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.suggestedTab:hover {
+  color: #111;
+  background: #f3f4f6;
+}
+.suggestedTabActive {
+  border-color: #d1d5db;
+  color: #111;
+  background: #fff;
 }
 
 .carouselControls {
   display: flex;
   gap: 6px;
+  margin-left: auto;
 }
 
 .arrowBtn {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 1px solid #e5e7eb;
   background: #fff;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1;
   color: #555;
   cursor: pointer;
@@ -1405,7 +1460,6 @@
   justify-content: center;
   transition: background .12s, border-color .12s;
 }
-
 .arrowBtn:hover {
   background: #f3f4f6;
   border-color: #d1d5db;
@@ -1413,88 +1467,87 @@
 
 .carouselTrack {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 12px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .carouselTrack::-webkit-scrollbar {
   display: none;
 }
 
-/* ── Video card ──────────────────────────────────────── */
-.card {
+/* ── Suggested asset card ────────────────────────────── */
+.suggestedCard {
   flex-shrink: 0;
-  width: 220px;
+  width: 160px;
   scroll-snap-align: start;
   border-radius: 10px;
-  overflow: hidden;
   border: 1px solid #e5e7eb;
   background: #fff;
+  overflow: hidden;
   cursor: pointer;
   transition: box-shadow .15s, transform .15s;
 }
-
-.card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,.1);
+.suggestedCard:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,.09);
   transform: translateY(-2px);
 }
 
-.cardThumb {
+.suggestedCardThumb {
   position: relative;
   width: 100%;
-  height: 126px;
+  height: 96px;
+  background: #f3f4f6;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.playBtn {
-  position: absolute;
-  inset: 0;
+.suggestedAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity .15s;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
 }
 
-.card:hover .playBtn {
-  opacity: 1;
-}
-
-.duration {
+.suggestedTypeBadge {
   position: absolute;
   bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 6px;
+  left: 8px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #fff;
+  border: 1px solid #e5e7eb;
   border-radius: 4px;
+  padding: 1px 6px;
 }
 
-.cardBody {
-  padding: 10px 12px 12px;
+.suggestedCardBody {
+  padding: 9px 10px 11px;
 }
 
-.cardTitle {
-  font-size: 13px;
+.suggestedCardTitle {
+  font-size: 12.5px;
   font-weight: 600;
   color: #111;
   line-height: 1.4;
   margin-bottom: 4px;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.cardDate {
-  font-size: 12px;
+.suggestedCardCount {
+  font-size: 11.5px;
   color: #9ca3af;
 }
 

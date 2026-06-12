@@ -11,12 +11,13 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'promoted', label: 'Promoted Content' },
 ]
 
-interface Video {
+interface SuggestedAsset {
   id: string
   title: string
-  duration: string
-  date: string
-  thumb: string
+  type: string
+  creatorInitials: string
+  creatorColor: string
+  inDemos: number
 }
 
 interface DemoRow {
@@ -34,25 +35,30 @@ interface DemoRow {
   created: string
   modified: string
   duration: string
+  description?: string
   parentFolder?: string
 }
 
-const MY_DEMOS_VIDEOS: Video[] = [
-  { id: 'v1', title: 'Onboarding Flow Walkthrough', duration: '3:42', date: 'May 18', thumb: '#d1d5db' },
-  { id: 'v2', title: 'Dashboard Overview', duration: '5:10', date: 'May 15', thumb: '#c4c9d4' },
-  { id: 'v3', title: 'Analytics Deep Dive', duration: '7:23', date: 'May 12', thumb: '#d1d5db' },
-  { id: 'v4', title: 'Settings & Permissions', duration: '2:55', date: 'May 10', thumb: '#c4c9d4' },
-  { id: 'v5', title: 'Integrations Setup', duration: '4:18', date: 'May 7', thumb: '#d1d5db' },
-  { id: 'v6', title: 'Reporting Basics', duration: '6:04', date: 'May 3', thumb: '#c4c9d4' },
+const MY_DEMOS_SUGGESTED: SuggestedAsset[] = [
+  { id: 's1', title: 'Quick Start Guide', type: 'Walkthrough', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 23 },
+  { id: 's2', title: 'Onboarding Flow Walkthrough', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 21 },
+  { id: 's3', title: 'Feature Highlights Reel', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 19 },
+  { id: 's4', title: 'Dashboard Overview', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 18 },
+  { id: 's5', title: 'Settings & Permissions', type: 'Tour', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 16 },
+  { id: 's6', title: 'Integrations Setup', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
+  { id: 's7', title: 'Analytics Deep Dive', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 15 },
+  { id: 's8', title: 'Competitive Battlecard Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
 ]
 
-const DEMO_LIBRARY_VIDEOS: Video[] = [
-  { id: 'l1', title: 'Product Tour 2026', duration: '8:30', date: 'May 19', thumb: '#d1d5db' },
-  { id: 'l2', title: 'Security & Compliance', duration: '4:45', date: 'May 17', thumb: '#c4c9d4' },
-  { id: 'l3', title: 'API Walkthrough', duration: '6:12', date: 'May 14', thumb: '#d1d5db' },
-  { id: 'l4', title: 'Mobile App Demo', duration: '3:58', date: 'May 11', thumb: '#c4c9d4' },
-  { id: 'l5', title: 'Enterprise Features', duration: '9:01', date: 'May 9', thumb: '#d1d5db' },
-  { id: 'l6', title: 'Admin Console', duration: '5:33', date: 'May 5', thumb: '#c4c9d4' },
+const DEMO_LIBRARY_SUGGESTED: SuggestedAsset[] = [
+  { id: 'ls1', title: 'Platform Overview', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 32 },
+  { id: 'ls2', title: 'Product Tour 2026', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 28 },
+  { id: 'ls3', title: 'Enterprise Features', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 24 },
+  { id: 'ls4', title: 'API Walkthrough', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 21 },
+  { id: 'ls5', title: 'Security & Compliance', type: 'Presentation', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 19 },
+  { id: 'ls6', title: 'Deal Closing Playbook', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 17 },
+  { id: 'ls7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
+  { id: 'ls8', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
 ]
 
 // Root-level rows have no parentFolder. Rows inside a folder have parentFolder set.
@@ -62,30 +68,30 @@ const MY_DEMOS_ROWS: DemoRow[] = [
   { id: 'r0b', title: 'Product', type: 'Folder', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 0, usage: 4, created: '03/01/26', modified: '05/01/26', duration: '—' },
   { id: 'r0c', title: 'Sales Enablement', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 4, created: '01/10/26', modified: '04/22/26', duration: '—' },
   { id: 'r0d', title: 'Engineering Demos', type: 'Folder', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'admin'], freshness: 0, usage: 3, created: '01/15/26', modified: '05/05/26', duration: '—' },
-  { id: 'r4', title: 'Settings & Permissions', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', duration: '2:55' },
-  { id: 'r5', title: 'Integrations Setup', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', duration: '4:18' },
-  { id: 'r9', title: 'Quick Start Guide', type: 'Walkthrough', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 15, usage: 312, created: '01/05/26', modified: '05/12/26', duration: '2:10' },
-  { id: 'r10', title: 'Feature Highlights Reel', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 3, usage: 88, created: '04/20/26', modified: '05/14/26', duration: '4:55' },
+  { id: 'r4', title: 'Settings & Permissions', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', duration: '2:55', description: 'A guided tour of the permissions model — role assignments, access levels, and audit log configuration.' },
+  { id: 'r5', title: 'Integrations Setup', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', duration: '4:18', description: 'Step-by-step simulation for connecting third-party tools via native integrations and the REST API.' },
+  { id: 'r9', title: 'Quick Start Guide', type: 'Walkthrough', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 15, usage: 312, created: '01/05/26', modified: '05/12/26', duration: '2:10', description: 'Get up and running in under 3 minutes. Covers workspace setup, inviting teammates, and first project creation.' },
+  { id: 'r10', title: 'Feature Highlights Reel', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 3, usage: 88, created: '04/20/26', modified: '05/14/26', duration: '4:55', description: 'A high-energy product sizzle reel showcasing the top 10 features most valued by customers.' },
   // Inside "Onboarding"
-  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42', parentFolder: 'Onboarding' },
-  { id: 'r7', title: 'Mobile Walkthrough', type: 'Tour', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15', parentFolder: 'Onboarding' },
-  { id: 'r11', title: 'First Login Experience', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding'], freshness: 11, usage: 203, created: '03/05/26', modified: '05/02/26', duration: '2:30', parentFolder: 'Onboarding' },
-  { id: 'r12', title: 'Account Setup Tour', type: 'Tour', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'admin'], freshness: 7, usage: 119, created: '03/18/26', modified: '04/28/26', duration: '3:00', parentFolder: 'Onboarding' },
-  { id: 'r13', title: 'Welcome Webinar Replay', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['onboarding', 'sales'], freshness: 4, usage: 78, created: '02/22/26', modified: '04/10/26', duration: '28:00', parentFolder: 'Onboarding' },
+  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42', description: 'Interactive simulation of the full new-user onboarding flow, from sign-up to first meaningful action.', parentFolder: 'Onboarding' },
+  { id: 'r7', title: 'Mobile Walkthrough', type: 'Tour', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15', description: 'A click-through tour of the iOS and Android apps, highlighting key mobile-only features.', parentFolder: 'Onboarding' },
+  { id: 'r11', title: 'First Login Experience', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding'], freshness: 11, usage: 203, created: '03/05/26', modified: '05/02/26', duration: '2:30', description: 'Simulates exactly what a new user sees when they log in for the first time, including the welcome checklist.', parentFolder: 'Onboarding' },
+  { id: 'r12', title: 'Account Setup Tour', type: 'Tour', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'admin'], freshness: 7, usage: 119, created: '03/18/26', modified: '04/28/26', duration: '3:00', description: 'Covers profile setup, notification preferences, and connecting calendar and email integrations.', parentFolder: 'Onboarding' },
+  { id: 'r13', title: 'Welcome Webinar Replay', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['onboarding', 'sales'], freshness: 4, usage: 78, created: '02/22/26', modified: '04/10/26', duration: '28:00', description: 'Recording of the monthly new-customer welcome webinar including live Q&A highlights.', parentFolder: 'Onboarding' },
   // Inside "Product"
-  { id: 'r2', title: 'Dashboard Overview', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10', parentFolder: 'Product' },
-  { id: 'r3', title: 'Analytics Deep Dive', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23', parentFolder: 'Product' },
-  { id: 'r14', title: 'Reporting Module Tour', type: 'Tour', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['product', 'reporting'], freshness: 5, usage: 134, created: '04/01/26', modified: '05/07/26', duration: '4:40', parentFolder: 'Product' },
-  { id: 'r15', title: 'Workspace Customization', type: 'Demo', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['product', 'admin'], freshness: 9, usage: 67, created: '04/10/26', modified: '05/03/26', duration: '3:55', parentFolder: 'Product' },
+  { id: 'r2', title: 'Dashboard Overview', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10', description: 'Walkthrough of the main dashboard — widgets, date ranges, and customizing the layout for different team roles.', parentFolder: 'Product' },
+  { id: 'r3', title: 'Analytics Deep Dive', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23', description: 'Explores advanced reporting features: custom funnels, cohort analysis, and scheduled report delivery.', parentFolder: 'Product' },
+  { id: 'r14', title: 'Reporting Module Tour', type: 'Tour', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['product', 'reporting'], freshness: 5, usage: 134, created: '04/01/26', modified: '05/07/26', duration: '4:40', description: 'Tour of every section in the Reporting module with tips on exporting data and sharing with stakeholders.', parentFolder: 'Product' },
+  { id: 'r15', title: 'Workspace Customization', type: 'Demo', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['product', 'admin'], freshness: 9, usage: 67, created: '04/10/26', modified: '05/03/26', duration: '3:55', description: 'Shows how admins can brand the workspace, configure default views, and manage team-wide settings.', parentFolder: 'Product' },
   // Inside "Sales Enablement"
-  { id: 'r6', title: 'Reporting Basics', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04', parentFolder: 'Sales Enablement' },
-  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45', parentFolder: 'Sales Enablement' },
-  { id: 'r16', title: 'Competitive Battlecard Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 6, usage: 241, created: '02/10/26', modified: '05/09/26', duration: '5:30', parentFolder: 'Sales Enablement' },
-  { id: 'r17', title: 'ROI Calculator Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['sales'], freshness: 10, usage: 188, created: '03/02/26', modified: '04/25/26', duration: '4:15', parentFolder: 'Sales Enablement' },
+  { id: 'r6', title: 'Reporting Basics', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04', description: 'Introductory video covering the core reporting screens — ideal for sharing with new champion contacts.', parentFolder: 'Sales Enablement' },
+  { id: 'r8', title: 'Enterprise Admin Tour', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45', description: 'Detailed presentation for IT and security stakeholders covering SSO, SCIM provisioning, and data residency.', parentFolder: 'Sales Enablement' },
+  { id: 'r16', title: 'Competitive Battlecard Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 6, usage: 241, created: '02/10/26', modified: '05/09/26', duration: '5:30', description: 'Side-by-side demo highlighting key differentiators versus the top two competitors — updated for Q2 2026.', parentFolder: 'Sales Enablement' },
+  { id: 'r17', title: 'ROI Calculator Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['sales'], freshness: 10, usage: 188, created: '03/02/26', modified: '04/25/26', duration: '4:15', description: 'Guided walkthrough of the interactive ROI calculator, showing how to input customer data and present results.', parentFolder: 'Sales Enablement' },
   // Inside "Engineering Demos"
-  { id: 'r18', title: 'API Integration Sandbox', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api'], freshness: 13, usage: 95, created: '01/28/26', modified: '04/20/26', duration: '6:50', parentFolder: 'Engineering Demos' },
-  { id: 'r19', title: 'Webhook Configuration', type: 'Walkthrough', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 8, usage: 52, created: '02/05/26', modified: '04/12/26', duration: '3:20', parentFolder: 'Engineering Demos' },
-  { id: 'r20', title: 'SSO Setup Guide', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['security', 'admin'], freshness: 5, usage: 74, created: '03/08/26', modified: '05/01/26', duration: '4:00', parentFolder: 'Engineering Demos' },
+  { id: 'r18', title: 'API Integration Sandbox', type: 'Sim', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api'], freshness: 13, usage: 95, created: '01/28/26', modified: '04/20/26', duration: '6:50', description: 'Live sandbox simulation letting prospects make real API calls and inspect responses without credentials.', parentFolder: 'Engineering Demos' },
+  { id: 'r19', title: 'Webhook Configuration', type: 'Walkthrough', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 8, usage: 52, created: '02/05/26', modified: '04/12/26', duration: '3:20', description: 'Step-by-step guide to setting up webhooks, verifying payloads, and handling retry logic.', parentFolder: 'Engineering Demos' },
+  { id: 'r20', title: 'SSO Setup Guide', type: 'Tour', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['security', 'admin'], freshness: 5, usage: 74, created: '03/08/26', modified: '05/01/26', duration: '4:00', description: 'Covers SAML 2.0 and OIDC configuration, attribute mapping, and testing the SSO flow end-to-end.', parentFolder: 'Engineering Demos' },
 ]
 
 const DEMO_LIBRARY_ROWS: DemoRow[] = [
@@ -94,29 +100,29 @@ const DEMO_LIBRARY_ROWS: DemoRow[] = [
   { id: 'l0b', title: 'Engineering', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api', 'security'], freshness: 0, usage: 4, created: '02/10/26', modified: '05/05/26', duration: '—' },
   { id: 'l0c', title: 'Sales', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 4, created: '01/05/26', modified: '03/01/26', duration: '—' },
   { id: 'l0d', title: 'Marketing', type: 'Folder', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'mobile'], freshness: 0, usage: 3, created: '01/20/26', modified: '04/28/26', duration: '—' },
-  { id: 'l4', title: 'Mobile App Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', duration: '3:58' },
-  { id: 'l6', title: 'Admin Console', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33' },
-  { id: 'l9', title: 'Platform Overview', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'onboarding'], freshness: 14, usage: 521, created: '01/10/26', modified: '05/15/26', duration: '6:00' },
-  { id: 'l10', title: 'Partner Enablement Kit', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['sales', 'enterprise'], freshness: 2, usage: 164, created: '02/25/26', modified: '04/18/26', duration: '11:30' },
+  { id: 'l4', title: 'Mobile App Demo', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', duration: '3:58', description: 'Full walkthrough of the mobile app experience across iOS and Android, including push notifications and offline mode.' },
+  { id: 'l6', title: 'Admin Console', type: 'Sim', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33', description: 'Interactive simulation of the admin console — user management, billing, and organization-wide settings.' },
+  { id: 'l9', title: 'Platform Overview', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'onboarding'], freshness: 14, usage: 521, created: '01/10/26', modified: '05/15/26', duration: '6:00', description: 'Top-level platform demo covering all core modules — ideal as the first demo in any discovery conversation.' },
+  { id: 'l10', title: 'Partner Enablement Kit', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['sales', 'enterprise'], freshness: 2, usage: 164, created: '02/25/26', modified: '04/18/26', duration: '11:30', description: 'Comprehensive deck for partner sales teams covering positioning, objection handling, and co-sell motions.' },
   // Inside "Global Library"
-  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30', parentFolder: 'Global Library' },
-  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20', parentFolder: 'Global Library' },
-  { id: 'l11', title: 'Onboarding Series Pt.2', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 4, usage: 271, created: '02/15/26', modified: '04/01/26', duration: '6:45', parentFolder: 'Global Library' },
-  { id: 'l12', title: 'Executive Summary Deck', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'sales'], freshness: 9, usage: 193, created: '03/10/26', modified: '05/10/26', duration: '9:00', parentFolder: 'Global Library' },
+  { id: 'l1', title: 'Product Tour 2026', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30', description: 'The definitive 2026 product tour — updated with all Q1 feature releases and refreshed UI screenshots.', parentFolder: 'Global Library' },
+  { id: 'l7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20', description: 'Part 1 of 2: covers workspace creation, initial configuration, and inviting your first team members.', parentFolder: 'Global Library' },
+  { id: 'l11', title: 'Onboarding Series Pt.2', type: 'Walkthrough', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 4, usage: 271, created: '02/15/26', modified: '04/01/26', duration: '6:45', description: 'Part 2 of 2: advanced configuration, custom fields, automations, and connecting your first integration.', parentFolder: 'Global Library' },
+  { id: 'l12', title: 'Executive Summary Deck', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'sales'], freshness: 9, usage: 193, created: '03/10/26', modified: '05/10/26', duration: '9:00', description: 'C-suite-ready presentation summarizing business value, ROI benchmarks, and customer success stories.', parentFolder: 'Global Library' },
   // Inside "Engineering"
-  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45', parentFolder: 'Engineering' },
-  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12', parentFolder: 'Engineering' },
-  { id: 'l13', title: 'Data Pipeline Demo', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 6, usage: 112, created: '03/25/26', modified: '05/03/26', duration: '7:15', parentFolder: 'Engineering' },
-  { id: 'l14', title: 'Authentication Flow', type: 'Tour', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'api'], freshness: 3, usage: 145, created: '04/05/26', modified: '05/08/26', duration: '3:30', parentFolder: 'Engineering' },
+  { id: 'l2', title: 'Security & Compliance', type: 'Presentation', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45', description: 'Covers SOC 2 Type II certification, data encryption at rest and in transit, and GDPR compliance posture.', parentFolder: 'Engineering' },
+  { id: 'l3', title: 'API Walkthrough', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12', description: 'Hands-on walkthrough of the REST API: authentication, pagination, rate limits, and common use cases.', parentFolder: 'Engineering' },
+  { id: 'l13', title: 'Data Pipeline Demo', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 6, usage: 112, created: '03/25/26', modified: '05/03/26', duration: '7:15', description: 'Demonstrates building an end-to-end data pipeline: ingestion, transformation, and output to downstream systems.', parentFolder: 'Engineering' },
+  { id: 'l14', title: 'Authentication Flow', type: 'Tour', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'api'], freshness: 3, usage: 145, created: '04/05/26', modified: '05/08/26', duration: '3:30', description: 'Tour of all supported authentication methods: API keys, OAuth 2.0, JWT, and session tokens.', parentFolder: 'Engineering' },
   // Inside "Sales"
-  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01', parentFolder: 'Sales' },
-  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05', parentFolder: 'Sales' },
-  { id: 'l15', title: 'Deal Closing Playbook', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 7, usage: 319, created: '02/18/26', modified: '05/11/26', duration: '6:20', parentFolder: 'Sales' },
-  { id: 'l16', title: 'Pricing Tier Explainer', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 5, usage: 207, created: '03/05/26', modified: '04/22/26', duration: '4:50', parentFolder: 'Sales' },
+  { id: 'l5', title: 'Enterprise Features', type: 'Presentation', theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01', description: 'Deep-dive into enterprise-only capabilities: advanced RBAC, dedicated infrastructure, and SLA commitments.', parentFolder: 'Sales' },
+  { id: 'l8', title: 'Sales Enablement Kit', type: 'Webinar', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05', description: 'Recorded enablement webinar for AEs covering discovery frameworks, demo best practices, and objection handling.', parentFolder: 'Sales' },
+  { id: 'l15', title: 'Deal Closing Playbook', type: 'Demo', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 7, usage: 319, created: '02/18/26', modified: '05/11/26', duration: '6:20', description: 'Late-stage demo focused on procurement, security review, and legal considerations for enterprise deals.', parentFolder: 'Sales' },
+  { id: 'l16', title: 'Pricing Tier Explainer', type: 'Walkthrough', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 5, usage: 207, created: '03/05/26', modified: '04/22/26', duration: '4:50', description: 'Walks through each pricing tier side-by-side, highlighting the features and limits relevant to mid-market buyers.', parentFolder: 'Sales' },
   // Inside "Marketing"
-  { id: 'l17', title: 'Brand Story Demo', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 10, usage: 388, created: '01/25/26', modified: '04/15/26', duration: '5:45', parentFolder: 'Marketing' },
-  { id: 'l18', title: 'Social Proof Reel', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 8, usage: 254, created: '02/08/26', modified: '04/20/26', duration: '3:10', parentFolder: 'Marketing' },
-  { id: 'l19', title: 'Event Booth Demo', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'enterprise'], freshness: 12, usage: 176, created: '03/12/26', modified: '05/05/26', duration: '4:25', parentFolder: 'Marketing' },
+  { id: 'l17', title: 'Brand Story Demo', type: 'Video', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 10, usage: 388, created: '01/25/26', modified: '04/15/26', duration: '5:45', description: 'An emotional brand narrative video — origin story, mission, and customer transformation highlights.', parentFolder: 'Marketing' },
+  { id: 'l18', title: 'Social Proof Reel', type: 'Video', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 8, usage: 254, created: '02/08/26', modified: '04/20/26', duration: '3:10', description: 'Fast-paced compilation of customer quotes, NPS scores, and G2 review highlights for use in sales emails.', parentFolder: 'Marketing' },
+  { id: 'l19', title: 'Event Booth Demo', type: 'Demo', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'enterprise'], freshness: 12, usage: 176, created: '03/12/26', modified: '05/05/26', duration: '4:25', description: 'Short, high-impact demo designed for trade show booths — grabs attention in 60 seconds and works without audio.', parentFolder: 'Marketing' },
 ]
 
 const TYPE_OPTIONS = ['Demo', 'Walkthrough', 'Tutorial', 'Presentation', 'Webinar', 'Sim', 'Tour', 'Video']
@@ -308,13 +314,13 @@ function TabContent({ tab }: { tab: Tab }) {
 
   const content = tab === 'my-demos' ? (
     <>
-      <VideoCarousel title="Recent" videos={MY_DEMOS_VIDEOS} />
+      <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
       <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} />
     </>
   ) : tab === 'demo-library' ? (
     <>
-      <VideoCarousel title="Recent" videos={DEMO_LIBRARY_VIDEOS} />
+      <SuggestedCarousel assets={DEMO_LIBRARY_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
       <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} />
     </>
@@ -867,6 +873,10 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                   <span className={styles.tileTitle}>{row.title}</span>
                 </div>
 
+                {row.type !== 'Folder' && row.description && (
+                  <p className={styles.tileDescription}>{row.description}</p>
+                )}
+
                 <div className={styles.tileMeta}>
                   <span className={styles.typeBadge}>{row.type}</span>
                   {row.tags.slice(0, 2).map((t) => (
@@ -1064,44 +1074,69 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
   )
 }
 
-function VideoCarousel({ title, videos }: { title: string; videos: Video[] }) {
+const SUGGESTED_TABS = ['Popular', 'By Deal', 'By Persona', 'Recent'] as const
+type SuggestedTab = typeof SUGGESTED_TABS[number]
+
+function SuggestedCarousel({ assets }: { assets: SuggestedAsset[] }) {
+  const [collapsed, setCollapsed] = useState(false)
+  const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
   const trackRef = useRef<HTMLDivElement>(null)
+
+  const sorted = [...assets].sort((a, b) => {
+    if (activeTab === 'Recent') return a.id.localeCompare(b.id)
+    if (activeTab === 'Popular') return b.inDemos - a.inDemos
+    return b.inDemos - a.inDemos
+  })
+
   function scroll(dir: 'left' | 'right') {
-    trackRef.current?.scrollBy({ left: dir === 'right' ? 280 : -280, behavior: 'smooth' })
+    trackRef.current?.scrollBy({ left: dir === 'right' ? 300 : -300, behavior: 'smooth' })
   }
+
   return (
-    <section className={styles.carousel}>
-      <div className={styles.carouselHeader}>
-        <h2 className={styles.carouselTitle}>{title}</h2>
+    <section className={styles.suggestedSection}>
+      <div className={styles.suggestedHeader}>
+        <button className={styles.suggestedToggle} onClick={() => setCollapsed((c) => !c)}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ transform: collapsed ? 'rotate(-90deg)' : 'none', transition: 'transform .2s' }}>
+            <path d="M3 5l4 4 4-4" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        <span className={styles.suggestedTitle}>Suggested assets for you</span>
+        <div className={styles.suggestedTabs}>
+          {SUGGESTED_TABS.map((tab) => (
+            <button
+              key={tab}
+              className={`${styles.suggestedTab} ${activeTab === tab ? styles.suggestedTabActive : ''}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
         <div className={styles.carouselControls}>
           <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
           <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>
         </div>
       </div>
-      <div className={styles.carouselTrack} ref={trackRef}>
-        {videos.map((v) => <VideoCard key={v.id} video={v} />)}
-      </div>
-    </section>
-  )
-}
 
-function VideoCard({ video }: { video: Video }) {
-  return (
-    <div className={styles.card}>
-      <div className={styles.cardThumb} style={{ background: video.thumb }}>
-        <div className={styles.playBtn}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <circle cx="9" cy="9" r="9" fill="rgba(0,0,0,0.45)" />
-            <polygon points="7,5.5 7,12.5 13,9" fill="#fff" />
-          </svg>
+      {!collapsed && (
+        <div className={styles.carouselTrack} ref={trackRef}>
+          {sorted.map((asset) => (
+            <div key={asset.id} className={styles.suggestedCard}>
+              <div className={styles.suggestedCardThumb}>
+                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                  {asset.creatorInitials}
+                </span>
+                <span className={styles.suggestedTypeBadge}>{asset.type}</span>
+              </div>
+              <div className={styles.suggestedCardBody}>
+                <div className={styles.suggestedCardTitle}>{asset.title}</div>
+                <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className={styles.duration}>{video.duration}</div>
-      </div>
-      <div className={styles.cardBody}>
-        <div className={styles.cardTitle}>{video.title}</div>
-        <div className={styles.cardDate}>{video.date}</div>
-      </div>
-    </div>
+      )}
+    </section>
   )
 }
 
