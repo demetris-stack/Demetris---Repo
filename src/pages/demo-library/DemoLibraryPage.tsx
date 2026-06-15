@@ -1512,7 +1512,12 @@ function HistoryDrawer({ row, onClose }: { row: DemoRow | null; onClose: () => v
 }
 
 function CircleIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><circle cx="7" cy="7" r="2.5" fill="currentColor"/></svg>
+  return (
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+      <polygon points="5.5,4.5 10,7 5.5,9.5" fill="currentColor"/>
+    </svg>
+  )
 }
 function PersonIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
