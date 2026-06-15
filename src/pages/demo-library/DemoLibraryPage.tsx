@@ -1185,7 +1185,7 @@ function SuggestionsPage() {
 const SUGGESTED_TABS = ['New', 'Trending', 'Most Viewed', 'Most Shared', 'Region'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
-function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
+function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState<boolean>(!initialExpanded)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('New')
 
