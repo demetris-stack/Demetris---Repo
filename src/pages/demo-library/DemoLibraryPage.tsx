@@ -828,7 +828,7 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                         ) : row.type === T2 ? (
                           <img src={standardPIconUrl} alt={T2} title={T2} width="16" height="16" style={{ objectFit: 'contain', display: 'block' }} />
                         ) : row.type === T3 ? (
-                          <img src={singleExpIconUrl} alt={T3} title={T3} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
+                          <img src={singleExpIconUrl} alt={T3} title={T3} width="16" height="16" style={{ objectFit: 'contain', display: 'block' }} />
                         ) : row.type === T1 ? (
                           <img src={discoveryDemoIconUrl} alt={T1} title={T1} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
                         ) : (
