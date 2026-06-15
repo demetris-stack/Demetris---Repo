@@ -813,15 +813,20 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                     </td>
                     <td className={styles.td}>
                       <div className={styles.titleCell}>
-                        {row.type === 'Folder' && (
-                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
-                            <path d="M1 3.5C1 2.67 1.67 2 2.5 2H5.5L7 3.5H11.5C12.33 3.5 13 4.17 13 5V10.5C13 11.33 12.33 12 11.5 12H2.5C1.67 12 1 11.33 1 10.5V3.5Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
-                          </svg>
-                        )}
                         <span className={`${styles.rowTitle} ${row.type === 'Folder' ? styles.rowTitleFolder : ''}`}>{row.title}</span>
                       </div>
                     </td>
-                    {col('type')       && <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>}
+                    {col('type') && (
+                      <td className={styles.td}>
+                        {row.type === 'Folder' ? (
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M1.5 4C1.5 3.17 2.17 2.5 3 2.5H6.5L8 4H13C13.83 4 14.5 4.67 14.5 5.5V12C14.5 12.83 13.83 13.5 13 13.5H3C2.17 13.5 1.5 12.83 1.5 12V4Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
+                          </svg>
+                        ) : (
+                          <span className={styles.typeBadge}>{row.type}</span>
+                        )}
+                      </td>
+                    )}
                     {col('theme')      && <td className={styles.tdMeta}>{row.theme || '—'}</td>}
                     {col('language')   && <td className={styles.tdMeta}>{row.language || '—'}</td>}
                     {col('totalTours') && <td className={styles.tdMeta}>{row.type === 'Folder' ? '—' : row.totalTours}</td>}
