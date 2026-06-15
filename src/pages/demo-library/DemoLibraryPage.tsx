@@ -728,9 +728,12 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
               title="Download report"
             >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <polyline points="8 17 12 21 16 17" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                <line x1="12" y1="12" x2="12" y2="21" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.83" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* Closed cloud shape with flat bottom */}
+                <path d="M17.5 9.5a6 6 0 0 0-11.9 1A3.5 3.5 0 0 0 7 17h10a3.5 3.5 0 0 0 .5-7z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/>
+                {/* Arrow stem */}
+                <path d="M12 10.5v5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+                {/* Arrowhead */}
+                <path d="M9.5 13.5l2.5 2.5 2.5-2.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
             {downloadOpen && (
