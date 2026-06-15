@@ -727,12 +727,10 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
               onClick={() => setDownloadOpen((o) => !o)}
               title="Download report"
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 11h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ marginLeft: 2 }}>
-                <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 15V3m0 12-4-4m4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M5 17c0 2.21 1.343 4 3 4h8c1.657 0 3-1.79 3-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                <path d="M3 17a9 9 0 0 1 2.343-6.07M21 17a9 9 0 0 0-2.343-6.07" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
               </svg>
             </button>
             {downloadOpen && (
