@@ -1174,10 +1174,10 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
 function SuggestionsPage() {
   return (
     <div className={styles.suggestionsPage}>
-      <SuggestionRow title="Recents" assets={SUGGESTIONS_RECENTS} />
-      <SuggestionRow title="For this deal…" assets={SUGGESTIONS_FOR_DEAL} />
+      <SuggestionRow title="Recent" assets={SUGGESTIONS_RECENTS} />
+      <SuggestionRow title="Recently Updated" assets={SUGGESTIONS_FOR_DEAL} />
       <SuggestionRow title="Promoted" assets={SUGGESTIONS_PROMOTED} />
-      <SuggestionRow title="Assets" assets={SUGGESTIONS_ASSETS} />
+      <SuggestionRow title="Top Performers" assets={SUGGESTIONS_ASSETS} />
     </div>
   )
 }
