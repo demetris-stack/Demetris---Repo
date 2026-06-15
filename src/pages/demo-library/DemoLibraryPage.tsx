@@ -1120,9 +1120,9 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
     trackRef.current?.scrollBy({ left: dir === 'right' ? 300 : -300, behavior: 'smooth' })
   }
   return (
-    <div className={styles.suggestionRow}>
-      <div className={styles.suggestionRowHeader}>
-        <span className={styles.suggestionRowTitle}>{title}</span>
+    <div className={styles.suggestSection}>
+      <div className={styles.suggestSectionHeader}>
+        <span className={styles.suggestSectionTitle}>{title}</span>
         <div className={styles.carouselControls}>
           <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
           <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>

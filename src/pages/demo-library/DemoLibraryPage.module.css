@@ -1387,19 +1387,19 @@
   padding-top: 4px;
 }
 
-.suggestionRow {
+.suggestSection {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.suggestionRowHeader {
+.suggestSectionHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.suggestionRowTitle {
+.suggestSectionTitle {
   font-size: 14px;
   font-weight: 600;
   color: #111;
