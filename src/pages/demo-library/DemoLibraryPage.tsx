@@ -826,7 +826,7 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                             <path d="M1.5 4C1.5 3.17 2.17 2.5 3 2.5H6.5L8 4H13C13.83 4 14.5 4.67 14.5 5.5V12C14.5 12.83 13.83 13.5 13 13.5H3C2.17 13.5 1.5 12.83 1.5 12V4Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
                           </svg>
                         ) : row.type === T2 ? (
-                          <img src={standardPIconUrl} alt={T2} title={T2} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
+                          <img src={standardPIconUrl} alt={T2} title={T2} width="16" height="16" style={{ objectFit: 'contain', display: 'block' }} />
                         ) : row.type === T3 ? (
                           <img src={singleExpIconUrl} alt={T3} title={T3} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
                         ) : row.type === T1 ? (
