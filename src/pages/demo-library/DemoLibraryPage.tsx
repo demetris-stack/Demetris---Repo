@@ -314,7 +314,7 @@ function TabContent({ tab }: { tab: Tab }) {
   }
 
   const content = tab === 'suggestions' ? (
-    <SuggestedCarousel assets={[...MY_DEMOS_SUGGESTED, ...DEMO_LIBRARY_SUGGESTED].sort((a, b) => b.inDemos - a.inDemos)} expanded />
+    <SuggestedCarousel assets={[...MY_DEMOS_SUGGESTED, ...DEMO_LIBRARY_SUGGESTED].sort((a, b) => b.inDemos - a.inDemos)} expanded hideTabs />
   ) : tab === 'my-demos' ? (
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
@@ -1080,7 +1080,7 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 const SUGGESTED_TABS = ['Popular', 'By Deal', 'By Persona', 'Recent'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
-function SuggestedCarousel({ assets, expanded: initialExpanded }: { assets: SuggestedAsset[]; expanded?: boolean }) {
+function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState(!initialExpanded && false)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
   const trackRef = useRef<HTMLDivElement>(null)
@@ -1104,17 +1104,19 @@ function SuggestedCarousel({ assets, expanded: initialExpanded }: { assets: Sugg
           </svg>
         </button>
         <span className={styles.suggestedTitle}>Suggested assets for you</span>
-        <div className={styles.suggestedTabs}>
-          {SUGGESTED_TABS.map((tab) => (
-            <button
-              key={tab}
-              className={`${styles.suggestedTab} ${activeTab === tab ? styles.suggestedTabActive : ''}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {!hideTabs && (
+          <div className={styles.suggestedTabs}>
+            {SUGGESTED_TABS.map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.suggestedTab} ${activeTab === tab ? styles.suggestedTabActive : ''}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        )}
         <div className={styles.carouselControls}>
           <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
           <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>
