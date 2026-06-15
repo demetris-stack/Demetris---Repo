@@ -1115,6 +1115,27 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 }
 
 /* ── Suggestions Page ───────────────────────────────── */
+const THUMB_PALETTES = [
+  ['#6366f1','#8b5cf6'],
+  ['#0ea5e9','#06b6d4'],
+  ['#f59e0b','#f97316'],
+  ['#10b981','#059669'],
+  ['#ec4899','#f43f5e'],
+  ['#3b82f6','#6366f1'],
+  ['#14b8a6','#0ea5e9'],
+  ['#f97316','#ef4444'],
+  ['#8b5cf6','#ec4899'],
+  ['#84cc16','#10b981'],
+  ['#06b6d4','#3b82f6'],
+  ['#f43f5e','#f59e0b'],
+]
+function thumbGradient(id: string) {
+  let hash = 0
+  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) & 0xffff
+  const [a, b] = THUMB_PALETTES[hash % THUMB_PALETTES.length]
+  return `linear-gradient(135deg, ${a} 0%, ${b} 100%)`
+}
+
 function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
   return (
     <div className={styles.suggestSection}>
@@ -1122,10 +1143,10 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
       <div className={styles.carouselTrack}>
         {assets.map((asset) => (
           <div key={asset.id} className={styles.suggestedCard}>
-            <div className={styles.suggestedCardThumb}>
+            <div className={styles.suggestedCardThumb} style={{ background: thumbGradient(asset.id) }}>
               <div className={styles.suggestedThumbPlay}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.15)"/>
+                  <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
                   <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
                 </svg>
               </div>
@@ -1134,7 +1155,7 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
               </span>
             </div>
             <div className={styles.suggestedCardBody}>
-              <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /><span className={styles.suggestedTypeLabel}>{asset.type}</span></div>
+              <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
               <div className={styles.suggestedCardTitle}>{asset.title}</div>
               <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
             </div>
@@ -1197,10 +1218,10 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
         <div className={styles.carouselTrack}>
           {sorted.map((asset) => (
             <div key={asset.id} className={styles.suggestedCard}>
-              <div className={styles.suggestedCardThumb}>
+              <div className={styles.suggestedCardThumb} style={{ background: thumbGradient(asset.id) }}>
                 <div className={styles.suggestedThumbPlay}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.15)"/>
+                    <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
                     <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
                   </svg>
                 </div>
@@ -1209,7 +1230,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
                 </span>
               </div>
               <div className={styles.suggestedCardBody}>
-                <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /><span className={styles.suggestedTypeLabel}>{asset.type}</span></div>
+                <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
                 <div className={styles.suggestedCardTitle}>{asset.title}</div>
                 <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
               </div>
