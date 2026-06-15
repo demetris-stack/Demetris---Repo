@@ -1109,6 +1109,18 @@
   padding: 9px 0;
 }
 
+.thIconLabel {
+  width: 28px;
+  padding: 9px 2px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-align: center;
+}
+
 .th {
   padding: 9px 12px;
   text-align: left;

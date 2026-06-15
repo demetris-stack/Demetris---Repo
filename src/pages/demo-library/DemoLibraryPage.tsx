@@ -775,7 +775,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                   onChange={toggleAll} />
               </th>
               <th className={styles.thIcon} />
-              <th className={styles.thIcon} />
+              <th className={styles.thIconLabel}>Promoted</th>
               <th className={styles.thIcon} />
               <th className={styles.th}>Title</th>
               {col('type')       && <th className={styles.th}>Type</th>}
