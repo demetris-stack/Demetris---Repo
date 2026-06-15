@@ -1186,7 +1186,7 @@ const SUGGESTED_TABS = ['Popular', 'By Deal', 'By Persona', 'Recent'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
 function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
-  const [collapsed, setCollapsed] = useState(!initialExpanded && false)
+  const [collapsed, setCollapsed] = useState<boolean>(!initialExpanded)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
 
   const sorted = [...assets].sort((a, b) => {
