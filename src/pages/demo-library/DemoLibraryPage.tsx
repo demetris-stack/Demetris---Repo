@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
+import logoUrl from '../../assets/logo.png'
 
 type Tab = 'suggestions' | 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
 
@@ -1246,20 +1247,9 @@ function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarTop}>
-        {/* Logo — faceted "C" gem */}
+        {/* Logo */}
         <div className={styles.logo}>
-          <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
-            {/* Top arm */}
-            <polygon points="10,4  22,2  24,9  14,13" fill="#fb923c"/>
-            <polygon points="22,2  30,7  26,12  24,9"  fill="#f97316"/>
-            {/* Left spine */}
-            <polygon points="10,4  14,13  12,25  6,19  8,11" fill="#ea580c"/>
-            {/* Middle fill */}
-            <polygon points="14,13  24,9  26,12  20,18  12,22  12,25" fill="#fdba74"/>
-            {/* Bottom arm */}
-            <polygon points="12,25  20,22  22,28  12,34" fill="#fb923c"/>
-            <polygon points="20,22  26,26  24,32  22,28" fill="#f97316"/>
-          </svg>
+          <img src={logoUrl} alt="Logo" width="44" height="44" style={{objectFit:'contain'}}/>
         </div>
 
         <nav className={styles.sidebarNav}>
