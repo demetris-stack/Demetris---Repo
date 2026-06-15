@@ -1203,7 +1203,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { as
             <path d="M3 5l4 4 4-4" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <span className={styles.suggestedTitle}>Suggested assets for you</span>
+        <span className={styles.suggestedTitle}>Suggested demos for you</span>
         {!hideTabs && (
           <div className={styles.suggestedTabs}>
             {SUGGESTED_TABS.map((tab) => (
