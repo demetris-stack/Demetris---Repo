@@ -4,6 +4,7 @@ import styles from './DemoLibraryPage.module.css'
 import logoUrl from '../../assets/logo.png'
 import standardPIconUrl from '../../assets/standard-p-icon.png'
 import singleExpIconUrl from '../../assets/single-exp-icon.png'
+import discoveryDemoIconUrl from '../../assets/discovery-demo-icon.png'
 
 type Tab = 'suggestions' | 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
 
@@ -828,6 +829,8 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                           <img src={standardPIconUrl} alt={T2} title={T2} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
                         ) : row.type === T3 ? (
                           <img src={singleExpIconUrl} alt={T3} title={T3} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
+                        ) : row.type === T1 ? (
+                          <img src={discoveryDemoIconUrl} alt={T1} title={T1} width="18" height="18" style={{ objectFit: 'contain', display: 'block', imageRendering: 'crisp-edges' }} />
                         ) : (
                           <span className={styles.typeBadge}>{row.type}</span>
                         )}
