@@ -52,11 +52,13 @@
 /* ── Main content ────────────────────────────────────── */
 .main {
   flex: 1;
+  min-width: 0;
   background: #fff;
   display: flex;
   flex-direction: column;
   padding: 20px 32px 40px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ── Back link ───────────────────────────────────────── */
@@ -1391,6 +1393,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
 }
 
 .suggestSectionHeader {
@@ -1470,15 +1473,10 @@
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding-bottom: 12px;
+  overflow-y: visible;
+  padding-bottom: 8px;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  cursor: grab;
-}
-.carouselTrack:active {
-  cursor: grabbing;
 }
 .carouselTrack::-webkit-scrollbar {
   display: none;
@@ -1488,7 +1486,6 @@
 .suggestedCard {
   flex-shrink: 0;
   width: 160px;
-  scroll-snap-align: start;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #fff;

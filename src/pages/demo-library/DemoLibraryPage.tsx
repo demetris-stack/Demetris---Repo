@@ -1114,34 +1114,11 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 }
 
 /* ── Suggestions Page ───────────────────────────────── */
-function useDragScroll() {
-  const ref = useRef<HTMLDivElement>(null)
-  const dragging = useRef(false)
-  const startX = useRef(0)
-  const scrollLeft = useRef(0)
-
-  function onMouseDown(e: React.MouseEvent) {
-    dragging.current = true
-    startX.current = e.pageX - (ref.current?.offsetLeft ?? 0)
-    scrollLeft.current = ref.current?.scrollLeft ?? 0
-  }
-  function onMouseMove(e: React.MouseEvent) {
-    if (!dragging.current || !ref.current) return
-    e.preventDefault()
-    const x = e.pageX - ref.current.offsetLeft
-    ref.current.scrollLeft = scrollLeft.current - (x - startX.current)
-  }
-  function onMouseUp() { dragging.current = false }
-
-  return { ref, onMouseDown, onMouseMove, onMouseUp, onMouseLeave: onMouseUp }
-}
-
 function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
-  const drag = useDragScroll()
   return (
     <div className={styles.suggestSection}>
       <span className={styles.suggestSectionTitle}>{title}</span>
-      <div className={styles.carouselTrack} ref={drag.ref} onMouseDown={drag.onMouseDown} onMouseMove={drag.onMouseMove} onMouseUp={drag.onMouseUp} onMouseLeave={drag.onMouseLeave}>
+      <div className={styles.carouselTrack}>
         {assets.map((asset) => (
           <div key={asset.id} className={styles.suggestedCard}>
             <div className={styles.suggestedCardThumb}>
@@ -1178,7 +1155,6 @@ type SuggestedTab = typeof SUGGESTED_TABS[number]
 function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState(!initialExpanded && false)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
-  const drag = useDragScroll()
 
   const sorted = [...assets].sort((a, b) => {
     if (activeTab === 'Recent') return a.id.localeCompare(b.id)
@@ -1211,7 +1187,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { as
       </div>
 
       {!collapsed && (
-        <div className={styles.carouselTrack} ref={drag.ref} onMouseDown={drag.onMouseDown} onMouseMove={drag.onMouseMove} onMouseUp={drag.onMouseUp} onMouseLeave={drag.onMouseLeave}>
+        <div className={styles.carouselTrack}>
           {sorted.map((asset) => (
             <div key={asset.id} className={styles.suggestedCard}>
               <div className={styles.suggestedCardThumb}>
