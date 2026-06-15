@@ -1379,6 +1379,32 @@
 }
 
 /* ── Carousel ────────────────────────────────────────── */
+/* ── Suggestions page (multi-row) ───────────────────── */
+.suggestionsPage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 4px;
+}
+
+.suggestionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggestionRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suggestionRowTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+}
+
 /* ── Suggested assets section ────────────────────────── */
 .suggestedSection {
   padding-top: 4px;

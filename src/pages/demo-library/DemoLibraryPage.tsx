@@ -62,6 +62,42 @@ const DEMO_LIBRARY_SUGGESTED: SuggestedAsset[] = [
   { id: 'ls8', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
 ]
 
+const SUGGESTIONS_RECENTS: SuggestedAsset[] = [
+  { id: 'rec1', title: 'Quick Start Guide', type: 'Walkthrough', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 23 },
+  { id: 'rec2', title: 'Dashboard Overview', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 18 },
+  { id: 'rec3', title: 'Product Tour 2026', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 28 },
+  { id: 'rec4', title: 'Integrations Setup', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
+  { id: 'rec5', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
+  { id: 'rec6', title: 'Analytics Deep Dive', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 15 },
+]
+
+const SUGGESTIONS_FOR_DEAL: SuggestedAsset[] = [
+  { id: 'deal1', title: 'Enterprise Features', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 24 },
+  { id: 'deal2', title: 'Deal Closing Playbook', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 17 },
+  { id: 'deal3', title: 'ROI Calculator Walkthrough', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 12 },
+  { id: 'deal4', title: 'Security & Compliance', type: 'Presentation', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 19 },
+  { id: 'deal5', title: 'Executive Summary Deck', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 11 },
+  { id: 'deal6', title: 'Competitive Battlecard Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
+]
+
+const SUGGESTIONS_PROMOTED: SuggestedAsset[] = [
+  { id: 'promo1', title: 'Platform Overview', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 32 },
+  { id: 'promo2', title: 'Brand Story Demo', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 29 },
+  { id: 'promo3', title: 'Sales Enablement Kit', type: 'Webinar', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 26 },
+  { id: 'promo4', title: 'Partner Enablement Kit', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 22 },
+  { id: 'promo5', title: 'Social Proof Reel', type: 'Video', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 20 },
+  { id: 'promo6', title: 'Event Booth Demo', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 18 },
+]
+
+const SUGGESTIONS_ASSETS: SuggestedAsset[] = [
+  { id: 'asset1', title: 'API Walkthrough', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 21 },
+  { id: 'asset2', title: 'Admin Console', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 9 },
+  { id: 'asset3', title: 'Onboarding Series Pt.1', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
+  { id: 'asset4', title: 'Pricing Tier Explainer', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 13 },
+  { id: 'asset5', title: 'Authentication Flow', type: 'Tour', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 10 },
+  { id: 'asset6', title: 'Data Pipeline Demo', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 8 },
+]
+
 // Root-level rows have no parentFolder. Rows inside a folder have parentFolder set.
 const MY_DEMOS_ROWS: DemoRow[] = [
   // Root level
@@ -314,7 +350,7 @@ function TabContent({ tab }: { tab: Tab }) {
   }
 
   const content = tab === 'suggestions' ? (
-    <SuggestedCarousel assets={[...MY_DEMOS_SUGGESTED, ...DEMO_LIBRARY_SUGGESTED].sort((a, b) => b.inDemos - a.inDemos)} expanded hideTabs />
+    <SuggestionsPage />
   ) : tab === 'my-demos' ? (
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
@@ -1073,6 +1109,52 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+/* ── Suggestions Page ───────────────────────────────── */
+function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  function scroll(dir: 'left' | 'right') {
+    trackRef.current?.scrollBy({ left: dir === 'right' ? 300 : -300, behavior: 'smooth' })
+  }
+  return (
+    <div className={styles.suggestionRow}>
+      <div className={styles.suggestionRowHeader}>
+        <span className={styles.suggestionRowTitle}>{title}</span>
+        <div className={styles.carouselControls}>
+          <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
+          <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>
+        </div>
+      </div>
+      <div className={styles.carouselTrack} ref={trackRef}>
+        {assets.map((asset) => (
+          <div key={asset.id} className={styles.suggestedCard}>
+            <div className={styles.suggestedCardThumb}>
+              <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                {asset.creatorInitials}
+              </span>
+              <span className={styles.suggestedTypeBadge}>{asset.type}</span>
+            </div>
+            <div className={styles.suggestedCardBody}>
+              <div className={styles.suggestedCardTitle}>{asset.title}</div>
+              <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function SuggestionsPage() {
+  return (
+    <div className={styles.suggestionsPage}>
+      <SuggestionRow title="Recents" assets={SUGGESTIONS_RECENTS} />
+      <SuggestionRow title="For this deal…" assets={SUGGESTIONS_FOR_DEAL} />
+      <SuggestionRow title="Promoted" assets={SUGGESTIONS_PROMOTED} />
+      <SuggestionRow title="Assets" assets={SUGGESTIONS_ASSETS} />
     </div>
   )
 }
