@@ -1182,17 +1182,17 @@ function SuggestionsPage() {
   )
 }
 
-const SUGGESTED_TABS = ['Popular', 'By Deal', 'By Persona', 'Recent'] as const
+const SUGGESTED_TABS = ['New', 'Trending', 'Most Viewed', 'Most Shared', 'Region'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
 function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState<boolean>(!initialExpanded)
-  const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
+  const [activeTab, setActiveTab] = useState<SuggestedTab>('New')
 
   const sorted = [...assets].sort((a, b) => {
-    if (activeTab === 'Recent') return a.id.localeCompare(b.id)
-    if (activeTab === 'Popular') return b.inDemos - a.inDemos
-    return b.inDemos - a.inDemos
+    if (activeTab === 'New') return a.id.localeCompare(b.id)
+    if (activeTab === 'Most Viewed' || activeTab === 'Most Shared' || activeTab === 'Trending') return b.inDemos - a.inDemos
+    return 0
   })
 
   return (
