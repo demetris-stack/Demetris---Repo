@@ -1329,36 +1329,34 @@ function Sidebar() {
             </svg>
             <span className={styles.navLabel}>Public Links</span>
           </div>
+
+          {/* Partners */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="3" r="2" stroke="currentColor" strokeWidth="1.5"/>
+              <circle cx="3" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
+              <circle cx="13" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M8 5v3M8 8l-3.5 3M8 8l3.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span className={styles.navLabel}>Partners</span>
+            <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          {/* Analytics */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="9" width="3" height="5" rx=".8" fill="currentColor"/>
+              <rect x="6.5" y="5" width="3" height="9" rx=".8" fill="currentColor"/>
+              <rect x="11" y="2" width="3" height="12" rx=".8" fill="currentColor"/>
+            </svg>
+            <span className={styles.navLabel}>Analytics</span>
+            <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
         </nav>
-      </div>
-
-      <div className={styles.sidebarBottom}>
-        {/* Partners */}
-        <div className={styles.navRow}>
-          <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="8" cy="3" r="2" stroke="currentColor" strokeWidth="1.5"/>
-            <circle cx="3" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
-            <circle cx="13" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
-            <path d="M8 5v3M8 8l-3.5 3M8 8l3.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          <span className={styles.navLabel}>Partners</span>
-          <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-
-        {/* Analytics */}
-        <div className={styles.navRow}>
-          <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect x="2" y="9" width="3" height="5" rx=".8" fill="currentColor"/>
-            <rect x="6.5" y="5" width="3" height="9" rx=".8" fill="currentColor"/>
-            <rect x="11" y="2" width="3" height="12" rx=".8" fill="currentColor"/>
-          </svg>
-          <span className={styles.navLabel}>Analytics</span>
-          <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
       </div>
     </aside>
   )

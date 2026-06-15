@@ -12,7 +12,6 @@
   background: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 20px 12px 24px;
   border-right: 1px solid #e5e7eb;
 }
