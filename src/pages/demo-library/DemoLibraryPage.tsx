@@ -1114,23 +1114,40 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 }
 
 /* ── Suggestions Page ───────────────────────────────── */
-function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
-  const trackRef = useRef<HTMLDivElement>(null)
-  function scroll(dir: 'left' | 'right') {
-    trackRef.current?.scrollBy({ left: dir === 'right' ? 300 : -300, behavior: 'smooth' })
+function useDragScroll() {
+  const ref = useRef<HTMLDivElement>(null)
+  const dragging = useRef(false)
+  const startX = useRef(0)
+  const scrollLeft = useRef(0)
+
+  function onMouseDown(e: React.MouseEvent) {
+    dragging.current = true
+    startX.current = e.pageX - (ref.current?.offsetLeft ?? 0)
+    scrollLeft.current = ref.current?.scrollLeft ?? 0
   }
+  function onMouseMove(e: React.MouseEvent) {
+    if (!dragging.current || !ref.current) return
+    e.preventDefault()
+    const x = e.pageX - ref.current.offsetLeft
+    ref.current.scrollLeft = scrollLeft.current - (x - startX.current)
+  }
+  function onMouseUp() { dragging.current = false }
+
+  return { ref, onMouseDown, onMouseMove, onMouseUp, onMouseLeave: onMouseUp }
+}
+
+function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
+  const drag = useDragScroll()
   return (
     <div className={styles.suggestSection}>
       <span className={styles.suggestSectionTitle}>{title}</span>
-      <div className={styles.carouselWrap}>
-        <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayLeft}`} onClick={() => scroll('left')}>‹</button>
-        <div className={styles.carouselTrack} ref={trackRef}>
-          {assets.map((asset) => (
-            <div key={asset.id} className={styles.suggestedCard}>
-              <div className={styles.suggestedCardThumb}>
-                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
-                  {asset.creatorInitials}
-                </span>
+      <div className={styles.carouselTrack} ref={drag.ref} onMouseDown={drag.onMouseDown} onMouseMove={drag.onMouseMove} onMouseUp={drag.onMouseUp} onMouseLeave={drag.onMouseLeave}>
+        {assets.map((asset) => (
+          <div key={asset.id} className={styles.suggestedCard}>
+            <div className={styles.suggestedCardThumb}>
+              <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                {asset.creatorInitials}
+              </span>
               <span className={styles.suggestedTypeBadge}>{asset.type}</span>
             </div>
             <div className={styles.suggestedCardBody}>
@@ -1139,8 +1156,6 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
             </div>
           </div>
         ))}
-        </div>
-        <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayRight}`} onClick={() => scroll('right')}>›</button>
       </div>
     </div>
   )
@@ -1163,17 +1178,13 @@ type SuggestedTab = typeof SUGGESTED_TABS[number]
 function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState(!initialExpanded && false)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
-  const trackRef = useRef<HTMLDivElement>(null)
+  const drag = useDragScroll()
 
   const sorted = [...assets].sort((a, b) => {
     if (activeTab === 'Recent') return a.id.localeCompare(b.id)
     if (activeTab === 'Popular') return b.inDemos - a.inDemos
     return b.inDemos - a.inDemos
   })
-
-  function scroll(dir: 'left' | 'right') {
-    trackRef.current?.scrollBy({ left: dir === 'right' ? 300 : -300, behavior: 'smooth' })
-  }
 
   return (
     <section className={styles.suggestedSection}>
@@ -1200,25 +1211,21 @@ function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { as
       </div>
 
       {!collapsed && (
-        <div className={styles.carouselWrap}>
-          <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayLeft}`} onClick={() => scroll('left')}>‹</button>
-          <div className={styles.carouselTrack} ref={trackRef}>
-            {sorted.map((asset) => (
-              <div key={asset.id} className={styles.suggestedCard}>
-                <div className={styles.suggestedCardThumb}>
-                  <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
-                    {asset.creatorInitials}
-                  </span>
-                  <span className={styles.suggestedTypeBadge}>{asset.type}</span>
-                </div>
-                <div className={styles.suggestedCardBody}>
-                  <div className={styles.suggestedCardTitle}>{asset.title}</div>
-                  <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
-                </div>
+        <div className={styles.carouselTrack} ref={drag.ref} onMouseDown={drag.onMouseDown} onMouseMove={drag.onMouseMove} onMouseUp={drag.onMouseUp} onMouseLeave={drag.onMouseLeave}>
+          {sorted.map((asset) => (
+            <div key={asset.id} className={styles.suggestedCard}>
+              <div className={styles.suggestedCardThumb}>
+                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                  {asset.creatorInitials}
+                </span>
+                <span className={styles.suggestedTypeBadge}>{asset.type}</span>
               </div>
-            ))}
-          </div>
-          <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayRight}`} onClick={() => scroll('right')}>›</button>
+              <div className={styles.suggestedCardBody}>
+                <div className={styles.suggestedCardTitle}>{asset.title}</div>
+                <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </section>

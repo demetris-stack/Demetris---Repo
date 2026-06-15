@@ -1465,55 +1465,20 @@
   background: #fff;
 }
 
-.carouselWrap {
-  position: relative;
-}
-
-.carouselOverlayBtn {
-  position: absolute;
-  top: 0;
-  bottom: 12px; /* accounts for carouselTrack padding-bottom */
-  width: 48px;
-  border: none;
-  background: transparent;
-  font-size: 22px;
-  color: #374151;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity .18s;
-  z-index: 10;
-  pointer-events: none;
-}
-.carouselOverlayLeft {
-  left: 0;
-  background: linear-gradient(to right, rgba(255,255,255,0.9) 40%, transparent);
-  border-radius: 8px 0 0 8px;
-}
-.carouselOverlayRight {
-  right: 0;
-  background: linear-gradient(to left, rgba(255,255,255,0.9) 40%, transparent);
-  border-radius: 0 8px 8px 0;
-}
-.carouselWrap:hover .carouselOverlayBtn {
-  opacity: 1;
-  pointer-events: auto;
-}
-.carouselOverlayBtn:hover {
-  opacity: 1 !important;
-  color: #111;
-}
 
 .carouselTrack {
   display: flex;
   gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   padding-bottom: 12px;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  cursor: grab;
+}
+.carouselTrack:active {
+  cursor: grabbing;
 }
 .carouselTrack::-webkit-scrollbar {
   display: none;
