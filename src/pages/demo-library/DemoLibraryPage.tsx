@@ -1246,11 +1246,19 @@ function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarTop}>
-        {/* Logo */}
+        {/* Logo — faceted "C" gem */}
         <div className={styles.logo}>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L29 10V22L16 29L3 22V10L16 3Z" fill="#1a1a1a"/>
-            <path d="M16 3L16 29M3 10L29 10M3 22L29 22" stroke="#fff" strokeWidth="1.2" opacity="0.5"/>
+          <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+            {/* Top arm */}
+            <polygon points="10,4  22,2  24,9  14,13" fill="#fb923c"/>
+            <polygon points="22,2  30,7  26,12  24,9"  fill="#f97316"/>
+            {/* Left spine */}
+            <polygon points="10,4  14,13  12,25  6,19  8,11" fill="#ea580c"/>
+            {/* Middle fill */}
+            <polygon points="14,13  24,9  26,12  20,18  12,22  12,25" fill="#fdba74"/>
+            {/* Bottom arm */}
+            <polygon points="12,25  20,22  22,28  12,34" fill="#fb923c"/>
+            <polygon points="20,22  26,26  24,32  22,28" fill="#f97316"/>
           </svg>
         </div>
 

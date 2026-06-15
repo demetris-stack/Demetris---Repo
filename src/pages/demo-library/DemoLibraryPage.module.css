@@ -26,8 +26,8 @@
 .logo {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 4px 8px;
+  justify-content: center;
+  padding: 8px 0 4px;
 }
 
 .sidebarNav {
