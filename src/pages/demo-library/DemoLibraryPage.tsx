@@ -707,6 +707,7 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
 
   return (
     <div className={styles.tableSection}>
+      <hr className={styles.tableDivider} />
       <div className={styles.tableToolbar}>
         <div className={styles.toolbarLeft}>
           {filters.openFolder && (
