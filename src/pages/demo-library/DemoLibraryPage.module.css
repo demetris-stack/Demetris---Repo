@@ -760,7 +760,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 14px;
+  height: 34px;
+  padding: 0 14px;
   border-radius: 999px;
   border: 1px solid #e5e7eb;
   background: #f3f4f6;
@@ -876,17 +877,19 @@
   display: flex;
   align-items: center;
   gap: 2px;
+  height: 34px;
   background: #f3f4f6;
   border-radius: 999px;
   border: 1px solid #e5e7eb;
   padding: 3px;
+  box-sizing: border-box;
 }
 .viewBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border: none;
   background: transparent;
   border-radius: 999px;
