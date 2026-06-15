@@ -27,16 +27,19 @@ interface DemoRow {
   title: string
   type: string
   theme: string
-  published: string
+  language?: string
+  totalTours?: number
   creator: string
   creatorInitials: string
   creatorColor: string
+  owner?: string
   tags: string[]
+  access?: string
   freshness: number
   usage: number
   created: string
   modified: string
-  duration: string
+  duration?: string
   description?: string
   parentFolder?: string
 }
@@ -138,65 +141,65 @@ const SUGGESTIONS_ASSETS: SuggestedAsset[] = [
 // Root-level rows have no parentFolder. Rows inside a folder have parentFolder set.
 const MY_DEMOS_ROWS: DemoRow[] = [
   // Root level
-  { id: 'r0a', title: 'Onboarding', type: 'Folder', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding'], freshness: 0, usage: 5, created: '02/01/26', modified: '05/10/26', duration: '—' },
-  { id: 'r0b', title: 'Product', type: 'Folder', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 0, usage: 4, created: '03/01/26', modified: '05/01/26', duration: '—' },
-  { id: 'r0c', title: 'Sales Enablement', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 4, created: '01/10/26', modified: '04/22/26', duration: '—' },
-  { id: 'r0d', title: 'Engineering Demos', type: 'Folder', theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'admin'], freshness: 0, usage: 3, created: '01/15/26', modified: '05/05/26', duration: '—' },
-  { id: 'r4', title: 'Settings & Permissions', type: T2, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', duration: '2:55', description: 'A guided tour of the permissions model — role assignments, access levels, and audit log configuration.' },
-  { id: 'r5', title: 'Integrations Setup', type: T3, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', duration: '4:18', description: 'Step-by-step simulation for connecting third-party tools via native integrations and the REST API.' },
-  { id: 'r9', title: 'Quick Start Guide', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 15, usage: 312, created: '01/05/26', modified: '05/12/26', duration: '2:10', description: 'Get up and running in under 3 minutes. Covers workspace setup, inviting teammates, and first project creation.' },
-  { id: 'r10', title: 'Feature Highlights Reel', type: T2, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 3, usage: 88, created: '04/20/26', modified: '05/14/26', duration: '4:55', description: 'A high-energy product sizzle reel showcasing the top 10 features most valued by customers.' },
+  { id: 'r0a', title: 'Onboarding', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding'], access: 'Team', freshness: 0, usage: 5, created: '02/01/26', modified: '05/10/26' },
+  { id: 'r0b', title: 'Product', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], access: 'Team', freshness: 0, usage: 4, created: '03/01/26', modified: '05/01/26' },
+  { id: 'r0c', title: 'Sales Enablement', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], access: 'Team', freshness: 0, usage: 4, created: '01/10/26', modified: '04/22/26' },
+  { id: 'r0d', title: 'Engineering Demos', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'admin'], access: 'Team', freshness: 0, usage: 3, created: '01/15/26', modified: '05/05/26' },
+  { id: 'r4', title: 'Settings & Permissions', type: T2, theme: '', language: 'English', totalTours: 4, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['admin', 'security'], access: 'Team', freshness: 8, usage: 57, created: '04/05/26', modified: '05/08/26', description: 'A guided tour of the permissions model — role assignments, access levels, and audit log configuration.' },
+  { id: 'r5', title: 'Integrations Setup', type: T3, theme: '', language: 'English', totalTours: 7, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api', 'onboarding'], access: 'Team', freshness: 12, usage: 176, created: '02/28/26', modified: '04/15/26', description: 'Step-by-step simulation for connecting third-party tools via native integrations and the REST API.' },
+  { id: 'r9', title: 'Quick Start Guide', type: T1, theme: '', language: 'English', totalTours: 2, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], access: 'Team', freshness: 15, usage: 312, created: '01/05/26', modified: '05/12/26', description: 'Get up and running in under 3 minutes. Covers workspace setup, inviting teammates, and first project creation.' },
+  { id: 'r10', title: 'Feature Highlights Reel', type: T2, theme: '', language: 'English', totalTours: 9, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], access: 'Team', freshness: 3, usage: 88, created: '04/20/26', modified: '05/14/26', description: 'A high-energy product sizzle reel showcasing the top 10 features most valued by customers.' },
   // Inside "Onboarding"
-  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', duration: '3:42', description: 'Interactive simulation of the full new-user onboarding flow, from sign-up to first meaningful action.', parentFolder: 'Onboarding' },
-  { id: 'r7', title: 'Mobile Walkthrough', type: T3, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', duration: '3:15', description: 'A click-through tour of the iOS and Android apps, highlighting key mobile-only features.', parentFolder: 'Onboarding' },
-  { id: 'r11', title: 'First Login Experience', type: T2, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding'], freshness: 11, usage: 203, created: '03/05/26', modified: '05/02/26', duration: '2:30', description: 'Simulates exactly what a new user sees when they log in for the first time, including the welcome checklist.', parentFolder: 'Onboarding' },
-  { id: 'r12', title: 'Account Setup Tour', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'admin'], freshness: 7, usage: 119, created: '03/18/26', modified: '04/28/26', duration: '3:00', description: 'Covers profile setup, notification preferences, and connecting calendar and email integrations.', parentFolder: 'Onboarding' },
-  { id: 'r13', title: 'Welcome & Overview', type: T3, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['onboarding', 'sales'], freshness: 4, usage: 78, created: '02/22/26', modified: '04/10/26', duration: '28:00', description: 'Recording of the monthly new-customer welcome session including live Q&A highlights.', parentFolder: 'Onboarding' },
+  { id: 'r1', title: 'Onboarding Flow Walkthrough', type: T1, theme: '', language: 'English', totalTours: 5, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'product'], access: 'Team', freshness: 6, usage: 142, created: '04/18/26', modified: '05/10/26', description: 'Interactive simulation of the full new-user onboarding flow, from sign-up to first meaningful action.', parentFolder: 'Onboarding' },
+  { id: 'r7', title: 'Mobile Walkthrough', type: T3, theme: '', language: 'English', totalTours: 12, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'onboarding'], access: 'Team', freshness: 9, usage: 64, created: '02/14/26', modified: '03/30/26', description: 'A click-through tour of the iOS and Android apps, highlighting key mobile-only features.', parentFolder: 'Onboarding' },
+  { id: 'r11', title: 'First Login Experience', type: T2, theme: '', language: 'English', totalTours: 3, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding'], access: 'Team', freshness: 11, usage: 203, created: '03/05/26', modified: '05/02/26', description: 'Simulates exactly what a new user sees when they log in for the first time, including the welcome checklist.', parentFolder: 'Onboarding' },
+  { id: 'r12', title: 'Account Setup Tour', type: T1, theme: '', language: 'English', totalTours: 8, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['onboarding', 'admin'], access: 'Team', freshness: 7, usage: 119, created: '03/18/26', modified: '04/28/26', description: 'Covers profile setup, notification preferences, and connecting calendar and email integrations.', parentFolder: 'Onboarding' },
+  { id: 'r13', title: 'Welcome & Overview', type: T3, theme: '', language: 'English', totalTours: 6, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['onboarding', 'sales'], access: 'Team', freshness: 4, usage: 78, created: '02/22/26', modified: '04/10/26', description: 'Recording of the monthly new-customer welcome session including live Q&A highlights.', parentFolder: 'Onboarding' },
   // Inside "Product"
-  { id: 'r2', title: 'Dashboard Overview', type: T1, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', duration: '5:10', description: 'Walkthrough of the main dashboard — widgets, date ranges, and customizing the layout for different team roles.', parentFolder: 'Product' },
-  { id: 'r3', title: 'Analytics Deep Dive', type: T2, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', duration: '7:23', description: 'Explores advanced reporting features: custom funnels, cohort analysis, and scheduled report delivery.', parentFolder: 'Product' },
-  { id: 'r14', title: 'Reporting Module', type: T3, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['product', 'reporting'], freshness: 5, usage: 134, created: '04/01/26', modified: '05/07/26', duration: '4:40', description: 'Tour of every section in the Reporting module with tips on exporting data and sharing with stakeholders.', parentFolder: 'Product' },
-  { id: 'r15', title: 'Workspace Customization', type: T1, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['product', 'admin'], freshness: 9, usage: 67, created: '04/10/26', modified: '05/03/26', duration: '3:55', description: 'Shows how admins can brand the workspace, configure default views, and manage team-wide settings.', parentFolder: 'Product' },
+  { id: 'r2', title: 'Dashboard Overview', type: T1, theme: '', language: 'English', totalTours: 11, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'sales'], access: 'Team', freshness: 4, usage: 98, created: '03/22/26', modified: '04/30/26', description: 'Walkthrough of the main dashboard — widgets, date ranges, and customizing the layout for different team roles.', parentFolder: 'Product' },
+  { id: 'r3', title: 'Analytics Deep Dive', type: T2, theme: '', language: 'English', totalTours: 1, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'admin', 'reporting'], access: 'Team', freshness: 3, usage: 211, created: '03/14/26', modified: '05/01/26', description: 'Explores advanced reporting features: custom funnels, cohort analysis, and scheduled report delivery.', parentFolder: 'Product' },
+  { id: 'r14', title: 'Reporting Module', type: T3, theme: '', language: 'English', totalTours: 10, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['product', 'reporting'], access: 'Team', freshness: 5, usage: 134, created: '04/01/26', modified: '05/07/26', description: 'Tour of every section in the Reporting module with tips on exporting data and sharing with stakeholders.', parentFolder: 'Product' },
+  { id: 'r15', title: 'Workspace Customization', type: T1, theme: '', language: 'English', totalTours: 5, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['product', 'admin'], access: 'Team', freshness: 9, usage: 67, created: '04/10/26', modified: '05/03/26', description: 'Shows how admins can brand the workspace, configure default views, and manage team-wide settings.', parentFolder: 'Product' },
   // Inside "Sales Enablement"
-  { id: 'r6', title: 'Reporting Basics', type: T2, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', duration: '6:04', description: 'Introductory video covering the core reporting screens — ideal for sharing with new champion contacts.', parentFolder: 'Sales Enablement' },
-  { id: 'r8', title: 'Enterprise Admin', type: T3, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', duration: '9:45', description: 'Detailed demo for IT and security stakeholders covering SSO, SCIM provisioning, and data residency.', parentFolder: 'Sales Enablement' },
-  { id: 'r16', title: 'Competitive Battlecard', type: T1, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 6, usage: 241, created: '02/10/26', modified: '05/09/26', duration: '5:30', description: 'Side-by-side demo highlighting key differentiators versus the top two competitors — updated for Q2 2026.', parentFolder: 'Sales Enablement' },
-  { id: 'r17', title: 'ROI Calculator', type: T2, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['sales'], freshness: 10, usage: 188, created: '03/02/26', modified: '04/25/26', duration: '4:15', description: 'Guided walkthrough of the interactive ROI calculator, showing how to input customer data and present results.', parentFolder: 'Sales Enablement' },
+  { id: 'r6', title: 'Reporting Basics', type: T2, theme: '', language: 'English', totalTours: 7, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], access: 'Team', freshness: 5, usage: 89, created: '03/10/26', modified: '04/22/26', description: 'Introductory video covering the core reporting screens — ideal for sharing with new champion contacts.', parentFolder: 'Sales Enablement' },
+  { id: 'r8', title: 'Enterprise Admin', type: T3, theme: '', language: 'English', totalTours: 3, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], access: 'Team', freshness: 2, usage: 130, created: '01/20/26', modified: '03/15/26', description: 'Detailed demo for IT and security stakeholders covering SSO, SCIM provisioning, and data residency.', parentFolder: 'Sales Enablement' },
+  { id: 'r16', title: 'Competitive Battlecard', type: T1, theme: '', language: 'English', totalTours: 9, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], access: 'Team', freshness: 6, usage: 241, created: '02/10/26', modified: '05/09/26', description: 'Side-by-side demo highlighting key differentiators versus the top two competitors — updated for Q2 2026.', parentFolder: 'Sales Enablement' },
+  { id: 'r17', title: 'ROI Calculator', type: T2, theme: '', language: 'English', totalTours: 4, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['sales'], access: 'Team', freshness: 10, usage: 188, created: '03/02/26', modified: '04/25/26', description: 'Guided walkthrough of the interactive ROI calculator, showing how to input customer data and present results.', parentFolder: 'Sales Enablement' },
   // Inside "Engineering Demos"
-  { id: 'r18', title: 'API Integration Sandbox', type: T3, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api'], freshness: 13, usage: 95, created: '01/28/26', modified: '04/20/26', duration: '6:50', description: 'Live sandbox simulation letting prospects make real API calls and inspect responses without credentials.', parentFolder: 'Engineering Demos' },
-  { id: 'r19', title: 'Webhook Configuration', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 8, usage: 52, created: '02/05/26', modified: '04/12/26', duration: '3:20', description: 'Step-by-step guide to setting up webhooks, verifying payloads, and handling retry logic.', parentFolder: 'Engineering Demos' },
-  { id: 'r20', title: 'SSO Setup Guide', type: T2, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['security', 'admin'], freshness: 5, usage: 74, created: '03/08/26', modified: '05/01/26', duration: '4:00', description: 'Covers SAML 2.0 and OIDC configuration, attribute mapping, and testing the SSO flow end-to-end.', parentFolder: 'Engineering Demos' },
+  { id: 'r18', title: 'API Integration Sandbox', type: T3, theme: '', language: 'English', totalTours: 6, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['api'], access: 'Team', freshness: 13, usage: 95, created: '01/28/26', modified: '04/20/26', description: 'Live sandbox simulation letting prospects make real API calls and inspect responses without credentials.', parentFolder: 'Engineering Demos' },
+  { id: 'r19', title: 'Webhook Configuration', type: T1, theme: '', language: 'English', totalTours: 8, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], access: 'Team', freshness: 8, usage: 52, created: '02/05/26', modified: '04/12/26', description: 'Step-by-step guide to setting up webhooks, verifying payloads, and handling retry logic.', parentFolder: 'Engineering Demos' },
+  { id: 'r20', title: 'SSO Setup Guide', type: T2, theme: '', language: 'English', totalTours: 2, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['security', 'admin'], access: 'Team', freshness: 5, usage: 74, created: '03/08/26', modified: '05/01/26', description: 'Covers SAML 2.0 and OIDC configuration, attribute mapping, and testing the SSO flow end-to-end.', parentFolder: 'Engineering Demos' },
 ]
 
 const DEMO_LIBRARY_ROWS: DemoRow[] = [
   // Root level
-  { id: 'l0a', title: 'Global Library', type: 'Folder', theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product'], freshness: 0, usage: 4, created: '01/01/26', modified: '05/18/26', duration: '—' },
-  { id: 'l0b', title: 'Engineering', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api', 'security'], freshness: 0, usage: 4, created: '02/10/26', modified: '05/05/26', duration: '—' },
-  { id: 'l0c', title: 'Sales', type: 'Folder', theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 0, usage: 4, created: '01/05/26', modified: '03/01/26', duration: '—' },
-  { id: 'l0d', title: 'Marketing', type: 'Folder', theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'mobile'], freshness: 0, usage: 3, created: '01/20/26', modified: '04/28/26', duration: '—' },
-  { id: 'l4', title: 'Mobile App Demo', type: T1, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', duration: '3:58', description: 'Full walkthrough of the mobile app experience across iOS and Android, including push notifications and offline mode.' },
-  { id: 'l6', title: 'Admin Console', type: T2, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', duration: '5:33', description: 'Interactive simulation of the admin console — user management, billing, and organization-wide settings.' },
-  { id: 'l9', title: 'Platform Overview', type: T3, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'onboarding'], freshness: 14, usage: 521, created: '01/10/26', modified: '05/15/26', duration: '6:00', description: 'Top-level platform demo covering all core modules — ideal as the first demo in any discovery conversation.' },
-  { id: 'l10', title: 'Partner Enablement Kit', type: T1, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['sales', 'enterprise'], freshness: 2, usage: 164, created: '02/25/26', modified: '04/18/26', duration: '11:30', description: 'Comprehensive demo for partner sales teams covering positioning, objection handling, and co-sell motions.' },
+  { id: 'l0a', title: 'Global Library', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product'], access: 'Team', freshness: 0, usage: 4, created: '01/01/26', modified: '05/18/26' },
+  { id: 'l0b', title: 'Engineering', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api', 'security'], access: 'Team', freshness: 0, usage: 4, created: '02/10/26', modified: '05/05/26' },
+  { id: 'l0c', title: 'Sales', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], access: 'Team', freshness: 0, usage: 4, created: '01/05/26', modified: '03/01/26' },
+  { id: 'l0d', title: 'Marketing', type: 'Folder', theme: '', language: 'English', totalTours: 0, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product', 'mobile'], access: 'Team', freshness: 0, usage: 3, created: '01/20/26', modified: '04/28/26' },
+  { id: 'l4', title: 'Mobile App Demo', type: T1, theme: '', language: 'English', totalTours: 11, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['mobile', 'product'], access: 'Team', freshness: 6, usage: 143, created: '03/30/26', modified: '04/28/26', description: 'Full walkthrough of the mobile app experience across iOS and Android, including push notifications and offline mode.' },
+  { id: 'l6', title: 'Admin Console', type: T2, theme: '', language: 'English', totalTours: 5, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['admin'], access: 'Team', freshness: 8, usage: 99, created: '02/20/26', modified: '04/05/26', description: 'Interactive simulation of the admin console — user management, billing, and organization-wide settings.' },
+  { id: 'l9', title: 'Platform Overview', type: T3, theme: '', language: 'English', totalTours: 7, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'onboarding'], access: 'Team', freshness: 14, usage: 521, created: '01/10/26', modified: '05/15/26', description: 'Top-level platform demo covering all core modules — ideal as the first demo in any discovery conversation.' },
+  { id: 'l10', title: 'Partner Enablement Kit', type: T1, theme: '', language: 'English', totalTours: 4, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['sales', 'enterprise'], access: 'Team', freshness: 2, usage: 164, created: '02/25/26', modified: '04/18/26', description: 'Comprehensive demo for partner sales teams covering positioning, objection handling, and co-sell motions.' },
   // Inside "Global Library"
-  { id: 'l1', title: 'Product Tour 2026', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', duration: '8:30', description: 'The definitive 2026 product tour — updated with all Q1 feature releases and refreshed UI screenshots.', parentFolder: 'Global Library' },
-  { id: 'l7', title: 'Onboarding Series Pt.1', type: T2, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', duration: '7:20', description: 'Part 1 of 2: covers workspace creation, initial configuration, and inviting your first team members.', parentFolder: 'Global Library' },
-  { id: 'l11', title: 'Onboarding Series Pt.2', type: T3, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], freshness: 4, usage: 271, created: '02/15/26', modified: '04/01/26', duration: '6:45', description: 'Part 2 of 2: advanced configuration, custom fields, automations, and connecting your first integration.', parentFolder: 'Global Library' },
-  { id: 'l12', title: 'Executive Summary', type: T1, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'sales'], freshness: 9, usage: 193, created: '03/10/26', modified: '05/10/26', duration: '9:00', description: 'C-suite-ready demo summarizing business value, ROI benchmarks, and customer success stories.', parentFolder: 'Global Library' },
+  { id: 'l1', title: 'Product Tour 2026', type: T1, theme: '', language: 'English', totalTours: 9, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'sales'], access: 'Team', freshness: 7, usage: 304, created: '05/01/26', modified: '05/18/26', description: 'The definitive 2026 product tour — updated with all Q1 feature releases and refreshed UI screenshots.', parentFolder: 'Global Library' },
+  { id: 'l7', title: 'Onboarding Series Pt.1', type: T2, theme: '', language: 'English', totalTours: 3, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], access: 'Team', freshness: 5, usage: 338, created: '02/01/26', modified: '03/20/26', description: 'Part 1 of 2: covers workspace creation, initial configuration, and inviting your first team members.', parentFolder: 'Global Library' },
+  { id: 'l11', title: 'Onboarding Series Pt.2', type: T3, theme: '', language: 'English', totalTours: 6, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['onboarding', 'product'], access: 'Team', freshness: 4, usage: 271, created: '02/15/26', modified: '04/01/26', description: 'Part 2 of 2: advanced configuration, custom fields, automations, and connecting your first integration.', parentFolder: 'Global Library' },
+  { id: 'l12', title: 'Executive Summary', type: T1, theme: '', language: 'English', totalTours: 8, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'sales'], access: 'Team', freshness: 9, usage: 193, created: '03/10/26', modified: '05/10/26', description: 'C-suite-ready demo summarizing business value, ROI benchmarks, and customer success stories.', parentFolder: 'Global Library' },
   // Inside "Engineering"
-  { id: 'l2', title: 'Security & Compliance', type: T2, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', duration: '4:45', description: 'Covers SOC 2 Type II certification, data encryption at rest and in transit, and GDPR compliance posture.', parentFolder: 'Engineering' },
-  { id: 'l3', title: 'API Walkthrough', type: T3, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', duration: '6:12', description: 'Hands-on walkthrough of the REST API: authentication, pagination, rate limits, and common use cases.', parentFolder: 'Engineering' },
-  { id: 'l13', title: 'Data Pipeline Demo', type: T1, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], freshness: 6, usage: 112, created: '03/25/26', modified: '05/03/26', duration: '7:15', description: 'Demonstrates building an end-to-end data pipeline: ingestion, transformation, and output to downstream systems.', parentFolder: 'Engineering' },
-  { id: 'l14', title: 'Authentication Flow', type: T2, theme: '', published: '', creator: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'api'], freshness: 3, usage: 145, created: '04/05/26', modified: '05/08/26', duration: '3:30', description: 'Tour of all supported authentication methods: API keys, OAuth 2.0, JWT, and session tokens.', parentFolder: 'Engineering' },
+  { id: 'l2', title: 'Security & Compliance', type: T2, theme: '', language: 'English', totalTours: 1, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'enterprise', 'compliance'], access: 'Team', freshness: 4, usage: 187, created: '04/22/26', modified: '05/12/26', description: 'Covers SOC 2 Type II certification, data encryption at rest and in transit, and GDPR compliance posture.', parentFolder: 'Engineering' },
+  { id: 'l3', title: 'API Walkthrough', type: T3, theme: '', language: 'English', totalTours: 10, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['api'], access: 'Team', freshness: 11, usage: 256, created: '04/10/26', modified: '05/05/26', description: 'Hands-on walkthrough of the REST API: authentication, pagination, rate limits, and common use cases.', parentFolder: 'Engineering' },
+  { id: 'l13', title: 'Data Pipeline Demo', type: T1, theme: '', language: 'English', totalTours: 5, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['api', 'admin'], access: 'Team', freshness: 6, usage: 112, created: '03/25/26', modified: '05/03/26', description: 'Demonstrates building an end-to-end data pipeline: ingestion, transformation, and output to downstream systems.', parentFolder: 'Engineering' },
+  { id: 'l14', title: 'Authentication Flow', type: T2, theme: '', language: 'English', totalTours: 7, creator: 'Taylor', owner: 'Taylor', creatorInitials: 'TK', creatorColor: '#0369a1', tags: ['security', 'api'], access: 'Team', freshness: 3, usage: 145, created: '04/05/26', modified: '05/08/26', description: 'Tour of all supported authentication methods: API keys, OAuth 2.0, JWT, and session tokens.', parentFolder: 'Engineering' },
   // Inside "Sales"
-  { id: 'l5', title: 'Enterprise Features', type: T3, theme: '', published: '', creator: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', duration: '9:01', description: 'Deep-dive into enterprise-only capabilities: advanced RBAC, dedicated infrastructure, and SLA commitments.', parentFolder: 'Sales' },
-  { id: 'l8', title: 'Sales Enablement Kit', type: T1, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', duration: '12:05', description: 'Demo for AEs covering discovery frameworks, demo best practices, and objection handling.', parentFolder: 'Sales' },
-  { id: 'l15', title: 'Deal Closing Playbook', type: T2, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], freshness: 7, usage: 319, created: '02/18/26', modified: '05/11/26', duration: '6:20', description: 'Late-stage demo focused on procurement, security review, and legal considerations for enterprise deals.', parentFolder: 'Sales' },
-  { id: 'l16', title: 'Pricing Tier Explainer', type: T3, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], freshness: 5, usage: 207, created: '03/05/26', modified: '04/22/26', duration: '4:50', description: 'Walks through each pricing tier side-by-side, highlighting the features and limits relevant to mid-market buyers.', parentFolder: 'Sales' },
+  { id: 'l5', title: 'Enterprise Features', type: T3, theme: '', language: 'English', totalTours: 3, creator: 'Sam', owner: 'Sam', creatorInitials: 'SR', creatorColor: '#7c3aed', tags: ['enterprise', 'admin'], access: 'Team', freshness: 3, usage: 412, created: '03/15/26', modified: '05/10/26', description: 'Deep-dive into enterprise-only capabilities: advanced RBAC, dedicated infrastructure, and SLA commitments.', parentFolder: 'Sales' },
+  { id: 'l8', title: 'Sales Enablement Kit', type: T1, theme: '', language: 'English', totalTours: 9, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], access: 'Team', freshness: 14, usage: 275, created: '01/15/26', modified: '03/01/26', description: 'Demo for AEs covering discovery frameworks, demo best practices, and objection handling.', parentFolder: 'Sales' },
+  { id: 'l15', title: 'Deal Closing Playbook', type: T2, theme: '', language: 'English', totalTours: 4, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['sales', 'enterprise'], access: 'Team', freshness: 7, usage: 319, created: '02/18/26', modified: '05/11/26', description: 'Late-stage demo focused on procurement, security review, and legal considerations for enterprise deals.', parentFolder: 'Sales' },
+  { id: 'l16', title: 'Pricing Tier Explainer', type: T3, theme: '', language: 'English', totalTours: 6, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales'], access: 'Team', freshness: 5, usage: 207, created: '03/05/26', modified: '04/22/26', description: 'Walks through each pricing tier side-by-side, highlighting the features and limits relevant to mid-market buyers.', parentFolder: 'Sales' },
   // Inside "Marketing"
-  { id: 'l17', title: 'Brand Story Demo', type: T1, theme: '', published: '', creator: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], freshness: 10, usage: 388, created: '01/25/26', modified: '04/15/26', duration: '5:45', description: 'An emotional brand narrative demo — origin story, mission, and customer transformation highlights.', parentFolder: 'Marketing' },
-  { id: 'l18', title: 'Social Proof Reel', type: T2, theme: '', published: '', creator: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], freshness: 8, usage: 254, created: '02/08/26', modified: '04/20/26', duration: '3:10', description: 'Fast-paced compilation of customer quotes, NPS scores, and G2 review highlights for use in sales emails.', parentFolder: 'Marketing' },
-  { id: 'l19', title: 'Event Booth Demo', type: T3, theme: '', published: '', creator: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'enterprise'], freshness: 12, usage: 176, created: '03/12/26', modified: '05/05/26', duration: '4:25', description: 'Short, high-impact demo designed for trade show booths — grabs attention in 60 seconds and works without audio.', parentFolder: 'Marketing' },
+  { id: 'l17', title: 'Brand Story Demo', type: T1, theme: '', language: 'English', totalTours: 8, creator: 'Jamie', owner: 'Jamie', creatorInitials: 'JL', creatorColor: '#1d4ed8', tags: ['product'], access: 'Team', freshness: 10, usage: 388, created: '01/25/26', modified: '04/15/26', description: 'An emotional brand narrative demo — origin story, mission, and customer transformation highlights.', parentFolder: 'Marketing' },
+  { id: 'l18', title: 'Social Proof Reel', type: T2, theme: '', language: 'English', totalTours: 2, creator: 'Jordan', owner: 'Jordan', creatorInitials: 'JP', creatorColor: '#b45309', tags: ['sales', 'product'], access: 'Team', freshness: 8, usage: 254, created: '02/08/26', modified: '04/20/26', description: 'Fast-paced compilation of customer quotes, NPS scores, and G2 review highlights for use in sales emails.', parentFolder: 'Marketing' },
+  { id: 'l19', title: 'Event Booth Demo', type: T3, theme: '', language: 'English', totalTours: 11, creator: 'Alex', owner: 'Alex', creatorInitials: 'AM', creatorColor: '#374151', tags: ['product', 'enterprise'], access: 'Team', freshness: 12, usage: 176, created: '03/12/26', modified: '05/05/26', description: 'Short, high-impact demo designed for trade show booths — grabs attention in 60 seconds and works without audio.', parentFolder: 'Marketing' },
 ]
 
 const TYPE_OPTIONS = ['Discovery Demo', 'Standard Personalization Demo', 'Single Experience']
@@ -580,17 +583,18 @@ function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actio
 }
 
 const COL_DEFS: { id: string; label: string; locked?: boolean }[] = [
-  { id: 'title',     label: 'Title',     locked: true },
-  { id: 'type',      label: 'Type' },
-  { id: 'theme',     label: 'Theme' },
-  { id: 'published', label: 'Published' },
-  { id: 'tags',      label: 'Tags' },
-  { id: 'freshness', label: 'Freshness' },
-  { id: 'usage',     label: 'Usage' },
-  { id: 'created',   label: 'Created' },
-  { id: 'modified',  label: 'Modified' },
-  { id: 'creator',   label: 'Creator' },
-  { id: 'duration',  label: 'Duration' },
+  { id: 'title',      label: 'Title',       locked: true },
+  { id: 'type',       label: 'Type' },
+  { id: 'theme',      label: 'Theme' },
+  { id: 'language',   label: 'Language' },
+  { id: 'totalTours', label: 'Total Tours' },
+  { id: 'tags',       label: 'Tags' },
+  { id: 'access',     label: 'Access' },
+  { id: 'usage',      label: 'Usage' },
+  { id: 'created',    label: 'Created' },
+  { id: 'modified',   label: 'Modified' },
+  { id: 'creator',    label: 'Creator' },
+  { id: 'owner',      label: 'Owner' },
 ]
 
 function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filters; actions: FilterActions }) {
@@ -626,7 +630,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
     if (filters.creators.length > 0 && !filters.creators.includes(r.creator)) return false
     if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t.toLowerCase()))) return false
-    if (filters.durationBuckets.length > 0 && !filters.durationBuckets.some((b) => matchesDurationBucket(r.duration, b))) return false
+    if (filters.durationBuckets.length > 0 && !filters.durationBuckets.some((b) => matchesDurationBucket(r.duration ?? '—', b))) return false
     if (filters.freshnessBuckets.length > 0 && !filters.freshnessBuckets.some((b) => matchesFreshnessBucket(r.freshness, b))) return false
     if (q) {
       const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
@@ -774,38 +778,17 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
               <th className={styles.thIcon} />
               <th className={styles.thIcon} />
               <th className={styles.th}>Title</th>
-              {col('type')      && <th className={styles.th}>Type</th>}
-              {col('theme')     && <th className={styles.th}>Theme</th>}
-              {col('published') && <th className={styles.th}>Published</th>}
-              {col('tags')      && <th className={styles.th}>Tags</th>}
-              {col('freshness') && (
-                <th className={styles.th}>
-                  <div className={styles.thWithInfo}>
-                    Freshness
-                    <span className={styles.infoIconWrap}>
-                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
-                        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                        <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                        <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
-                      </svg>
-                      <div className={styles.infoTooltip}>
-                        <div className={styles.infoTooltipTitle}>Freshness Score</div>
-                        <div className={styles.infoTooltipBody}>Measures how up-to-date a demo's content is based on last edit, screenshot age, and link validity.</div>
-                        <div className={styles.infoTooltipScale}>
-                          <span className={styles.infoScaleHigh}>● High &gt;70%</span>
-                          <span className={styles.infoScaleMid}>● Medium 30–70%</span>
-                          <span className={styles.infoScaleLow}>● Low &lt;30%</span>
-                        </div>
-                      </div>
-                    </span>
-                  </div>
-                </th>
-              )}
-              {col('usage')    && <th className={styles.th}>Usage</th>}
-              {col('created')  && <th className={styles.th}>Created ↓</th>}
-              {col('modified') && <th className={styles.th}>Modified</th>}
-              {col('creator')  && <th className={styles.th}>Creator</th>}
-              {col('duration') && <th className={styles.th}>Duration</th>}
+              {col('type')       && <th className={styles.th}>Type</th>}
+              {col('theme')      && <th className={styles.th}>Theme</th>}
+              {col('language')   && <th className={styles.th}>Language</th>}
+              {col('totalTours') && <th className={styles.th}>Total Tours</th>}
+              {col('tags')       && <th className={styles.th}>Tags</th>}
+              {col('access')     && <th className={styles.th}>Access</th>}
+              {col('usage')      && <th className={styles.th}>Usage</th>}
+              {col('created')    && <th className={styles.th}>Created ↓</th>}
+              {col('modified')   && <th className={styles.th}>Modified</th>}
+              {col('creator')    && <th className={styles.th}>Creator</th>}
+              {col('owner')      && <th className={styles.th}>Owner</th>}
             </tr>
           </thead>
           <tbody>
@@ -839,10 +822,11 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                         <span className={`${styles.rowTitle} ${row.type === 'Folder' ? styles.rowTitleFolder : ''}`}>{row.title}</span>
                       </div>
                     </td>
-                    {col('type')      && <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>}
-                    {col('theme')     && <td className={styles.tdMeta}>{row.theme || '—'}</td>}
-                    {col('published') && <td className={styles.tdMeta}>{row.published || '—'}</td>}
-                    {col('tags')      && (
+                    {col('type')       && <td className={styles.td}><span className={styles.typeBadge}>{row.type}</span></td>}
+                    {col('theme')      && <td className={styles.tdMeta}>{row.theme || '—'}</td>}
+                    {col('language')   && <td className={styles.tdMeta}>{row.language || '—'}</td>}
+                    {col('totalTours') && <td className={styles.tdMeta}>{row.type === 'Folder' ? '—' : row.totalTours}</td>}
+                    {col('tags')       && (
                       <td className={styles.td}>
                         <div className={styles.tagList}>
                           {visibleTags.map((t) => <span key={t} className={styles.tag}>{t}</span>)}
@@ -850,54 +834,17 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                         </div>
                       </td>
                     )}
-                    {col('freshness') && (
-                      <td className={styles.td}>
-                        <div className={styles.freshnessCell}>
-                          <div className={styles.freshnessBar}>
-                            <div
-                              className={styles.freshnessFill}
-                              style={{
-                                width: `${Math.min(row.freshness * 6, 100)}%`,
-                                background: row.freshness > 70 ? '#059669' : row.freshness >= 30 ? '#b45309' : '#dc2626',
-                              }}
-                            />
-                          </div>
-                          <span className={styles.freshnessPct}>{row.freshness}%</span>
-                          <span className={styles.infoIconWrap}>
-                            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" className={styles.infoIcon}>
-                              <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                              <path d="M7 6.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                              <circle cx="7" cy="4.5" r="0.75" fill="currentColor"/>
-                            </svg>
-                            <div className={`${styles.infoTooltip} ${styles.infoTooltipLeft}`}>
-                              <div className={styles.infoTooltipTitle}>Freshness Score</div>
-                              <div className={styles.infoTooltipBody}>
-                                {row.freshness > 70
-                                  ? 'Content is up-to-date. Screenshots, links, and copy are current.'
-                                  : row.freshness >= 30
-                                  ? 'Some content may be stale. Consider reviewing screenshots or copy.'
-                                  : 'Content is outdated. A full review is recommended.'}
-                              </div>
-                              <div className={styles.infoTooltipScale}>
-                                <span className={`${styles.infoScaleHigh} ${row.freshness > 70 ? styles.infoScaleActive : ''}`}>● High &gt;70%</span>
-                                <span className={`${styles.infoScaleMid} ${row.freshness >= 30 && row.freshness <= 70 ? styles.infoScaleActive : ''}`}>● Mid 30–70%</span>
-                                <span className={`${styles.infoScaleLow} ${row.freshness < 30 ? styles.infoScaleActive : ''}`}>● Low &lt;30%</span>
-                              </div>
-                            </div>
-                          </span>
-                        </div>
-                      </td>
-                    )}
-                    {col('usage')    && <td className={styles.tdMeta}>{row.usage}</td>}
-                    {col('created')  && <td className={styles.tdMeta}>{row.created}</td>}
-                    {col('modified') && (
+                    {col('access')     && <td className={styles.tdMeta}>{row.access || '—'}</td>}
+                    {col('usage')      && <td className={styles.tdMeta}>{row.usage}</td>}
+                    {col('created')    && <td className={styles.tdMeta}>{row.created}</td>}
+                    {col('modified')   && (
                       <td className={styles.tdMeta} onClick={(e) => e.stopPropagation()}>
                         <button className={styles.modifiedLink} onClick={() => setHistoryRow(row)}>
                           {row.modified}
                         </button>
                       </td>
                     )}
-                    {col('creator')  && (
+                    {col('creator')    && (
                       <td className={styles.td}>
                         <div className={styles.creatorCell}>
                           <span className={styles.creatorAvatarSm} style={{ background: row.creatorColor }}>{row.creatorInitials}</span>
@@ -905,7 +852,7 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
                         </div>
                       </td>
                     )}
-                    {col('duration') && <td className={styles.tdMeta}>{row.duration}</td>}
+                    {col('owner')      && <td className={styles.tdMeta}>{row.owner || '—'}</td>}
                   </tr>
                 )
               })
