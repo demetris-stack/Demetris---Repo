@@ -49,6 +49,10 @@ const MY_DEMOS_SUGGESTED: SuggestedAsset[] = [
   { id: 's6', title: 'Integrations Setup', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
   { id: 's7', title: 'Analytics Deep Dive', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 15 },
   { id: 's8', title: 'Competitive Battlecard Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
+  { id: 's9', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 13 },
+  { id: 's10', title: 'Account Setup Tour', type: 'Tour', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 12 },
+  { id: 's11', title: 'Data Export Guide', type: 'Walkthrough', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 10 },
+  { id: 's12', title: 'First Login Experience', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 9 },
 ]
 
 const DEMO_LIBRARY_SUGGESTED: SuggestedAsset[] = [
@@ -60,6 +64,10 @@ const DEMO_LIBRARY_SUGGESTED: SuggestedAsset[] = [
   { id: 'ls6', title: 'Deal Closing Playbook', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 17 },
   { id: 'ls7', title: 'Onboarding Series Pt.1', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
   { id: 'ls8', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
+  { id: 'ls9', title: 'ROI Calculator Walkthrough', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 13 },
+  { id: 'ls10', title: 'Brand Story Demo', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 12 },
+  { id: 'ls11', title: 'Authentication Flow', type: 'Tour', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 11 },
+  { id: 'ls12', title: 'Admin Console', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 10 },
 ]
 
 const SUGGESTIONS_RECENTS: SuggestedAsset[] = [
@@ -69,6 +77,12 @@ const SUGGESTIONS_RECENTS: SuggestedAsset[] = [
   { id: 'rec4', title: 'Integrations Setup', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 16 },
   { id: 'rec5', title: 'Mobile App Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
   { id: 'rec6', title: 'Analytics Deep Dive', type: 'Sim', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 15 },
+  { id: 'rec7', title: 'Settings & Permissions', type: 'Tour', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 11 },
+  { id: 'rec8', title: 'Feature Highlights Reel', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 19 },
+  { id: 'rec9', title: 'Account Setup Tour', type: 'Tour', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 9 },
+  { id: 'rec10', title: 'First Login Experience', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 22 },
+  { id: 'rec11', title: 'Admin Console Walkthrough', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 7 },
+  { id: 'rec12', title: 'Data Export Guide', type: 'Walkthrough', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 13 },
 ]
 
 const SUGGESTIONS_FOR_DEAL: SuggestedAsset[] = [
@@ -78,6 +92,12 @@ const SUGGESTIONS_FOR_DEAL: SuggestedAsset[] = [
   { id: 'deal4', title: 'Security & Compliance', type: 'Presentation', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 19 },
   { id: 'deal5', title: 'Executive Summary Deck', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 11 },
   { id: 'deal6', title: 'Competitive Battlecard Demo', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 14 },
+  { id: 'deal7', title: 'Procurement Checklist', type: 'Walkthrough', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 8 },
+  { id: 'deal8', title: 'Legal & Privacy Overview', type: 'Presentation', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 10 },
+  { id: 'deal9', title: 'SLA & Support Tiers', type: 'Walkthrough', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 16 },
+  { id: 'deal10', title: 'Migration Readiness Sim', type: 'Sim', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 13 },
+  { id: 'deal11', title: 'Pilot Program Deck', type: 'Presentation', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 9 },
+  { id: 'deal12', title: 'Stakeholder Alignment Tour', type: 'Tour', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 20 },
 ]
 
 const SUGGESTIONS_PROMOTED: SuggestedAsset[] = [
@@ -87,6 +107,12 @@ const SUGGESTIONS_PROMOTED: SuggestedAsset[] = [
   { id: 'promo4', title: 'Partner Enablement Kit', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 22 },
   { id: 'promo5', title: 'Social Proof Reel', type: 'Video', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 20 },
   { id: 'promo6', title: 'Event Booth Demo', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 18 },
+  { id: 'promo7', title: 'Customer Case Study', type: 'Video', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 25 },
+  { id: 'promo8', title: 'Analyst Report Highlights', type: 'Presentation', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 17 },
+  { id: 'promo9', title: 'Product Launch Webinar', type: 'Webinar', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 30 },
+  { id: 'promo10', title: 'Award Win Announcement', type: 'Video', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 14 },
+  { id: 'promo11', title: 'Community Spotlight', type: 'Video', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 11 },
+  { id: 'promo12', title: 'Year in Review', type: 'Presentation', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 19 },
 ]
 
 const SUGGESTIONS_ASSETS: SuggestedAsset[] = [
@@ -96,6 +122,12 @@ const SUGGESTIONS_ASSETS: SuggestedAsset[] = [
   { id: 'asset4', title: 'Pricing Tier Explainer', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 13 },
   { id: 'asset5', title: 'Authentication Flow', type: 'Tour', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 10 },
   { id: 'asset6', title: 'Data Pipeline Demo', type: 'Demo', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 8 },
+  { id: 'asset7', title: 'Webhook Setup Guide', type: 'Walkthrough', creatorInitials: 'JP', creatorColor: '#b45309', inDemos: 12 },
+  { id: 'asset8', title: 'SSO Configuration', type: 'Sim', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 7 },
+  { id: 'asset9', title: 'Reporting Deep Dive', type: 'Demo', creatorInitials: 'JL', creatorColor: '#1d4ed8', inDemos: 15 },
+  { id: 'asset10', title: 'Custom Fields Tour', type: 'Tour', creatorInitials: 'AM', creatorColor: '#374151', inDemos: 11 },
+  { id: 'asset11', title: 'Bulk Import Walkthrough', type: 'Walkthrough', creatorInitials: 'TK', creatorColor: '#0369a1', inDemos: 6 },
+  { id: 'asset12', title: 'Notifications Setup', type: 'Tour', creatorInitials: 'SR', creatorColor: '#7c3aed', inDemos: 9 },
 ]
 
 // Root-level rows have no parentFolder. Rows inside a folder have parentFolder set.
