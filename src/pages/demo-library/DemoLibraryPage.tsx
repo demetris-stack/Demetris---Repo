@@ -1241,21 +1241,126 @@ function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { as
 }
 
 function Sidebar() {
+  const [libraryOpen, setLibraryOpen] = useState(true)
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarTop}>
+        {/* Logo */}
         <div className={styles.logo}>
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path d="M14 2L26 8.5V19.5L14 26L2 19.5V8.5L14 2Z" stroke="#333" strokeWidth="1.5" fill="none" />
-            <path d="M14 2L14 26M2 8.5L26 8.5M2 19.5L26 19.5" stroke="#333" strokeWidth="1" opacity="0.4" />
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L29 10V22L16 29L3 22V10L16 3Z" fill="#1a1a1a"/>
+            <path d="M16 3L16 29M3 10L29 10M3 22L29 22" stroke="#fff" strokeWidth="1.2" opacity="0.5"/>
           </svg>
         </div>
+
         <nav className={styles.sidebarNav}>
-          {[...Array(5)].map((_, i) => <div key={i} className={styles.navItem} />)}
+          {/* Dashboard */}
+          <div className={`${styles.navRow} ${styles.navRowActive}`}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="1" y="1" width="6" height="6" rx="1.2" fill="currentColor"/>
+              <rect x="9" y="1" width="6" height="6" rx="1.2" fill="currentColor"/>
+              <rect x="1" y="9" width="6" height="6" rx="1.2" fill="currentColor"/>
+              <rect x="9" y="9" width="6" height="6" rx="1.2" fill="currentColor"/>
+            </svg>
+            <span className={styles.navLabel}>Dashboard</span>
+          </div>
+
+          {/* Create */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+            <span className={styles.navLabel}>Create</span>
+            <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          {/* Share */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 2l4 4-4 4M14 6H6a3 3 0 000 6h1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span className={styles.navLabel}>Share</span>
+            <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          {/* Library (expandable, active) */}
+          <div className={`${styles.navRow} ${styles.navRowAccent}`} onClick={() => setLibraryOpen(o => !o)} style={{cursor:'pointer'}}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="4" width="9" height="11" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M5 1h7a1.2 1.2 0 011.2 1.2V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span className={styles.navLabel}>Library</span>
+            <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none" style={{transform: libraryOpen ? 'rotate(90deg)' : 'none', transition:'transform .2s'}}>
+              <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          {libraryOpen && (
+            <div className={styles.navSubGroup}>
+              <div className={`${styles.navSubItem} ${styles.navSubItemActive}`}>Demos</div>
+              <div className={styles.navSubItem}>Dynamic Tours</div>
+            </div>
+          )}
+
+          {/* Leads */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span className={styles.navLabel}>Leads</span>
+          </div>
+
+          {/* DemoBoards */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="1" y="1" width="6" height="14" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="9" y="1" width="6" height="9" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+            <span className={styles.navLabel}>DemoBoards</span>
+          </div>
+
+          {/* Public Links */}
+          <div className={styles.navRow}>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 9.5a4 4 0 005.66 0l1.5-1.5a4 4 0 00-5.66-5.66l-.86.85" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M9.5 6.5a4 4 0 00-5.66 0l-1.5 1.5a4 4 0 005.66 5.66l.85-.85" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span className={styles.navLabel}>Public Links</span>
+          </div>
         </nav>
       </div>
+
       <div className={styles.sidebarBottom}>
-        {[...Array(3)].map((_, i) => <div key={i} className={styles.navItem} />)}
+        {/* Partners */}
+        <div className={styles.navRow}>
+          <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="3" r="2" stroke="currentColor" strokeWidth="1.5"/>
+            <circle cx="3" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
+            <circle cx="13" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
+            <path d="M8 5v3M8 8l-3.5 3M8 8l3.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          <span className={styles.navLabel}>Partners</span>
+          <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+
+        {/* Analytics */}
+        <div className={styles.navRow}>
+          <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="9" width="3" height="5" rx=".8" fill="currentColor"/>
+            <rect x="6.5" y="5" width="3" height="9" rx=".8" fill="currentColor"/>
+            <rect x="11" y="2" width="3" height="12" rx=".8" fill="currentColor"/>
+          </svg>
+          <span className={styles.navLabel}>Analytics</span>
+          <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
       </div>
     </aside>
   )
