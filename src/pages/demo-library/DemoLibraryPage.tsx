@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 import logoUrl from '../../assets/logo.png'
 import standardPIconUrl from '../../assets/standard-p-icon.png'
+import singleExpIconUrl from '../../assets/single-exp-icon.png'
 
 type Tab = 'suggestions' | 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
 
@@ -825,6 +826,8 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                           </svg>
                         ) : row.type === T2 ? (
                           <img src={standardPIconUrl} alt={T2} title={T2} width="20" height="20" style={{ objectFit: 'contain', display: 'block' }} />
+                        ) : row.type === T3 ? (
+                          <img src={singleExpIconUrl} alt={T3} title={T3} width="20" height="20" style={{ objectFit: 'contain', display: 'block' }} />
                         ) : (
                           <span className={styles.typeBadge}>{row.type}</span>
                         )}
