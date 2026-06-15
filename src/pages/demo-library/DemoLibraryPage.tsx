@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 
-type Tab = 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
+type Tab = 'suggestions' | 'my-demos' | 'demo-library' | 'favorites' | 'promoted'
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: 'suggestions', label: 'Suggestions' },
   { id: 'my-demos', label: 'My Demos' },
   { id: 'demo-library', label: 'Demo Library' },
   { id: 'favorites', label: 'Favorites' },
@@ -312,7 +313,9 @@ function TabContent({ tab }: { tab: Tab }) {
     closeFolder: handleCloseFolder,
   }
 
-  const content = tab === 'my-demos' ? (
+  const content = tab === 'suggestions' ? (
+    <SuggestedCarousel assets={[...MY_DEMOS_SUGGESTED, ...DEMO_LIBRARY_SUGGESTED].sort((a, b) => b.inDemos - a.inDemos)} expanded />
+  ) : tab === 'my-demos' ? (
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
@@ -1077,8 +1080,8 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 const SUGGESTED_TABS = ['Popular', 'By Deal', 'By Persona', 'Recent'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
-function SuggestedCarousel({ assets }: { assets: SuggestedAsset[] }) {
-  const [collapsed, setCollapsed] = useState(false)
+function SuggestedCarousel({ assets, expanded: initialExpanded }: { assets: SuggestedAsset[]; expanded?: boolean }) {
+  const [collapsed, setCollapsed] = useState(!initialExpanded && false)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('Popular')
   const trackRef = useRef<HTMLDivElement>(null)
 
