@@ -696,12 +696,14 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
     else if (pageNumbers[pageNumbers.length - 1] !== '…') pageNumbers.push('…')
   }
 
+  const [detailRow, setDetailRow] = useState<DemoRow | null>(null)
+
   function handleRowClick(row: DemoRow) {
     if (row.type === 'Folder') {
       setSelected(new Set())
       actions.openFolder(row.title)
     } else {
-      toggleRow(row.id)
+      setDetailRow(row)
     }
   }
 
@@ -985,6 +987,7 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
         </div>
       </div>
       <HistoryDrawer row={historyRow} onClose={() => setHistoryRow(null)} />
+      <DemoDetailDrawer row={detailRow} onClose={() => setDetailRow(null)} />
     </div>
   )
 }
@@ -1211,6 +1214,176 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
         </div>
       )}
     </section>
+  )
+}
+
+/* ── Demo Detail Drawer ─────────────────────────────── */
+type DetailTab = 'details' | 'usage' | 'tags' | 'activity'
+
+function DemoDetailDrawer({ row, onClose }: { row: DemoRow | null; onClose: () => void }) {
+  const [tab, setTab] = useState<DetailTab>('details')
+
+  useEffect(() => { if (row) setTab('details') }, [row])
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  if (!row) return null
+
+  const engagementRate = Math.min(95, 50 + row.usage % 46)
+  const usedInDemos = Math.max(1, Math.floor(row.usage / 20))
+
+  return (
+    <>
+      <div className={styles.detailOverlay} onClick={onClose} />
+      <aside className={styles.detailDrawer}>
+        {/* Header */}
+        <div className={styles.detailHeader}>
+          <span className={styles.detailHeaderTitle}>Demo</span>
+          <button className={styles.detailClose} onClick={onClose}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Thumbnail */}
+        <div className={styles.detailThumb}>
+          <div className={styles.detailPlayBtn}>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="11" fill="rgba(255,255,255,0.15)"/>
+              <polygon points="8,6 17,11 8,16" fill="white"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Title */}
+        <div className={styles.detailTitleRow}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke="#6b7280" strokeWidth="1.3"/>
+            <polygon points="5.5,4.5 10,7 5.5,9.5" fill="#6b7280"/>
+          </svg>
+          <span className={styles.detailTitle}>{row.title}</span>
+          <button className={styles.detailEditBtn}>
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div className={styles.detailTabs}>
+          {(['details','usage','tags','activity'] as DetailTab[]).map((t) => (
+            <button key={t} className={`${styles.detailTab} ${tab === t ? styles.detailTabActive : ''}`} onClick={() => setTab(t)}>
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Body */}
+        <div className={styles.detailBody}>
+          {tab === 'details' && (
+            <>
+              <div className={styles.detailSection}>
+                <div className={styles.detailSectionTitle}>Demo Details</div>
+                {[
+                  ['Name', row.title],
+                  ['Created', row.created],
+                  ['Owner', row.owner || row.creator],
+                  ['Creator', row.creator],
+                  ['Last modified', row.modified],
+                  ['Type', row.type],
+                  ['Language', row.language || 'English'],
+                  ['Used in', `${usedInDemos} demos`],
+                  ['Access', row.access || 'Team'],
+                  ['Tags', row.tags.join(', ') || '—'],
+                ].map(([label, value]) => (
+                  <div key={label} className={styles.detailRow}>
+                    <span className={styles.detailLabel}>{label}</span>
+                    <span className={styles.detailValue}>{value}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {tab === 'usage' && (
+            <div className={styles.detailSection}>
+              <div className={styles.detailSectionTitle}>Usage Analytics</div>
+              {[
+                ['Total views', row.usage.toString()],
+                ['Used in demos', `${usedInDemos} demos`],
+                ['Engagement rate', `${engagementRate}%`],
+                ['Avg. time spent', `${Math.floor(engagementRate / 10)}m ${engagementRate % 10 * 6}s`],
+                ['Shares', `${Math.floor(row.usage / 8)}`],
+                ['Last viewed', row.modified],
+                ['Peak month', 'May 2026'],
+              ].map(([label, value]) => (
+                <div key={label} className={styles.detailRow}>
+                  <span className={styles.detailLabel}>{label}</span>
+                  <span className={styles.detailValue}>{value}</span>
+                </div>
+              ))}
+              <div className={styles.detailEngBar}>
+                <div className={styles.detailEngLabel}>Engagement</div>
+                <div className={styles.detailEngTrack}>
+                  <div className={styles.detailEngFill} style={{ width: `${engagementRate}%` }} />
+                </div>
+                <span className={styles.detailEngPct}>{engagementRate}%</span>
+              </div>
+            </div>
+          )}
+
+          {tab === 'tags' && (
+            <div className={styles.detailSection}>
+              <div className={styles.detailSectionTitle}>Tags</div>
+              <div className={styles.detailTagCloud}>
+                {row.tags.length > 0
+                  ? row.tags.map((t) => <span key={t} className={styles.detailTagPill}>{t}</span>)
+                  : <p className={styles.detailEmpty}>No tags assigned.</p>}
+              </div>
+              <div className={styles.detailSectionTitle} style={{ marginTop: 20 }}>Suggested Tags</div>
+              <div className={styles.detailTagCloud}>
+                {['onboarding', 'product', 'sales', 'enterprise', 'api', 'security']
+                  .filter((t) => !row.tags.includes(t))
+                  .slice(0, 5)
+                  .map((t) => <span key={t} className={styles.detailTagPillGhost}>{t}</span>)}
+              </div>
+            </div>
+          )}
+
+          {tab === 'activity' && (
+            <div className={styles.detailSection}>
+              <div className={styles.detailSectionTitle}>Recent Activity</div>
+              {[
+                { date: row.modified, actor: row.creator, action: 'Updated content' },
+                { date: row.created, actor: row.owner || row.creator, action: 'Created demo' },
+                { date: '04/10/26', actor: 'Alex', action: 'Added to 3 demos' },
+                { date: '03/22/26', actor: row.creator, action: 'Changed access to Team' },
+                { date: '03/01/26', actor: 'Jamie', action: 'Shared via public link' },
+              ].map((item, i) => (
+                <div key={i} className={styles.detailActivityItem}>
+                  <div className={styles.detailActivityDot} />
+                  <div className={styles.detailActivityContent}>
+                    <div className={styles.detailActivityAction}>{item.action}</div>
+                    <div className={styles.detailActivityMeta}>{item.actor} · {item.date}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className={styles.detailFooter}>
+          <button className={styles.detailCancelBtn} onClick={onClose}>Cancel</button>
+          <button className={styles.detailShareBtn}>Share</button>
+        </div>
+      </aside>
+    </>
   )
 }
 

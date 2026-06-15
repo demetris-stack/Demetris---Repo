@@ -1644,6 +1644,287 @@
   color: #9ca3af;
 }
 
+/* ── Demo Detail Drawer ─────────────────────────────── */
+.detailOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.25);
+  z-index: 300;
+}
+
+.detailDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  background: #fff;
+  z-index: 301;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,.12);
+}
+
+.detailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.detailHeaderTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+}
+
+.detailClose {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  transition: background .12s;
+}
+.detailClose:hover { background: #f3f4f6; color: #111; }
+
+.detailThumb {
+  background: #1f2937;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detailPlayBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s;
+}
+.detailPlayBtn:hover { background: rgba(255,255,255,0.25); }
+
+.detailTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px 0;
+}
+
+.detailTitle {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+}
+
+.detailEditBtn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+.detailEditBtn:hover { color: #374151; }
+
+.detailTabs {
+  display: flex;
+  gap: 0;
+  padding: 12px 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.detailTab {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color .12s;
+}
+.detailTab:hover { color: #111; }
+.detailTabActive {
+  color: #111;
+  border-bottom-color: #111;
+  font-weight: 600;
+}
+
+.detailBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.detailSection { }
+
+.detailSectionTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 14px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.detailLabel {
+  width: 120px;
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  text-align: right;
+}
+
+.detailValue {
+  flex: 1;
+  font-size: 13px;
+  color: #111;
+}
+
+.detailEngBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.detailEngLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  width: 80px;
+}
+.detailEngTrack {
+  flex: 1;
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.detailEngFill {
+  height: 100%;
+  background: #111;
+  border-radius: 3px;
+}
+.detailEngPct {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 600;
+  width: 36px;
+  text-align: right;
+}
+
+.detailTagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.detailTagPill {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  color: #111;
+  font-weight: 500;
+}
+.detailTagPillGhost {
+  background: #fff;
+  border: 1px dashed #d1d5db;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+.detailTagPillGhost:hover { border-color: #9ca3af; color: #374151; }
+
+.detailActivityItem {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.detailActivityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.detailActivityContent { flex: 1; }
+.detailActivityAction {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 2px;
+}
+.detailActivityMeta {
+  font-size: 11.5px;
+  color: #9ca3af;
+}
+
+.detailEmpty {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.detailFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid #e5e7eb;
+}
+.detailCancelBtn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background .12s;
+}
+.detailCancelBtn:hover { background: #f9fafb; }
+.detailShareBtn {
+  padding: 8px 24px;
+  border-radius: 20px;
+  border: none;
+  background: #1f2937;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .12s;
+}
+.detailShareBtn:hover { background: #111; }
+
 /* ── Modified date link ─────────────────────────────── */
 .modifiedLink {
   background: none;
