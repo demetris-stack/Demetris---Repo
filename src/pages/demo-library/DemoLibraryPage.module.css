@@ -1465,30 +1465,45 @@
   background: #fff;
 }
 
-.carouselControls {
-  display: flex;
-  gap: 6px;
-  margin-left: auto;
+.carouselWrap {
+  position: relative;
 }
 
-.arrowBtn {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 17px;
-  line-height: 1;
-  color: #555;
+.carouselOverlayBtn {
+  position: absolute;
+  top: 0;
+  bottom: 12px; /* accounts for carouselTrack padding-bottom */
+  width: 48px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  color: #374151;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .12s, border-color .12s;
+  opacity: 0;
+  transition: opacity .18s;
+  z-index: 10;
+  pointer-events: none;
 }
-.arrowBtn:hover {
-  background: #f3f4f6;
-  border-color: #d1d5db;
+.carouselOverlayLeft {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,0.9) 40%, transparent);
+  border-radius: 8px 0 0 8px;
+}
+.carouselOverlayRight {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.9) 40%, transparent);
+  border-radius: 0 8px 8px 0;
+}
+.carouselWrap:hover .carouselOverlayBtn {
+  opacity: 1;
+  pointer-events: auto;
+}
+.carouselOverlayBtn:hover {
+  opacity: 1 !important;
+  color: #111;
 }
 
 .carouselTrack {

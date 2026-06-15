@@ -1121,20 +1121,16 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
   }
   return (
     <div className={styles.suggestSection}>
-      <div className={styles.suggestSectionHeader}>
-        <span className={styles.suggestSectionTitle}>{title}</span>
-        <div className={styles.carouselControls}>
-          <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
-          <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>
-        </div>
-      </div>
-      <div className={styles.carouselTrack} ref={trackRef}>
-        {assets.map((asset) => (
-          <div key={asset.id} className={styles.suggestedCard}>
-            <div className={styles.suggestedCardThumb}>
-              <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
-                {asset.creatorInitials}
-              </span>
+      <span className={styles.suggestSectionTitle}>{title}</span>
+      <div className={styles.carouselWrap}>
+        <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayLeft}`} onClick={() => scroll('left')}>‹</button>
+        <div className={styles.carouselTrack} ref={trackRef}>
+          {assets.map((asset) => (
+            <div key={asset.id} className={styles.suggestedCard}>
+              <div className={styles.suggestedCardThumb}>
+                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                  {asset.creatorInitials}
+                </span>
               <span className={styles.suggestedTypeBadge}>{asset.type}</span>
             </div>
             <div className={styles.suggestedCardBody}>
@@ -1143,6 +1139,8 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
             </div>
           </div>
         ))}
+        </div>
+        <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayRight}`} onClick={() => scroll('right')}>›</button>
       </div>
     </div>
   )
@@ -1199,28 +1197,28 @@ function SuggestedCarousel({ assets, expanded: initialExpanded, hideTabs }: { as
             ))}
           </div>
         )}
-        <div className={styles.carouselControls}>
-          <button className={styles.arrowBtn} onClick={() => scroll('left')}>‹</button>
-          <button className={styles.arrowBtn} onClick={() => scroll('right')}>›</button>
-        </div>
       </div>
 
       {!collapsed && (
-        <div className={styles.carouselTrack} ref={trackRef}>
-          {sorted.map((asset) => (
-            <div key={asset.id} className={styles.suggestedCard}>
-              <div className={styles.suggestedCardThumb}>
-                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
-                  {asset.creatorInitials}
-                </span>
-                <span className={styles.suggestedTypeBadge}>{asset.type}</span>
+        <div className={styles.carouselWrap}>
+          <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayLeft}`} onClick={() => scroll('left')}>‹</button>
+          <div className={styles.carouselTrack} ref={trackRef}>
+            {sorted.map((asset) => (
+              <div key={asset.id} className={styles.suggestedCard}>
+                <div className={styles.suggestedCardThumb}>
+                  <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                    {asset.creatorInitials}
+                  </span>
+                  <span className={styles.suggestedTypeBadge}>{asset.type}</span>
+                </div>
+                <div className={styles.suggestedCardBody}>
+                  <div className={styles.suggestedCardTitle}>{asset.title}</div>
+                  <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+                </div>
               </div>
-              <div className={styles.suggestedCardBody}>
-                <div className={styles.suggestedCardTitle}>{asset.title}</div>
-                <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <button className={`${styles.carouselOverlayBtn} ${styles.carouselOverlayRight}`} onClick={() => scroll('right')}>›</button>
         </div>
       )}
     </section>
