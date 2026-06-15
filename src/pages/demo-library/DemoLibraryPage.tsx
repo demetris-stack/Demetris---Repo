@@ -1115,25 +1115,98 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
 }
 
 /* ── Suggestions Page ───────────────────────────────── */
-const THUMB_PALETTES = [
-  ['#6366f1','#8b5cf6'],
-  ['#0ea5e9','#06b6d4'],
-  ['#f59e0b','#f97316'],
-  ['#10b981','#059669'],
-  ['#ec4899','#f43f5e'],
-  ['#3b82f6','#6366f1'],
-  ['#14b8a6','#0ea5e9'],
-  ['#f97316','#ef4444'],
-  ['#8b5cf6','#ec4899'],
-  ['#84cc16','#10b981'],
-  ['#06b6d4','#3b82f6'],
-  ['#f43f5e','#f59e0b'],
-]
-function thumbGradient(id: string) {
+const PEOPLE_PHOTO_IDS = [1005, 1010, 1011, 1012, 1025, 1027, 1028, 1059, 1062, 1074, 1079, 1047]
+
+function CardThumbnail({ id }: { id: string }) {
   let hash = 0
   for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) & 0xffff
-  const [a, b] = THUMB_PALETTES[hash % THUMB_PALETTES.length]
-  return `linear-gradient(135deg, ${a} 0%, ${b} 100%)`
+  const bucket = hash % 7  // 0-4: person photo, 5: SaaS dashboard, 6: slide
+
+  if (bucket <= 4) {
+    const photoId = PEOPLE_PHOTO_IDS[hash % PEOPLE_PHOTO_IDS.length]
+    return (
+      <img
+        src={`https://picsum.photos/id/${photoId}/320/180`}
+        alt=""
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    )
+  }
+
+  if (bucket === 5) {
+    return (
+      <svg width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="180" fill="#f8fafc"/>
+        <rect width="320" height="28" fill="#1e293b"/>
+        <rect x="0" y="28" width="54" height="152" fill="#f1f5f9"/>
+        <rect x="8" y="38" width="38" height="5" rx="2.5" fill="#cbd5e1"/>
+        <rect x="8" y="50" width="30" height="5" rx="2.5" fill="#94a3b8"/>
+        <rect x="8" y="62" width="34" height="5" rx="2.5" fill="#94a3b8"/>
+        <rect x="8" y="74" width="28" height="5" rx="2.5" fill="#94a3b8"/>
+        <rect x="8" y="86" width="32" height="5" rx="2.5" fill="#94a3b8"/>
+        <rect x="8" y="10" width="50" height="9" rx="4.5" fill="rgba(255,255,255,0.25)"/>
+        <circle cx="297" cy="14" r="7" fill="rgba(255,255,255,0.2)"/>
+        <circle cx="281" cy="14" r="7" fill="rgba(255,255,255,0.2)"/>
+        <rect x="62" y="36" width="58" height="34" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="128" y="36" width="58" height="34" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="194" y="36" width="58" height="34" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="260" y="36" width="52" height="34" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="68" y="42" width="22" height="4" rx="2" fill="#94a3b8"/>
+        <rect x="68" y="52" width="16" height="7" rx="2" fill="#1e293b"/>
+        <rect x="134" y="42" width="22" height="4" rx="2" fill="#94a3b8"/>
+        <rect x="134" y="52" width="16" height="7" rx="2" fill="#1e293b"/>
+        <rect x="200" y="42" width="22" height="4" rx="2" fill="#94a3b8"/>
+        <rect x="200" y="52" width="16" height="7" rx="2" fill="#6366f1"/>
+        <rect x="266" y="42" width="22" height="4" rx="2" fill="#94a3b8"/>
+        <rect x="266" y="52" width="16" height="7" rx="2" fill="#10b981"/>
+        <rect x="62" y="78" width="150" height="92" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="68" y="84" width="34" height="4" rx="2" fill="#1e293b"/>
+        <rect x="72" y="126" width="12" height="34" rx="2" fill="#6366f1" opacity="0.7"/>
+        <rect x="90" y="114" width="12" height="46" rx="2" fill="#6366f1"/>
+        <rect x="108" y="120" width="12" height="40" rx="2" fill="#6366f1" opacity="0.8"/>
+        <rect x="126" y="106" width="12" height="54" rx="2" fill="#6366f1"/>
+        <rect x="144" y="128" width="12" height="32" rx="2" fill="#6366f1" opacity="0.6"/>
+        <rect x="162" y="116" width="12" height="44" rx="2" fill="#6366f1" opacity="0.85"/>
+        <rect x="188" y="78" width="124" height="92" rx="4" fill="white" stroke="#e2e8f0" strokeWidth="0.8"/>
+        <rect x="194" y="84" width="38" height="4" rx="2" fill="#1e293b"/>
+        <rect x="194" y="96" width="112" height="1" fill="#f1f5f9"/>
+        <rect x="194" y="101" width="30" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="101" width="18" height="3" rx="1.5" fill="#10b981"/>
+        <rect x="194" y="110" width="34" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="110" width="14" height="3" rx="1.5" fill="#f59e0b"/>
+        <rect x="194" y="119" width="26" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="119" width="20" height="3" rx="1.5" fill="#6366f1"/>
+        <rect x="194" y="128" width="32" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="128" width="16" height="3" rx="1.5" fill="#10b981"/>
+        <rect x="194" y="137" width="28" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="137" width="22" height="3" rx="1.5" fill="#ef4444"/>
+        <rect x="194" y="146" width="36" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="146" width="14" height="3" rx="1.5" fill="#6366f1"/>
+        <rect x="194" y="155" width="24" height="3" rx="1.5" fill="#94a3b8"/>
+        <rect x="288" y="155" width="18" height="3" rx="1.5" fill="#10b981"/>
+      </svg>
+    )
+  }
+
+  // bucket === 6: presentation slide
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="180" fill="#faf8f5"/>
+      <rect x="210" y="0" width="110" height="180" fill="#f0ebe3" opacity="0.7"/>
+      <rect x="248" y="0" width="72" height="180" fill="#e6ddd2" opacity="0.5"/>
+      <circle cx="38" cy="30" r="12" fill="#c2410c"/>
+      <text x="38" y="35" textAnchor="middle" fontSize="13" fontWeight="bold" fill="white">C</text>
+      <text x="28" y="78" fontSize="24" fontWeight="800" fill="#1a1a1a">Pre-sales</text>
+      <text x="28" y="108" fontSize="24" fontWeight="800" fill="#1a1a1a">ROI</text>
+      <rect x="28" y="120" width="78" height="3" rx="1.5" fill="#c2410c"/>
+      <rect x="28" y="132" width="96" height="4" rx="2" fill="#94a3b8" opacity="0.5"/>
+      <rect x="28" y="142" width="80" height="4" rx="2" fill="#94a3b8" opacity="0.35"/>
+      <circle cx="272" cy="88" r="32" fill="#c2410c" opacity="0.07"/>
+      <circle cx="294" cy="132" r="22" fill="#c2410c" opacity="0.05"/>
+      <rect x="255" y="48" width="38" height="3" rx="1.5" fill="#c2410c" opacity="0.18"/>
+      <rect x="248" y="58" width="48" height="3" rx="1.5" fill="#c2410c" opacity="0.1"/>
+    </svg>
+  )
 }
 
 function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
@@ -1143,7 +1216,8 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
       <div className={styles.carouselTrack}>
         {assets.map((asset) => (
           <div key={asset.id} className={styles.suggestedCard}>
-            <div className={styles.suggestedCardThumb} style={{ background: thumbGradient(asset.id) }}>
+            <div className={styles.suggestedCardThumb}>
+              <CardThumbnail id={asset.id} />
               <div className={styles.suggestedThumbPlay}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
@@ -1218,7 +1292,8 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
         <div className={styles.carouselTrack}>
           {sorted.map((asset) => (
             <div key={asset.id} className={styles.suggestedCard}>
-              <div className={styles.suggestedCardThumb} style={{ background: thumbGradient(asset.id) }}>
+              <div className={styles.suggestedCardThumb}>
+                <CardThumbnail id={asset.id} />
                 <div className={styles.suggestedThumbPlay}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
