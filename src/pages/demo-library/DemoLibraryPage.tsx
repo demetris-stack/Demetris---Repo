@@ -209,7 +209,6 @@ const TAG_OPTIONS = [
   'Reporting', 'Analytics', 'Compliance', 'Marketing', 'Engineering', 'Integrations',
   'Getting Started', 'Advanced', 'Partner', 'Webinar', 'Demo', 'Tutorial',
 ]
-const DURATION_OPTIONS = ['Short (< 5 min)', 'Medium (5–15 min)', 'Long (> 15 min)']
 
 /* ── Change history mock data ───────────────────────── */
 interface HistoryEvent {
@@ -273,28 +272,10 @@ function getHistory(row: DemoRow): HistoryEvent[] {
     { id: 'h2', date: row.created, actor: row.creator, actorInitials: row.creatorInitials, actorColor: row.creatorColor, type: 'create', description: row.type === 'Folder' ? 'Created folder' : 'Created demo' },
   ]
 }
-const FRESHNESS_OPTIONS = ['High (> 70%)', 'Medium (30–70%)', 'Low (< 30%)']
-const PUBLISHED_OPTIONS = ['Published', 'Draft', 'Archived', 'Scheduled']
 const THEME_OPTIONS = ['Light', 'Dark', 'Custom', 'Default', 'Minimal']
+const LANGUAGE_OPTIONS = ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese', 'Chinese', 'Korean']
+const OWNER_OPTIONS = ['Alex', 'Jamie', 'Sam', 'Taylor', 'Jordan']
 
-function parseDurationMins(d: string): number {
-  if (!d || d === '—') return 0
-  const parts = d.split(':')
-  return parts.length === 2 ? parseInt(parts[0]) + parseInt(parts[1]) / 60 : 0
-}
-function matchesDurationBucket(duration: string, bucket: string): boolean {
-  const m = parseDurationMins(duration)
-  if (bucket === 'Short (< 5 min)') return m > 0 && m < 5
-  if (bucket === 'Medium (5–15 min)') return m >= 5 && m <= 15
-  if (bucket === 'Long (> 15 min)') return m > 15
-  return false
-}
-function matchesFreshnessBucket(freshness: number, bucket: string): boolean {
-  if (bucket === 'High (> 70%)') return freshness > 70
-  if (bucket === 'Medium (30–70%)') return freshness >= 30 && freshness <= 70
-  if (bucket === 'Low (< 30%)') return freshness < 30
-  return false
-}
 
 export default function DemoLibraryPage() {
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
@@ -338,10 +319,9 @@ function TabContent({ tab }: { tab: Tab }) {
   const [types, setTypes] = useState<string[]>([])
   const [creators, setCreators] = useState<string[]>([])
   const [tags, setTags] = useState<string[]>([])
-  const [durationBuckets, setDurationBuckets] = useState<string[]>([])
-  const [freshnessBuckets, setFreshnessBuckets] = useState<string[]>([])
-  const [publishedStatuses, setPublishedStatuses] = useState<string[]>([])
   const [themes, setThemes] = useState<string[]>([])
+  const [languages, setLanguages] = useState<string[]>([])
+  const [owners, setOwners] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchScope, setSearchScope] = useState<SearchScope>('everywhere')
   const [openFolderName, setOpenFolderName] = useState<string | null>(null)
@@ -358,8 +338,7 @@ function TabContent({ tab }: { tab: Tab }) {
 
   function clearAll() {
     setTypes([]); setCreators([]); setTags([])
-    setDurationBuckets([]); setFreshnessBuckets([])
-    setPublishedStatuses([]); setThemes([])
+    setThemes([]); setLanguages([]); setOwners([])
     setSearchQuery(''); setSearchScope('everywhere')
   }
 
@@ -376,17 +355,16 @@ function TabContent({ tab }: { tab: Tab }) {
   }
 
   const filters: Filters = {
-    types, creators, tags, durationBuckets, freshnessBuckets, publishedStatuses, themes,
+    types, creators, tags, themes, languages, owners,
     searchQuery, searchScope, openFolder: openFolderName,
   }
   const filterActions: FilterActions = {
     toggleType: (v) => toggle(types, setTypes, v),
     toggleCreator: (v) => toggle(creators, setCreators, v),
     toggleTag: (v) => toggle(tags, setTags, v),
-    toggleDurationBucket: (v) => toggle(durationBuckets, setDurationBuckets, v),
-    toggleFreshnessBucket: (v) => toggle(freshnessBuckets, setFreshnessBuckets, v),
-    togglePublishedStatus: (v) => toggle(publishedStatuses, setPublishedStatuses, v),
     toggleTheme: (v) => toggle(themes, setThemes, v),
+    toggleLanguage: (v) => toggle(languages, setLanguages, v),
+    toggleOwner: (v) => toggle(owners, setOwners, v),
     clearAll,
     setSearch: setSearchQuery,
     setScope: setSearchScope,
@@ -430,18 +408,16 @@ function TabContent({ tab }: { tab: Tab }) {
 type SearchScope = 'everywhere' | 'in-folder'
 interface Filters {
   types: string[]; creators: string[]; tags: string[]
-  durationBuckets: string[]; freshnessBuckets: string[]
-  publishedStatuses: string[]; themes: string[]
+  themes: string[]; languages: string[]; owners: string[]
   searchQuery: string; searchScope: SearchScope; openFolder: string | null
 }
 interface FilterActions {
   toggleType: (v: string) => void
   toggleCreator: (v: string) => void
   toggleTag: (v: string) => void
-  toggleDurationBucket: (v: string) => void
-  toggleFreshnessBucket: (v: string) => void
-  togglePublishedStatus: (v: string) => void
   toggleTheme: (v: string) => void
+  toggleLanguage: (v: string) => void
+  toggleOwner: (v: string) => void
   clearAll: () => void
   setSearch: (v: string) => void
   setScope: (v: SearchScope) => void
@@ -455,10 +431,9 @@ const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
 ]
 
 function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actions: FilterActions; onOpenDrawer: () => void }) {
-  const { types, creators, tags, durationBuckets, freshnessBuckets, publishedStatuses, themes, searchQuery, searchScope } = filters
-  const totalApplied = types.length + creators.length + tags.length +
-    durationBuckets.length + freshnessBuckets.length + publishedStatuses.length + themes.length
-  const totalExtra = durationBuckets.length + freshnessBuckets.length + publishedStatuses.length + themes.length
+  const { types, creators, tags, themes, languages, owners, searchQuery, searchScope } = filters
+  const totalApplied = types.length + creators.length + tags.length + themes.length + languages.length + owners.length
+  const totalExtra = themes.length + languages.length + owners.length
   const totalAll = totalApplied
   const [scopeOpen, setScopeOpen] = useState(false)
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
@@ -484,10 +459,9 @@ function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actio
     { label: 'Type', values: types, onToggle: actions.toggleType },
     { label: 'Creator', values: creators, onToggle: actions.toggleCreator },
     { label: 'Tags', values: tags, onToggle: actions.toggleTag },
-    { label: 'Duration', values: filters.durationBuckets, onToggle: actions.toggleDurationBucket },
-    { label: 'Freshness', values: filters.freshnessBuckets, onToggle: actions.toggleFreshnessBucket },
-    { label: 'Published Status', values: filters.publishedStatuses, onToggle: actions.togglePublishedStatus },
     { label: 'Theme', values: filters.themes, onToggle: actions.toggleTheme },
+    { label: 'Language', values: filters.languages, onToggle: actions.toggleLanguage },
+    { label: 'Owner', values: filters.owners, onToggle: actions.toggleOwner },
   ]
 
   const scopeLabel = filters.openFolder
@@ -647,8 +621,9 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
     if (filters.types.length > 0 && !filters.types.includes(r.type)) return false
     if (filters.creators.length > 0 && !filters.creators.includes(r.creator)) return false
     if (filters.tags.length > 0 && !filters.tags.some((t) => r.tags.includes(t.toLowerCase()))) return false
-    if (filters.durationBuckets.length > 0 && !filters.durationBuckets.some((b) => matchesDurationBucket(r.duration ?? '—', b))) return false
-    if (filters.freshnessBuckets.length > 0 && !filters.freshnessBuckets.some((b) => matchesFreshnessBucket(r.freshness, b))) return false
+    if (filters.themes.length > 0 && r.theme && !filters.themes.includes(r.theme)) return false
+    if (filters.languages.length > 0 && !filters.languages.includes(r.language ?? 'English')) return false
+    if (filters.owners.length > 0 && !filters.owners.includes(r.owner ?? r.creator)) return false
     if (q) {
       const haystack = [r.title, r.type, r.creator, ...r.tags].join(' ').toLowerCase()
       if (!haystack.includes(q)) return false
@@ -1702,17 +1677,11 @@ function TagIcon() {
 function FunnelIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
 }
-function ClockIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M7 4v3.5l2.5 1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
-}
-function SparkleIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.3 3.7L12 7l-3.7 1.3L7 13l-1.3-3.7L2 7l3.7-1.3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/></svg>
-}
-function PublishedIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="1.4"/><path d="M4 7l2.5 2.5L10 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
-}
 function ThemeIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M7 1.5v11M1.5 7h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+}
+function LanguageIcon() {
+  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M7 1.5C5.5 3.5 4.5 5.2 4.5 7s1 3.5 2.5 5.5M7 1.5C8.5 3.5 9.5 5.2 9.5 7s-1 3.5-2.5 5.5M1.5 7h11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
 }
 
 /* ── Drawer Section ─────────────────────────────────── */
@@ -1805,8 +1774,7 @@ function FilterDrawer({ open, onClose, filters, actions }: {
 
   const totalActive =
     filters.types.length + filters.creators.length + filters.tags.length +
-    filters.durationBuckets.length + filters.freshnessBuckets.length +
-    filters.publishedStatuses.length + filters.themes.length
+    filters.themes.length + filters.languages.length + filters.owners.length
 
   return (
     <>
@@ -1837,10 +1805,9 @@ function FilterDrawer({ open, onClose, filters, actions }: {
 
           <div className={styles.drawerDivider} />
           <div className={styles.drawerGroupLabel}>Extra Filters</div>
-          <DrawerSection label="Duration" icon={<ClockIcon />} options={DURATION_OPTIONS} selected={filters.durationBuckets} onToggle={actions.toggleDurationBucket} />
-          <DrawerSection label="Freshness" icon={<SparkleIcon />} options={FRESHNESS_OPTIONS} selected={filters.freshnessBuckets} onToggle={actions.toggleFreshnessBucket} />
-          <DrawerSection label="Published Status" icon={<PublishedIcon />} options={PUBLISHED_OPTIONS} selected={filters.publishedStatuses} onToggle={actions.togglePublishedStatus} />
           <DrawerSection label="Theme" icon={<ThemeIcon />} options={THEME_OPTIONS} selected={filters.themes} onToggle={actions.toggleTheme} />
+          <DrawerSection label="Language" icon={<LanguageIcon />} options={LANGUAGE_OPTIONS} selected={filters.languages} onToggle={actions.toggleLanguage} />
+          <DrawerSection label="Owner" icon={<PersonIcon />} options={OWNER_OPTIONS} selected={filters.owners} onToggle={actions.toggleOwner} />
         </div>
 
         <div className={styles.drawerFooter}>
