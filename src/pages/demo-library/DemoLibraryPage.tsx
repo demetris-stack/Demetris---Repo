@@ -346,6 +346,11 @@ function TabContent({ tab }: { tab: Tab }) {
   const [searchScope, setSearchScope] = useState<SearchScope>('everywhere')
   const [openFolderName, setOpenFolderName] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [favorited, setFavorited] = useState<Set<string>>(new Set())
+
+  function toggleFavGlobal(id: string) {
+    setFavorited((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+  }
 
   function toggle(list: string[], setList: (v: string[]) => void, val: string) {
     setList(list.includes(val) ? list.filter((x) => x !== val) : [...list, val])
@@ -389,22 +394,27 @@ function TabContent({ tab }: { tab: Tab }) {
     closeFolder: handleCloseFolder,
   }
 
+  const allRows = [...MY_DEMOS_ROWS, ...DEMO_LIBRARY_ROWS]
+  const favRows = allRows.filter((r) => favorited.has(r.id))
+
   const content = tab === 'suggestions' ? (
     <SuggestionsPage />
   ) : tab === 'my-demos' ? (
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
-      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} />
+      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} />
     </>
   ) : tab === 'demo-library' ? (
     <>
       <SuggestedCarousel assets={DEMO_LIBRARY_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
-      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} />
+      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} />
     </>
   ) : tab === 'favorites' ? (
-    <div className={styles.empty}><p>No favorites yet.</p></div>
+    favRows.length === 0
+      ? <div className={styles.empty}><p>No favorites yet. Click the ♥ on any demo to save it here.</p></div>
+      : <DemoTable rows={favRows} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} />
   ) : (
     <div className={styles.empty}><p>No promoted content.</p></div>
   )
@@ -597,9 +607,16 @@ const COL_DEFS: { id: string; label: string; locked?: boolean }[] = [
   { id: 'owner',      label: 'Owner' },
 ]
 
-function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filters; actions: FilterActions }) {
+function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleFav }: {
+  rows: DemoRow[]
+  filters: Filters
+  actions: FilterActions
+  favorited?: Set<string>
+  onToggleFav?: (id: string) => void
+}) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
-  const [favorited, setFavorited] = useState<Set<string>>(new Set())
+  const [localFavorited, setLocalFavorited] = useState<Set<string>>(new Set())
+  const favorited = favoritedProp ?? localFavorited
   const [starred, setStarred] = useState<Set<string>>(new Set())
   const [pageSize, setPageSize] = useState(10)
   const [page, setPage] = useState(1)
@@ -658,7 +675,11 @@ function DemoTable({ rows, filters, actions }: { rows: DemoRow[]; filters: Filte
   }
   function toggleFav(id: string, e: React.MouseEvent) {
     e.stopPropagation()
-    setFavorited((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+    if (onToggleFav) {
+      onToggleFav(id)
+    } else {
+      setLocalFavorited((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
+    }
   }
   function toggleStar(id: string, e: React.MouseEvent) {
     e.stopPropagation()
