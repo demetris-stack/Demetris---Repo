@@ -822,6 +822,16 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M1.5 4C1.5 3.17 2.17 2.5 3 2.5H6.5L8 4H13C13.83 4 14.5 4.67 14.5 5.5V12C14.5 12.83 13.83 13.5 13 13.5H3C2.17 13.5 1.5 12.83 1.5 12V4Z" fill="#e5e7eb" stroke="#9ca3af" strokeWidth="1.2" strokeLinejoin="round"/>
                           </svg>
+                        ) : row.type === T2 ? (
+                          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" title={T2}>
+                            {/* 3 stacked lines */}
+                            <rect x="7" y="2" width="8" height="1.5" rx="0.75" fill="#374151"/>
+                            <rect x="6" y="4.5" width="10" height="1.5" rx="0.75" fill="#374151"/>
+                            <rect x="5" y="7" width="12" height="1.5" rx="0.75" fill="#374151"/>
+                            {/* Card with play button */}
+                            <rect x="2" y="9.5" width="18" height="9" rx="2" fill="#374151"/>
+                            <polygon points="9,12 15,14 9,16" fill="white"/>
+                          </svg>
                         ) : (
                           <span className={styles.typeBadge}>{row.type}</span>
                         )}
