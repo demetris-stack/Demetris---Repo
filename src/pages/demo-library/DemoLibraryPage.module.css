@@ -778,6 +778,60 @@
   background: #e8e8f0;
   border-color: #c7c7e0;
 }
+/* ── Download button ─────────────────────────────────── */
+.downloadWrap {
+  position: relative;
+}
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+.downloadBtn:hover {
+  background: #e9eaec;
+  border-color: #d1d5db;
+}
+.downloadDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  z-index: 200;
+  overflow: hidden;
+  padding: 4px 0;
+}
+.downloadItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 14px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+  transition: background .1s;
+}
+.downloadItem:hover {
+  background: #f9fafb;
+}
+
 .colSelectorDropdown {
   right: 0;
   left: auto;

@@ -384,13 +384,13 @@ function TabContent({ tab }: { tab: Tab }) {
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
-      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} />
+      <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} reportLabel="Full Demo Report" />
     </>
   ) : tab === 'demo-library' ? (
     <>
       <SuggestedCarousel assets={DEMO_LIBRARY_SUGGESTED} />
       <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
-      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} />
+      <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} reportLabel="Demo Library Report" />
     </>
   ) : tab === 'favorites' ? (
     favRows.length === 0
@@ -584,12 +584,13 @@ const COL_DEFS: { id: string; label: string; locked?: boolean }[] = [
   { id: 'owner',      label: 'Owner' },
 ]
 
-function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleFav }: {
+function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleFav, reportLabel = 'Full Demo Report' }: {
   rows: DemoRow[]
   filters: Filters
   actions: FilterActions
   favorited?: Set<string>
   onToggleFav?: (id: string) => void
+  reportLabel?: string
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [localFavorited, setLocalFavorited] = useState<Set<string>>(new Set())
@@ -602,6 +603,19 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
   const [visibleCols, setVisibleCols] = useState<Set<string>>(
     new Set(COL_DEFS.map((c) => c.id))
   )
+  const [downloadOpen, setDownloadOpen] = useState(false)
+  const downloadRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!downloadOpen) return
+    function handleClick(e: MouseEvent) {
+      if (downloadRef.current && !downloadRef.current.contains(e.target as Node)) {
+        setDownloadOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [downloadOpen])
 
   function toggleCol(id: string) {
     setVisibleCols((prev) => {
@@ -707,6 +721,32 @@ function DemoTable({ rows, filters, actions, favorited: favoritedProp, onToggleF
           )}
         </div>
         <div className={styles.toolbarRight}>
+          <div className={styles.downloadWrap} ref={downloadRef}>
+            <button
+              className={styles.downloadBtn}
+              onClick={() => setDownloadOpen((o) => !o)}
+              title="Download report"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 11h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ marginLeft: 2 }}>
+                <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            {downloadOpen && (
+              <div className={styles.downloadDropdown}>
+                <button className={styles.downloadItem} onClick={() => setDownloadOpen(false)}>
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 11h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                  </svg>
+                  {reportLabel}
+                </button>
+              </div>
+            )}
+          </div>
           {viewMode === 'table' && (
             <ColumnSelector cols={COL_DEFS} visible={visibleCols} onToggle={toggleCol} />
           )}
