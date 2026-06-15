@@ -1123,12 +1123,18 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
         {assets.map((asset) => (
           <div key={asset.id} className={styles.suggestedCard}>
             <div className={styles.suggestedCardThumb}>
+              <div className={styles.suggestedThumbPlay}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.15)"/>
+                  <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
+                </svg>
+              </div>
               <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
                 {asset.creatorInitials}
               </span>
-              <span className={styles.suggestedTypeBadge}>{asset.type}</span>
             </div>
             <div className={styles.suggestedCardBody}>
+              <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /><span className={styles.suggestedTypeLabel}>{asset.type}</span></div>
               <div className={styles.suggestedCardTitle}>{asset.title}</div>
               <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
             </div>
@@ -1192,12 +1198,18 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
           {sorted.map((asset) => (
             <div key={asset.id} className={styles.suggestedCard}>
               <div className={styles.suggestedCardThumb}>
+                <div className={styles.suggestedThumbPlay}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.15)"/>
+                    <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
+                  </svg>
+                </div>
                 <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
                   {asset.creatorInitials}
                 </span>
-                <span className={styles.suggestedTypeBadge}>{asset.type}</span>
               </div>
               <div className={styles.suggestedCardBody}>
+                <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /><span className={styles.suggestedTypeLabel}>{asset.type}</span></div>
                 <div className={styles.suggestedCardTitle}>{asset.title}</div>
                 <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
               </div>
@@ -1693,6 +1705,12 @@ function TagIcon() {
 }
 function FunnelIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+}
+function DemoTypeIcon({ type, size = 14 }: { type: string; size?: number }) {
+  if (type === T1) return <img src={discoveryDemoIconUrl} alt={type} width={size} height={size} style={{ objectFit: 'contain', display: 'block' }} />
+  if (type === T2) return <img src={standardPIconUrl} alt={type} width={size} height={size} style={{ objectFit: 'contain', display: 'block' }} />
+  if (type === T3) return <img src={singleExpIconUrl} alt={type} width={size} height={size} style={{ objectFit: 'contain', display: 'block' }} />
+  return <span style={{ fontSize: 11 }}>{type}</span>
 }
 function ThemeIcon() {
   return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4"/><path d="M7 1.5v11M1.5 7h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
