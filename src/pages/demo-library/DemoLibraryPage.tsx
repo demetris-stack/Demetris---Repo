@@ -1244,6 +1244,160 @@ function CardThumbnail({ id }: { id: string }) {
   )
 }
 
+/* ── Share / DemoBoard Modal ────────────────────────── */
+function ShareModal({ asset, onClose }: { asset: SuggestedAsset | null; onClose: () => void }) {
+  const [step, setStep] = useState<'form' | 'review'>('form')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [org, setOrg] = useState('')
+  const [sent, setSent] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    if (!asset) return
+    setStep('form'); setFirstName(''); setLastName('')
+    setEmail(''); setOrg(''); setSent(false); setErrors({})
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [asset, onClose])
+
+  if (!asset) return null
+
+  function validate() {
+    const e: Record<string, string> = {}
+    if (!firstName.trim()) e.firstName = 'Required'
+    if (!lastName.trim()) e.lastName = 'Required'
+    if (!email.trim()) e.email = 'Required'
+    else if (!/\S+@\S+\.\S+/.test(email)) e.email = 'Enter a valid email'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
+  function handleReview() { if (validate()) setStep('review') }
+  function handleSend() { setSent(true) }
+
+  return (
+    <div className={styles.shareOverlay} onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div className={styles.shareModal}>
+
+        {/* Dark header */}
+        <div className={styles.shareHeader}>
+          <div>
+            <p className={styles.shareHeaderTag}>SEND VIA CONSENSUS</p>
+            <h2 className={styles.shareHeaderTitle}>
+              {sent ? 'DemoBoard Sent!' : step === 'review' ? 'Review DemoBoard' : 'Create a DemoBoard'}
+            </h2>
+            {!sent && <p className={styles.shareHeaderSub}>Hello {asset.title.split(' ')[0]}</p>}
+          </div>
+          <button className={styles.shareClose} onClick={onClose}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Body */}
+        {sent ? (
+          <div className={styles.shareSentBody}>
+            <div className={styles.shareSentIcon}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p className={styles.shareSentTitle}>DemoBoard created!</p>
+            <p className={styles.shareSentDesc}>
+              A link has been sent to <strong>{email}</strong>. They'll be able to explore this demo at their own pace.
+            </p>
+            <button className={styles.sharePrimaryBtn} onClick={onClose}>Done</button>
+          </div>
+        ) : step === 'form' ? (
+          <div className={styles.shareBody}>
+            <div className={styles.shareRow}>
+              <div className={styles.shareField}>
+                <label className={styles.shareLabel}>FIRST NAME <span className={styles.shareReq}>*</span></label>
+                <input
+                  className={`${styles.shareInput} ${errors.firstName ? styles.shareInputErr : ''}`}
+                  placeholder="Jane"
+                  value={firstName}
+                  onChange={(e) => { setFirstName(e.target.value); setErrors((p) => ({ ...p, firstName: '' })) }}
+                />
+                {errors.firstName && <span className={styles.shareErrMsg}>{errors.firstName}</span>}
+              </div>
+              <div className={styles.shareField}>
+                <label className={styles.shareLabel}>LAST NAME <span className={styles.shareReq}>*</span></label>
+                <input
+                  className={`${styles.shareInput} ${errors.lastName ? styles.shareInputErr : ''}`}
+                  placeholder="Smith"
+                  value={lastName}
+                  onChange={(e) => { setLastName(e.target.value); setErrors((p) => ({ ...p, lastName: '' })) }}
+                />
+                {errors.lastName && <span className={styles.shareErrMsg}>{errors.lastName}</span>}
+              </div>
+            </div>
+
+            <div className={styles.shareField}>
+              <label className={styles.shareLabel}>RECIPIENT EMAIL <span className={styles.shareReq}>*</span></label>
+              <input
+                className={`${styles.shareInput} ${errors.email ? styles.shareInputErr : ''}`}
+                placeholder="jane@company.com"
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: '' })) }}
+              />
+              {errors.email && <span className={styles.shareErrMsg}>{errors.email}</span>}
+            </div>
+
+            <div className={styles.shareField}>
+              <label className={styles.shareLabel}>ORGANIZATION</label>
+              <input
+                className={styles.shareInput}
+                placeholder="Acme Corp"
+                value={org}
+                onChange={(e) => setOrg(e.target.value)}
+              />
+              <span className={styles.shareHint}>Optional — helps identify the demoboard later</span>
+            </div>
+
+            <div className={styles.shareFooter}>
+              <button className={styles.shareCancelBtn} onClick={onClose}>Cancel</button>
+              <button className={styles.sharePrimaryBtn} onClick={handleReview}>
+                Review DemoBoard →
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.shareBody}>
+            <div className={styles.shareReviewCard}>
+              <div className={styles.shareReviewThumb}>
+                <CardThumbnail id={asset.id} />
+              </div>
+              <div className={styles.shareReviewInfo}>
+                <p className={styles.shareReviewLabel}>Demo</p>
+                <p className={styles.shareReviewName}>{asset.title}</p>
+              </div>
+            </div>
+
+            <div className={styles.shareReviewRows}>
+              <div className={styles.shareReviewRow}><span>Recipient</span><strong>{firstName} {lastName}</strong></div>
+              <div className={styles.shareReviewRow}><span>Email</span><strong>{email}</strong></div>
+              {org && <div className={styles.shareReviewRow}><span>Organization</span><strong>{org}</strong></div>}
+            </div>
+
+            <div className={styles.shareFooter}>
+              <button className={styles.shareCancelBtn} onClick={() => setStep('form')}>← Back</button>
+              <button className={styles.sharePrimaryBtn} onClick={handleSend}>
+                Send DemoBoard
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 /* ── Demo Preview Modal ─────────────────────────────── */
 function DemoPreviewModal({ asset, onClose }: { asset: SuggestedAsset | null; onClose: () => void }) {
   const [copied, setCopied] = useState(false)
@@ -1383,9 +1537,11 @@ function DemoPreviewModal({ asset, onClose }: { asset: SuggestedAsset | null; on
 
 function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
   const [previewAsset, setPreviewAsset] = useState<SuggestedAsset | null>(null)
+  const [shareAsset, setShareAsset] = useState<SuggestedAsset | null>(null)
   return (
     <>
       <DemoPreviewModal asset={previewAsset} onClose={() => setPreviewAsset(null)} />
+      <ShareModal asset={shareAsset} onClose={() => setShareAsset(null)} />
       <div className={styles.suggestSection}>
         <span className={styles.suggestSectionTitle}>{title}</span>
         <div className={styles.carouselTrack}>
@@ -1415,7 +1571,7 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
                         <circle cx="12" cy="12" r="3"/>
                       </svg>
                     </button>
-                    <button className={styles.suggestedActionBtn} title="Share">
+                    <button className={styles.suggestedActionBtn} title="Share" onClick={() => setShareAsset(asset)}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
                         <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
@@ -1450,6 +1606,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
   const [collapsed, setCollapsed] = useState<boolean>(!initialExpanded)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('New')
   const [previewAsset, setPreviewAsset] = useState<SuggestedAsset | null>(null)
+  const [shareAsset, setShareAsset] = useState<SuggestedAsset | null>(null)
 
   const sorted = [...assets].sort((a, b) => {
     if (activeTab === 'New') return a.id.localeCompare(b.id)
@@ -1460,6 +1617,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
   return (
     <>
     <DemoPreviewModal asset={previewAsset} onClose={() => setPreviewAsset(null)} />
+    <ShareModal asset={shareAsset} onClose={() => setShareAsset(null)} />
     <section className={styles.suggestedSection}>
       <div className={styles.suggestedHeader}>
         <button className={styles.suggestedToggle} onClick={() => setCollapsed((c) => !c)}>
@@ -1511,7 +1669,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
                         <circle cx="12" cy="12" r="3"/>
                       </svg>
                     </button>
-                    <button className={styles.suggestedActionBtn} title="Share">
+                    <button className={styles.suggestedActionBtn} title="Share" onClick={() => setShareAsset(asset)}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
                         <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
