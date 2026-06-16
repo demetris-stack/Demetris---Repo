@@ -1958,31 +1958,68 @@
   color: #6b7280;
 }
 
+.previewShareRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid #f3f4f6;
+}
+.previewLinkWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 10px;
+  height: 36px;
+  min-width: 0;
+}
+.previewLinkInput {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 12.5px;
+  color: #374151;
+  outline: none;
+  min-width: 0;
+  font-family: inherit;
+}
+.previewCopyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .1s, border-color .1s, color .1s;
+  flex-shrink: 0;
+}
+.previewCopyBtn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+.previewCopyBtnCopied {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #16a34a;
+}
+
 .previewFooter {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  padding: 12px 20px 16px;
-  border-top: 1px solid #f3f4f6;
-}
-.previewShareBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 16px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  color: #374151;
-  cursor: pointer;
-  transition: background .1s, border-color .1s;
-}
-.previewShareBtn:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
+  padding: 10px 20px 16px;
 }
 .previewOpenBtn {
   display: inline-flex;

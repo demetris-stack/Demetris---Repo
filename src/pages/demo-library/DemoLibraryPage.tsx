@@ -1246,8 +1246,19 @@ function CardThumbnail({ id }: { id: string }) {
 
 /* ── Demo Preview Modal ─────────────────────────────── */
 function DemoPreviewModal({ asset, onClose }: { asset: SuggestedAsset | null; onClose: () => void }) {
+  const [copied, setCopied] = useState(false)
+
+  const shareLink = asset ? `https://demo.example.com/share/${asset.id}` : ''
+
+  function copyLink() {
+    navigator.clipboard.writeText(shareLink).catch(() => {})
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   useEffect(() => {
     if (!asset) return
+    setCopied(false)
     function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
@@ -1320,15 +1331,44 @@ function DemoPreviewModal({ asset, onClose }: { asset: SuggestedAsset | null; on
           </div>
         </div>
 
+        {/* Share link row */}
+        <div className={styles.previewShareRow}>
+          <div className={styles.previewLinkWrap}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, color: '#9ca3af' }}>
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <input
+              className={styles.previewLinkInput}
+              value={shareLink}
+              readOnly
+              onFocus={(e) => e.target.select()}
+            />
+          </div>
+          <button
+            className={`${styles.previewCopyBtn} ${copied ? styles.previewCopyBtnCopied : ''}`}
+            onClick={copyLink}
+          >
+            {copied ? (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Copied!
+              </>
+            ) : (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy link
+              </>
+            )}
+          </button>
+        </div>
+
         {/* Footer actions */}
         <div className={styles.previewFooter}>
-          <button className={styles.previewShareBtn}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-            </svg>
-            Share
-          </button>
           <button className={styles.previewOpenBtn}>
             Open Demo
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
