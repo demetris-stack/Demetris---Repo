@@ -1244,50 +1244,151 @@ function CardThumbnail({ id }: { id: string }) {
   )
 }
 
-function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
+/* ── Demo Preview Modal ─────────────────────────────── */
+function DemoPreviewModal({ asset, onClose }: { asset: SuggestedAsset | null; onClose: () => void }) {
+  useEffect(() => {
+    if (!asset) return
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [asset, onClose])
+
+  if (!asset) return null
+
   return (
-    <div className={styles.suggestSection}>
-      <span className={styles.suggestSectionTitle}>{title}</span>
-      <div className={styles.carouselTrack}>
-        {assets.map((asset) => (
-          <div key={asset.id} className={styles.suggestedCard}>
-            <div className={styles.suggestedCardThumb}>
-              <CardThumbnail id={asset.id} />
-              <div className={styles.suggestedThumbPlay}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
-                  <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
+    <div className={styles.previewOverlay} onMouseDown={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div className={styles.previewModal}>
+        {/* Header */}
+        <div className={styles.previewHeader}>
+          <div className={styles.previewHeaderLeft}>
+            <DemoTypeIcon type={asset.type} size={16} />
+            <span className={styles.previewTypeLabel}>{asset.type}</span>
+          </div>
+          <button className={styles.previewClose} onClick={onClose} title="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Player area */}
+        <div className={styles.previewPlayer}>
+          <div className={styles.previewThumb}>
+            <CardThumbnail id={asset.id} />
+            <div className={styles.previewPlayBtn}>
+              <div className={styles.previewPlayCircle}>
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <polygon points="10,6 22,14 10,22" fill="white"/>
                 </svg>
-              </div>
-              <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
-                {asset.creatorInitials}
-              </span>
-            </div>
-            <div className={styles.suggestedCardBody}>
-              <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
-              <div className={styles.suggestedCardTitle}>{asset.title}</div>
-              <div className={styles.suggestedCardFooter}>
-                <span className={styles.suggestedCardCount}>In {asset.inDemos} demos</span>
-                <div className={styles.suggestedCardActions}>
-                  <button className={styles.suggestedActionBtn} title="Preview">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-                      <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                  </button>
-                  <button className={styles.suggestedActionBtn} title="Share">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                    </svg>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* Info */}
+        <div className={styles.previewInfo}>
+          <h2 className={styles.previewTitle}>{asset.title}</h2>
+          <div className={styles.previewMeta}>
+            <span className={styles.previewAvatar} style={{ background: asset.creatorColor }}>
+              {asset.creatorInitials}
+            </span>
+            <span className={styles.previewCreator}>Created by {asset.creatorInitials}</span>
+            <span className={styles.previewDot}>·</span>
+            <span className={styles.previewDemosCount}>Used in {asset.inDemos} demos</span>
+          </div>
+
+          <div className={styles.previewStats}>
+            <div className={styles.previewStat}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+              <span>{Math.floor(Math.random() * 900 + 100)} views</span>
+            </div>
+            <div className={styles.previewStat}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              <span>{Math.floor(Math.random() * 50 + 5)} shares</span>
+            </div>
+            <div className={styles.previewStat}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span>Updated 3 days ago</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer actions */}
+        <div className={styles.previewFooter}>
+          <button className={styles.previewShareBtn}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Share
+          </button>
+          <button className={styles.previewOpenBtn}>
+            Open Demo
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
+  )
+}
+
+function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsset[] }) {
+  const [previewAsset, setPreviewAsset] = useState<SuggestedAsset | null>(null)
+  return (
+    <>
+      <DemoPreviewModal asset={previewAsset} onClose={() => setPreviewAsset(null)} />
+      <div className={styles.suggestSection}>
+        <span className={styles.suggestSectionTitle}>{title}</span>
+        <div className={styles.carouselTrack}>
+          {assets.map((asset) => (
+            <div key={asset.id} className={styles.suggestedCard}>
+              <div className={styles.suggestedCardThumb}>
+                <CardThumbnail id={asset.id} />
+                <div className={styles.suggestedThumbPlay}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="8" fill="rgba(255,255,255,0.2)"/>
+                    <polygon points="6,4.5 12,8 6,11.5" fill="white"/>
+                  </svg>
+                </div>
+                <span className={styles.suggestedAvatar} style={{ background: asset.creatorColor }}>
+                  {asset.creatorInitials}
+                </span>
+              </div>
+              <div className={styles.suggestedCardBody}>
+                <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
+                <div className={styles.suggestedCardTitle}>{asset.title}</div>
+                <div className={styles.suggestedCardFooter}>
+                  <span className={styles.suggestedCardCount}>In {asset.inDemos} demos</span>
+                  <div className={styles.suggestedCardActions}>
+                    <button className={styles.suggestedActionBtn} title="Preview" onClick={() => setPreviewAsset(asset)}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </button>
+                    <button className={styles.suggestedActionBtn} title="Share">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -1308,6 +1409,7 @@ type SuggestedTab = typeof SUGGESTED_TABS[number]
 function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
   const [collapsed, setCollapsed] = useState<boolean>(!initialExpanded)
   const [activeTab, setActiveTab] = useState<SuggestedTab>('New')
+  const [previewAsset, setPreviewAsset] = useState<SuggestedAsset | null>(null)
 
   const sorted = [...assets].sort((a, b) => {
     if (activeTab === 'New') return a.id.localeCompare(b.id)
@@ -1316,6 +1418,8 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
   })
 
   return (
+    <>
+    <DemoPreviewModal asset={previewAsset} onClose={() => setPreviewAsset(null)} />
     <section className={styles.suggestedSection}>
       <div className={styles.suggestedHeader}>
         <button className={styles.suggestedToggle} onClick={() => setCollapsed((c) => !c)}>
@@ -1361,7 +1465,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
                 <div className={styles.suggestedCardFooter}>
                   <span className={styles.suggestedCardCount}>In {asset.inDemos} demos</span>
                   <div className={styles.suggestedCardActions}>
-                    <button className={styles.suggestedActionBtn} title="Preview">
+                    <button className={styles.suggestedActionBtn} title="Preview" onClick={() => setPreviewAsset(asset)}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -1381,6 +1485,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
         </div>
       )}
     </section>
+    </>
   )
 }
 
