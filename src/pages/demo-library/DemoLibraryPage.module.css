@@ -1758,9 +1758,46 @@
   overflow: hidden;
 }
 
+.suggestedCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
 .suggestedCardCount {
   font-size: 11.5px;
   color: #9ca3af;
+}
+
+.suggestedCardActions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.suggestedCard:hover .suggestedCardActions {
+  opacity: 1;
+}
+
+.suggestedActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  padding: 0;
+}
+.suggestedActionBtn:hover {
+  background: #f3f4f6;
+  color: #111;
 }
 
 /* ── Demo Detail Drawer ─────────────────────────────── */

@@ -1266,7 +1266,23 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
             <div className={styles.suggestedCardBody}>
               <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
               <div className={styles.suggestedCardTitle}>{asset.title}</div>
-              <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+              <div className={styles.suggestedCardFooter}>
+                <span className={styles.suggestedCardCount}>In {asset.inDemos} demos</span>
+                <div className={styles.suggestedCardActions}>
+                  <button className={styles.suggestedActionBtn} title="Preview">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <button className={styles.suggestedActionBtn} title="Share">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -1342,7 +1358,23 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
               <div className={styles.suggestedCardBody}>
                 <div className={styles.suggestedTypeIcon}><DemoTypeIcon type={asset.type} size={13} /></div>
                 <div className={styles.suggestedCardTitle}>{asset.title}</div>
-                <div className={styles.suggestedCardCount}>In {asset.inDemos} demos</div>
+                <div className={styles.suggestedCardFooter}>
+                  <span className={styles.suggestedCardCount}>In {asset.inDemos} demos</span>
+                  <div className={styles.suggestedCardActions}>
+                    <button className={styles.suggestedActionBtn} title="Preview">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </button>
+                    <button className={styles.suggestedActionBtn} title="Share">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
