@@ -1591,15 +1591,16 @@ function SuggestionRow({ title, assets }: { title: string; assets: SuggestedAsse
 function SuggestionsPage() {
   return (
     <div className={styles.suggestionsPage}>
-      <SuggestionRow title="Recent" assets={SUGGESTIONS_RECENTS} />
-      <SuggestionRow title="Recently Updated" assets={SUGGESTIONS_FOR_DEAL} />
-      <SuggestionRow title="Promoted" assets={SUGGESTIONS_PROMOTED} />
-      <SuggestionRow title="Top Performers" assets={SUGGESTIONS_ASSETS} />
+      <SuggestionRow title="New" assets={SUGGESTIONS_RECENTS} />
+      <SuggestionRow title="Recently Used" assets={SUGGESTIONS_FOR_DEAL} />
+      <SuggestionRow title="Updated" assets={SUGGESTIONS_PROMOTED} />
+      <SuggestionRow title="Most Viewed" assets={SUGGESTIONS_ASSETS} />
+      <SuggestionRow title="Most Shared" assets={SUGGESTIONS_RECENTS} />
     </div>
   )
 }
 
-const SUGGESTED_TABS = ['New', 'Trending', 'Most Viewed', 'Most Shared', 'Region'] as const
+const SUGGESTED_TABS = ['New', 'Recently Used', 'Updated', 'Most Viewed', 'Most Shared'] as const
 type SuggestedTab = typeof SUGGESTED_TABS[number]
 
 function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs }: { assets: SuggestedAsset[]; expanded?: boolean; hideTabs?: boolean }) {
@@ -1610,7 +1611,7 @@ function SuggestedCarousel({ assets, expanded: initialExpanded = true, hideTabs 
 
   const sorted = [...assets].sort((a, b) => {
     if (activeTab === 'New') return a.id.localeCompare(b.id)
-    if (activeTab === 'Most Viewed' || activeTab === 'Most Shared' || activeTab === 'Trending') return b.inDemos - a.inDemos
+    if (activeTab === 'Most Viewed' || activeTab === 'Most Shared') return b.inDemos - a.inDemos
     return 0
   })
 
