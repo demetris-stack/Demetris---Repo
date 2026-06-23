@@ -18,8 +18,14 @@ const PROJECTS: Project[] = [
   {
     slug: 'demo-library',
     title: 'Demo Library Filtering',
-    description: 'Coming soon.',
+    description: 'Browse, filter, and manage your demo assets with folders, tags, and carousel suggestions.',
     accent: '#10b981',
+  },
+  {
+    slug: 'demo-library-consensus',
+    title: 'Demo Library Filtering - Consensus Colors',
+    description: 'Same Demo Library experience styled with Consensus brand colors.',
+    accent: '#f97316',
   },
 ]
 
