@@ -281,12 +281,16 @@ const LANGUAGE_OPTIONS = ['English', 'Spanish', 'French', 'German', 'Portuguese'
 const OWNER_OPTIONS = ['Alex', 'Jamie', 'Sam', 'Taylor', 'Jordan']
 
 
-export default function DemoLibraryPage() {
-  useEffect(() => { document.title = 'Demo Library Filtering' }, [])
+export default function DemoLibraryPage({ theme }: { theme?: 'consensus' } = {}) {
+  useEffect(() => {
+    document.title = theme === 'consensus'
+      ? 'Demo Library Filtering - Consensus Colors'
+      : 'Demo Library Filtering'
+  }, [theme])
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
 
   return (
-    <div className={styles.layout}>
+    <div className={styles.layout} data-theme={theme}>
       <Sidebar />
       <main className={styles.main}>
         <Link to="/menu" className={styles.backLink}>← Back to Menu</Link>

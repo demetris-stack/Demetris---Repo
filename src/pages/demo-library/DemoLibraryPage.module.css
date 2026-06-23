@@ -2955,3 +2955,242 @@
   transition: background .15s;
 }
 .drawerDoneBtn:hover { background: #333; }
+
+/* ═══════════════════════════════════════════════════════
+   CONSENSUS COLORS THEME  (data-theme="consensus")
+   Brand palette:
+     Primary orange : #FC6839  (hover #DE5321)
+     Light orange   : #FFDCCA  (tint #FFEFE6)
+     Sidebar bg     : #F7F4F1
+     Sidebar border : #D0CBC6
+     Dark text      : #172537
+     Mid text       : #6F6F6F
+═══════════════════════════════════════════════════════ */
+
+/* ── Sidebar ── */
+:global([data-theme="consensus"]) .sidebar {
+  background: #F7F4F1;
+  border-right: 1px solid #D0CBC6;
+}
+:global([data-theme="consensus"]) .sidebarTop {
+  border-bottom: 1px solid #D0CBC6;
+}
+:global([data-theme="consensus"]) .sidebarBottom {
+  border-top: 1px solid #D0CBC6;
+}
+:global([data-theme="consensus"]) .navLabel {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .navRow {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .navRow:hover {
+  background: #EEEBE8;
+  color: #172537;
+}
+:global([data-theme="consensus"]) .navRowActive {
+  background: #FFDCCA;
+  color: #DE5321;
+  font-weight: 600;
+}
+:global([data-theme="consensus"]) .navSubItem {
+  color: #6F6F6F;
+}
+:global([data-theme="consensus"]) .navSubItem:hover {
+  color: #172537;
+  background: #EEEBE8;
+}
+:global([data-theme="consensus"]) .navSubItemActive {
+  color: #DE5321;
+  font-weight: 600;
+  background: #FFDCCA;
+}
+:global([data-theme="consensus"]) .navChevron {
+  color: #A8A39C;
+}
+:global([data-theme="consensus"]) .navIcon svg {
+  color: #172537;
+}
+
+/* ── Create Demo button ── */
+:global([data-theme="consensus"]) .createBtn {
+  background: #FC6839;
+  color: #fff;
+}
+:global([data-theme="consensus"]) .createBtn:hover {
+  background: #DE5321;
+}
+
+/* ── Tabs ── */
+:global([data-theme="consensus"]) .tab {
+  color: #6F6F6F;
+}
+:global([data-theme="consensus"]) .tab:hover {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .tabActive {
+  color: #FC6839;
+  border-bottom-color: #FC6839;
+}
+
+/* ── Filter buttons ── */
+:global([data-theme="consensus"]) .filterBtn {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+  color: #172537;
+}
+:global([data-theme="consensus"]) .filterBtn:hover {
+  background: #D0CBC6;
+  border-color: #A8A39C;
+}
+:global([data-theme="consensus"]) .filterBtnActive {
+  background: #FFDCCA;
+  border-color: #FC6839;
+  color: #DE5321;
+}
+:global([data-theme="consensus"]) .filterCount {
+  background: #FC6839;
+  color: #fff;
+}
+
+/* ── Search combo pill ── */
+:global([data-theme="consensus"]) .comboPill {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+}
+:global([data-theme="consensus"]) .comboDivider {
+  background: #D0CBC6;
+}
+:global([data-theme="consensus"]) .comboEvery {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .comboEveryActive {
+  background: #FC6839;
+  color: #fff;
+  border-radius: 6px;
+}
+
+/* ── Table ── */
+:global([data-theme="consensus"]) .table thead tr {
+  background: #F7F4F1;
+  border-bottom: 1px solid #D0CBC6;
+}
+:global([data-theme="consensus"]) .th {
+  color: #6F6F6F;
+}
+:global([data-theme="consensus"]) .tr:hover {
+  background: #FFF8F5;
+}
+:global([data-theme="consensus"]) .trSelected {
+  background: #FFEFE6 !important;
+}
+:global([data-theme="consensus"]) .tdCheck input[type="checkbox"] {
+  accent-color: #FC6839;
+}
+:global([data-theme="consensus"]) .thCheck input[type="checkbox"] {
+  accent-color: #FC6839;
+}
+
+/* ── Selection popup ── */
+:global([data-theme="consensus"]) .selectionBar {
+  background: #FC6839;
+}
+
+/* ── Applied filters pill ── */
+:global([data-theme="consensus"]) .appliedPill {
+  background: #FFDCCA;
+  border-color: #FC6839;
+  color: #DE5321;
+}
+:global([data-theme="consensus"]) .appliedPillX {
+  color: #DE5321;
+}
+
+/* ── Column selector button ── */
+:global([data-theme="consensus"]) .colSelectorBtn {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+  color: #172537;
+}
+
+/* ── View toggle ── */
+:global([data-theme="consensus"]) .viewToggle {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+}
+:global([data-theme="consensus"]) .viewBtn {
+  color: #6F6F6F;
+}
+:global([data-theme="consensus"]) .viewBtn:hover {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .viewBtnActive {
+  background: #FC6839;
+  color: #fff;
+}
+
+/* ── Drawers ── */
+:global([data-theme="consensus"]) .drawerHeader {
+  background: #F7F4F1;
+  border-bottom: 1px solid #D0CBC6;
+  color: #172537;
+}
+:global([data-theme="consensus"]) .drawerSectionTitle {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .drawerApplyBtn {
+  background: #FC6839;
+}
+:global([data-theme="consensus"]) .drawerApplyBtn:hover {
+  background: #DE5321;
+}
+:global([data-theme="consensus"]) .drawerDoneBtn {
+  background: #FC6839;
+}
+:global([data-theme="consensus"]) .drawerDoneBtn:hover {
+  background: #DE5321;
+}
+
+/* ── History drawer ── */
+:global([data-theme="consensus"]) .historyDot {
+  background: #FC6839;
+}
+:global([data-theme="consensus"]) .historyLine {
+  background: #D0CBC6;
+}
+
+/* ── Suggested demos tabs ── */
+:global([data-theme="consensus"]) .suggestedTab {
+  color: #6F6F6F;
+  border-color: transparent;
+}
+:global([data-theme="consensus"]) .suggestedTabActive {
+  color: #FC6839;
+  border-bottom-color: #FC6839;
+}
+
+/* ── Tile view ── */
+:global([data-theme="consensus"]) .tileCard {
+  border-color: #D0CBC6;
+}
+:global([data-theme="consensus"]) .tileCard:hover {
+  border-color: #FC6839;
+  box-shadow: 0 4px 12px rgba(252,104,57,.15);
+}
+:global([data-theme="consensus"]) .tileTitle {
+  color: #172537;
+}
+
+/* ── Breadcrumb / back link ── */
+:global([data-theme="consensus"]) .backLink {
+  color: #FC6839;
+}
+:global([data-theme="consensus"]) .breadcrumb {
+  color: #172537;
+}
+
+/* ── Demo detail drawer tabs ── */
+:global([data-theme="consensus"]) .detailTabActive {
+  color: #FC6839;
+  border-bottom-color: #FC6839;
+}
