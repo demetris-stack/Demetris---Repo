@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './AnalyticsPage.module.css'
 
@@ -11,6 +11,7 @@ const TABS: { id: Tab; label: string }[] = [
 ]
 
 export default function AnalyticsPage() {
+  useEffect(() => { document.title = 'Analytics' }, [])
   const [activeTab, setActiveTab] = useState<Tab>('sales')
 
   return (

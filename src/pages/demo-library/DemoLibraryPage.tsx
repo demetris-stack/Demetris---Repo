@@ -282,6 +282,7 @@ const OWNER_OPTIONS = ['Alex', 'Jamie', 'Sam', 'Taylor', 'Jordan']
 
 
 export default function DemoLibraryPage() {
+  useEffect(() => { document.title = 'Demo Library Filtering' }, [])
   const [activeTab, setActiveTab] = useState<Tab>('my-demos')
 
   return (

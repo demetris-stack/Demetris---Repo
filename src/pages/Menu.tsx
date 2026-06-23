@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Menu.module.css'
 
@@ -30,6 +31,8 @@ const PROJECTS: Project[] = [
 ]
 
 export default function Menu() {
+  useEffect(() => { document.title = 'Projects' }, [])
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
