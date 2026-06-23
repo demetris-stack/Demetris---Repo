@@ -3068,7 +3068,7 @@
   background: #EEEBE8;
 }
 :global([data-theme="consensus"]) .comboEveryActive {
-  background: #FFEFE6;
+  background: transparent;
   color: #FC6839;
 }
 :global([data-theme="consensus"]) .searchInput {
@@ -3253,6 +3253,10 @@
 :global([data-theme="consensus"]) .drawerSectionTitle { color: #172537; }
 :global([data-theme="consensus"]) .filterDropItem { color: #172537; }
 :global([data-theme="consensus"]) .scopeItem { color: #172537; }
+:global([data-theme="consensus"]) .scopeOption { color: #172537; }
+:global([data-theme="consensus"]) .scopeOption:hover { background: #EEEBE8; }
+:global([data-theme="consensus"]) .scopeOptionActive { color: #FC6839; }
+:global([data-theme="consensus"]) .scopeDropdown { border-color: #D0CBC6; }
 :global([data-theme="consensus"]) .tableFooter { color: #172537; }
 :global([data-theme="consensus"]) .pagerBtn { color: #172537; }
 :global([data-theme="consensus"]) .suggestedTitle { color: #172537; }
