@@ -3194,3 +3194,55 @@
   color: #FC6839;
   border-bottom-color: #FC6839;
 }
+
+/* ── Consensus: replace all #111 black text with navy #172537 ── */
+:global([data-theme="consensus"]) .layout {
+  color: #172537;
+}
+/* Broad override for all direct text-bearing elements */
+:global([data-theme="consensus"]) .main,
+:global([data-theme="consensus"]) .topBar,
+:global([data-theme="consensus"]) .filterBar,
+:global([data-theme="consensus"]) .tableSection,
+:global([data-theme="consensus"]) .tableToolbar,
+:global([data-theme="consensus"]) .tableWrap,
+:global([data-theme="consensus"]) .tileGrid,
+:global([data-theme="consensus"]) .drawerBody,
+:global([data-theme="consensus"]) .detailBody {
+  color: #172537;
+}
+
+/* Specific #111 text overrides */
+:global([data-theme="consensus"]) .th { color: #6F6F6F; }
+:global([data-theme="consensus"]) .td { color: #172537; }
+:global([data-theme="consensus"]) .titleCell { color: #172537; }
+:global([data-theme="consensus"]) .titleCellName { color: #172537; }
+:global([data-theme="consensus"]) .tdMeta { color: #6F6F6F; }
+:global([data-theme="consensus"]) .tagPill { color: #172537; }
+:global([data-theme="consensus"]) .breadcrumb { color: #172537; }
+:global([data-theme="consensus"]) .pageTitle { color: #172537; }
+:global([data-theme="consensus"]) .suggestSectionTitle { color: #172537; }
+:global([data-theme="consensus"]) .tileTitle { color: #172537; }
+:global([data-theme="consensus"]) .tileDesc { color: #6F6F6F; }
+:global([data-theme="consensus"]) .tileMeta { color: #6F6F6F; }
+:global([data-theme="consensus"]) .dropdownItem { color: #172537; }
+:global([data-theme="consensus"]) .colSelectorItem { color: #172537; }
+:global([data-theme="consensus"]) .colSelectorReset { color: #FC6839; }
+:global([data-theme="consensus"]) .colSelectorReset:hover { color: #DE5321; }
+:global([data-theme="consensus"]) .historyTitle { color: #172537; }
+:global([data-theme="consensus"]) .historyMeta { color: #6F6F6F; }
+:global([data-theme="consensus"]) .detailTitle { color: #172537; }
+:global([data-theme="consensus"]) .detailTab { color: #6F6F6F; }
+:global([data-theme="consensus"]) .detailTab:hover { color: #172537; }
+:global([data-theme="consensus"]) .detailTabActive { color: #FC6839; border-bottom-color: #FC6839; }
+:global([data-theme="consensus"]) .detailSectionTitle { color: #172537; }
+:global([data-theme="consensus"]) .shareReviewRow strong { color: #172537; }
+:global([data-theme="consensus"]) .drawerLabel { color: #172537; }
+:global([data-theme="consensus"]) .drawerCheckLabel { color: #172537; }
+:global([data-theme="consensus"]) .drawerSectionTitle { color: #172537; }
+:global([data-theme="consensus"]) .filterDropItem { color: #172537; }
+:global([data-theme="consensus"]) .scopeItem { color: #172537; }
+:global([data-theme="consensus"]) .tableFooter { color: #172537; }
+:global([data-theme="consensus"]) .pagerBtn { color: #172537; }
+:global([data-theme="consensus"]) .suggestedTitle { color: #172537; }
+:global([data-theme="consensus"]) .suggestSection { color: #172537; }
