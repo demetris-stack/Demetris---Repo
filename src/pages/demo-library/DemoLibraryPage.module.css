@@ -3055,8 +3055,8 @@
 
 /* ── Search combo pill ── */
 :global([data-theme="consensus"]) .comboPill {
-  background: #EEEBE8;
-  border-color: #D0CBC6;
+  background: #F7F4F1;
+  border: 1.5px solid #D0CBC6;
 }
 :global([data-theme="consensus"]) .comboDivider {
   background: #D0CBC6;
@@ -3064,10 +3064,18 @@
 :global([data-theme="consensus"]) .comboEvery {
   color: #172537;
 }
+:global([data-theme="consensus"]) .comboEvery:hover {
+  background: #EEEBE8;
+}
 :global([data-theme="consensus"]) .comboEveryActive {
-  background: #FC6839;
-  color: #fff;
-  border-radius: 6px;
+  background: #FFEFE6;
+  color: #FC6839;
+}
+:global([data-theme="consensus"]) .searchInput {
+  color: #172537;
+}
+:global([data-theme="consensus"]) .searchInput::placeholder {
+  color: #A8A39C;
 }
 
 /* ── Table ── */
