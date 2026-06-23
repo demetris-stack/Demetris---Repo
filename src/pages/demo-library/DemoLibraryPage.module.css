@@ -3213,7 +3213,10 @@
 }
 
 /* Specific #111 text overrides */
-:global([data-theme="consensus"]) .th { color: #6F6F6F; }
+:global([data-theme="consensus"]) .th { color: #6F6F6F; font-weight: 500; }
+:global([data-theme="consensus"]) .thIconLabel { color: #6F6F6F; font-weight: 500; }
+:global([data-theme="consensus"]) .thCheck { color: #6F6F6F; }
+:global([data-theme="consensus"]) .thStar { color: #6F6F6F; }
 :global([data-theme="consensus"]) .td { color: #172537; }
 :global([data-theme="consensus"]) .titleCell { color: #172537; }
 :global([data-theme="consensus"]) .titleCellName { color: #172537; }
