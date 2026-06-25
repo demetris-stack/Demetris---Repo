@@ -1,13 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined'
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined'
-import FilterListOutlinedIcon from '@mui/icons-material/FilterListOutlined'
-import AutoGraphOutlinedIcon from '@mui/icons-material/AutoGraphOutlined'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
-import ViewKanbanOutlinedIcon from '@mui/icons-material/ViewKanbanOutlined'
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
 import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 import logoUrl from '../../assets/logo.png'
@@ -2041,33 +2032,33 @@ function Sidebar() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          {/* Dashboard — Speed */}
+          {/* Dashboard */}
           <div className={styles.navRow}>
-            <SpeedOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">speed</span>
             <span className={styles.navLabel}>Dashboard</span>
           </div>
 
-          {/* Create — Add */}
+          {/* Create */}
           <div className={styles.navRow}>
-            <AddOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">add</span>
             <span className={styles.navLabel}>Create</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
 
-          {/* Share — Send */}
+          {/* Share */}
           <div className={styles.navRow}>
-            <SendOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">send</span>
             <span className={styles.navLabel}>Share</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
 
-          {/* Library — LibraryBooks */}
+          {/* Library */}
           <div className={`${styles.navRow} ${styles.navRowAccent}`} onClick={() => setLibraryOpen(o => !o)} style={{cursor:'pointer'}}>
-            <LibraryBooksOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">note_stack</span>
             <span className={styles.navLabel}>Library</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none" style={{transform: libraryOpen ? 'rotate(90deg)' : 'none', transition:'transform .2s'}}>
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
@@ -2080,36 +2071,36 @@ function Sidebar() {
             </div>
           )}
 
-          {/* Leads — FilterList */}
+          {/* Leads */}
           <div className={styles.navRow}>
-            <FilterListOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">filter_list</span>
             <span className={styles.navLabel}>Leads</span>
           </div>
 
-          {/* DemoBoards — ViewKanban */}
+          {/* DemoBoards */}
           <div className={styles.navRow}>
-            <ViewKanbanOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">view_kanban</span>
             <span className={styles.navLabel}>DemoBoards</span>
           </div>
 
-          {/* Public Links — Link */}
+          {/* Public Links */}
           <div className={styles.navRow}>
-            <LinkOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">link</span>
             <span className={styles.navLabel}>Public Links</span>
           </div>
 
-          {/* Partners — AutoGraph */}
+          {/* Partners */}
           <div className={styles.navRow}>
-            <AutoGraphOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">graph_2</span>
             <span className={styles.navLabel}>Partners</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
 
-          {/* Analytics — BarChart */}
+          {/* Analytics */}
           <div className={styles.navRow}>
-            <BarChartOutlinedIcon className={styles.navIcon} sx={{ fontSize: 20 }} />
+            <span className="material-symbols-outlined">bar_chart</span>
             <span className={styles.navLabel}>Analytics</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
