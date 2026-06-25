@@ -1875,19 +1875,18 @@ function Sidebar() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          {/* Dashboard */}
+          {/* Dashboard — Material: refresh */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M13 8A5 5 0 113.1 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              <path d="M3 2.5v3h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
             </svg>
             <span className={styles.navLabel}>Dashboard</span>
           </div>
 
-          {/* Create */}
+          {/* Create — Material: add */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
             </svg>
             <span className={styles.navLabel}>Create</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -1895,10 +1894,10 @@ function Sidebar() {
             </svg>
           </div>
 
-          {/* Share */}
+          {/* Share — Material: play_arrow */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M5 3.5l7 4.5-7 4.5V3.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
             </svg>
             <span className={styles.navLabel}>Share</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -1906,12 +1905,10 @@ function Sidebar() {
             </svg>
           </div>
 
-          {/* Library (expandable, active) */}
+          {/* Library — Material: assignment (clipboard) */}
           <div className={`${styles.navRow} ${styles.navRowAccent}`} onClick={() => setLibraryOpen(o => !o)} style={{cursor:'pointer'}}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2.5" y="4" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M5.5 4V3a2 2 0 014 0v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              <path d="M5.5 8h5M5.5 10.5h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
             </svg>
             <span className={styles.navLabel}>Library</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none" style={{transform: libraryOpen ? 'rotate(90deg)' : 'none', transition:'transform .2s'}}>
@@ -1925,40 +1922,34 @@ function Sidebar() {
             </div>
           )}
 
-          {/* Leads */}
+          {/* Leads — Material: filter_alt */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 3.5h12l-4.5 5.5v4l-3-1.5V9L2 3.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39C20.25 4.95 19.78 4 18.95 4H5.04c-.83 0-1.3.95-.79 1.61z"/>
             </svg>
             <span className={styles.navLabel}>Leads</span>
           </div>
 
-          {/* DemoBoards */}
+          {/* DemoBoards — Material: view_kanban */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1.5" y="1.5" width="5.5" height="13" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
-              <rect x="9" y="1.5" width="5.5" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
-              <rect x="9" y="9.5" width="5.5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 3h5v18H3V3zm13 0h5v8h-5V3zm0 10h5v8h-5v-8zM9 3h5v11H9V3zm0 13h5v5H9v-5z"/>
             </svg>
             <span className={styles.navLabel}>DemoBoards</span>
           </div>
 
-          {/* Public Links */}
+          {/* Public Links — Material: link */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6.5 9.5a4 4 0 005.66 0l1.5-1.5a4 4 0 00-5.66-5.66l-.86.85" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              <path d="M9.5 6.5a4 4 0 00-5.66 0l-1.5 1.5a4 4 0 005.66 5.66l.85-.85" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z"/>
             </svg>
             <span className={styles.navLabel}>Public Links</span>
           </div>
 
-          {/* Partners */}
+          {/* Partners — Material: account_tree */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="3" r="2" stroke="currentColor" strokeWidth="1.5"/>
-              <circle cx="3" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
-              <circle cx="13" cy="13" r="2" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M8 5v3M8 8l-3.5 3M8 8l3.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/>
             </svg>
             <span className={styles.navLabel}>Partners</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -1966,12 +1957,10 @@ function Sidebar() {
             </svg>
           </div>
 
-          {/* Analytics */}
+          {/* Analytics — Material: bar_chart */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="9" width="3" height="5" rx=".8" fill="currentColor"/>
-              <rect x="6.5" y="5" width="3" height="9" rx=".8" fill="currentColor"/>
-              <rect x="11" y="2" width="3" height="12" rx=".8" fill="currentColor"/>
+            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 9h4v11H4zm12 4h4v7h-4zm-6-9h4v16h-4z"/>
             </svg>
             <span className={styles.navLabel}>Analytics</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
