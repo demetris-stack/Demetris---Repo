@@ -2079,7 +2079,7 @@ function Sidebar() {
 
           {/* DemoBoards */}
           <div className={styles.navRow}>
-            <span className="material-symbols-outlined">view_kanban</span>
+            <span className="material-symbols-outlined">space_dashboard</span>
             <span className={styles.navLabel}>DemoBoards</span>
           </div>
 
@@ -2100,7 +2100,7 @@ function Sidebar() {
 
           {/* Analytics */}
           <div className={styles.navRow}>
-            <span className="material-symbols-outlined">bar_chart</span>
+            <span className="material-symbols-outlined">insert_chart</span>
             <span className={styles.navLabel}>Analytics</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
