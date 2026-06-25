@@ -1,4 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
+import SpeedIcon from '@mui/icons-material/Speed'
+import SendIcon from '@mui/icons-material/Send'
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import AutoGraphIcon from '@mui/icons-material/AutoGraph'
 import { Link } from 'react-router-dom'
 import styles from './DemoLibraryPage.module.css'
 import logoUrl from '../../assets/logo.png'
@@ -2032,11 +2037,9 @@ function Sidebar() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          {/* Dashboard — Material: refresh */}
+          {/* Dashboard — Speed */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-            </svg>
+            <SpeedIcon className={styles.navIcon} sx={{ fontSize: 18 }} />
             <span className={styles.navLabel}>Dashboard</span>
           </div>
 
@@ -2051,22 +2054,18 @@ function Sidebar() {
             </svg>
           </div>
 
-          {/* Share — Material: play_arrow */}
+          {/* Share — Send */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
+            <SendIcon className={styles.navIcon} sx={{ fontSize: 18 }} />
             <span className={styles.navLabel}>Share</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
 
-          {/* Library — Material: assignment (clipboard) */}
+          {/* Library — LibraryBooks (closest to NoteStack) */}
           <div className={`${styles.navRow} ${styles.navRowAccent}`} onClick={() => setLibraryOpen(o => !o)} style={{cursor:'pointer'}}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-            </svg>
+            <LibraryBooksIcon className={styles.navIcon} sx={{ fontSize: 18 }} />
             <span className={styles.navLabel}>Library</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none" style={{transform: libraryOpen ? 'rotate(90deg)' : 'none', transition:'transform .2s'}}>
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
@@ -2079,11 +2078,9 @@ function Sidebar() {
             </div>
           )}
 
-          {/* Leads — Material: filter_alt */}
+          {/* Leads — FilterList */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39C20.25 4.95 19.78 4 18.95 4H5.04c-.83 0-1.3.95-.79 1.61z"/>
-            </svg>
+            <FilterListIcon className={styles.navIcon} sx={{ fontSize: 18 }} />
             <span className={styles.navLabel}>Leads</span>
           </div>
 
@@ -2103,11 +2100,9 @@ function Sidebar() {
             <span className={styles.navLabel}>Public Links</span>
           </div>
 
-          {/* Partners — Material: account_tree */}
+          {/* Partners — AutoGraph (closest to Graph 2) */}
           <div className={styles.navRow}>
-            <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"/>
-            </svg>
+            <AutoGraphIcon className={styles.navIcon} sx={{ fontSize: 18 }} />
             <span className={styles.navLabel}>Partners</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M4.5 3l3 3-3 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
