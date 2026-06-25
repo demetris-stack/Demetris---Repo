@@ -336,6 +336,22 @@ function TabContent({ tab }: { tab: Tab }) {
   const [openFolderName, setOpenFolderName] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [favorited, setFavorited] = useState<Set<string>>(new Set())
+  const [savedFilters, setSavedFilters] = useState<SavedFilter[]>([
+    { id: 'sf1', name: 'My Sales Demos', types: ['Discovery Demo'], creators: [], tags: ['sales'], themes: [], languages: [], owners: [] },
+    { id: 'sf2', name: 'English Onboarding', types: [], creators: [], tags: ['onboarding'], themes: [], languages: ['English'], owners: [] },
+  ])
+
+  function handleSaveFilter(name: string) {
+    const id = `sf_${Date.now()}`
+    setSavedFilters(prev => [...prev, { id, name, types, creators, tags, themes, languages, owners }])
+  }
+  function handleApplyFilter(sf: SavedFilter) {
+    setTypes(sf.types); setCreators(sf.creators); setTags(sf.tags)
+    setThemes(sf.themes); setLanguages(sf.languages); setOwners(sf.owners)
+  }
+  function handleDeleteFilter(id: string) {
+    setSavedFilters(prev => prev.filter(f => f.id !== id))
+  }
 
   function toggleFavGlobal(id: string) {
     setFavorited((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
@@ -389,13 +405,13 @@ function TabContent({ tab }: { tab: Tab }) {
   ) : tab === 'my-demos' ? (
     <>
       <SuggestedCarousel assets={MY_DEMOS_SUGGESTED} />
-      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
+      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} savedFilters={savedFilters} onSaveFilter={handleSaveFilter} onApplyFilter={handleApplyFilter} onDeleteFilter={handleDeleteFilter} />
       <DemoTable rows={MY_DEMOS_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} reportLabel="Full Demo Report" />
     </>
   ) : tab === 'demo-library' ? (
     <>
       <SuggestedCarousel assets={DEMO_LIBRARY_SUGGESTED} />
-      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} />
+      <FilterBar filters={filters} actions={filterActions} onOpenDrawer={() => setDrawerOpen(true)} savedFilters={savedFilters} onSaveFilter={handleSaveFilter} onApplyFilter={handleApplyFilter} onDeleteFilter={handleDeleteFilter} />
       <DemoTable rows={DEMO_LIBRARY_ROWS} filters={filters} actions={filterActions} favorited={favorited} onToggleFav={toggleFavGlobal} reportLabel="Demo Library Report" />
     </>
   ) : tab === 'favorites' ? (
@@ -433,21 +449,47 @@ interface FilterActions {
   openFolder: (name: string) => void
   closeFolder: () => void
 }
+interface SavedFilter {
+  id: string
+  name: string
+  types: string[]; creators: string[]; tags: string[]
+  themes: string[]; languages: string[]; owners: string[]
+}
 
 const SCOPE_OPTIONS: { value: SearchScope; label: string }[] = [
   { value: 'everywhere', label: 'Everywhere' },
   { value: 'in-folder', label: 'In Folder' },
 ]
 
-function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actions: FilterActions; onOpenDrawer: () => void }) {
+function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFilter, onApplyFilter, onDeleteFilter }: {
+  filters: Filters; actions: FilterActions; onOpenDrawer: () => void
+  savedFilters?: SavedFilter[]
+  onSaveFilter?: (name: string) => void
+  onApplyFilter?: (sf: SavedFilter) => void
+  onDeleteFilter?: (id: string) => void
+}) {
   const { types, creators, tags, themes, languages, owners, searchQuery, searchScope } = filters
   const totalApplied = types.length + creators.length + tags.length + themes.length + languages.length + owners.length
   const totalExtra = themes.length + languages.length + owners.length
   const totalAll = totalApplied
   const [scopeOpen, setScopeOpen] = useState(false)
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
+  const [savedOpen, setSavedOpen] = useState(false)
+  const [saveMode, setSaveMode] = useState(false)
+  const [saveName, setSaveName] = useState('')
+  const savedRef = useRef<HTMLDivElement>(null)
   const scopeRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    function h(e: MouseEvent) {
+      if (savedRef.current && !savedRef.current.contains(e.target as Node)) {
+        setSavedOpen(false); setSaveMode(false); setSaveName('')
+      }
+    }
+    document.addEventListener('mousedown', h)
+    return () => document.removeEventListener('mousedown', h)
+  }, [])
 
   useEffect(() => {
     function h(e: MouseEvent) {
@@ -488,6 +530,96 @@ function FilterBar({ filters, actions, onOpenDrawer }: { filters: Filters; actio
           <FunnelIcon />All Filters
           {totalAll > 0 && <span className={styles.filterCount}>{totalAll}</span>}
         </button>
+
+        {/* Saved Filters */}
+        <div className={styles.savedWrap} ref={savedRef}>
+          <button
+            className={`${styles.filterBtn} ${savedOpen ? styles.filterBtnActive : ''}`}
+            onClick={() => { setSavedOpen(o => !o); setSaveMode(false); setSaveName('') }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0}}>
+              <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16a3 3 0 110-6 3 3 0 010 6zm3-10H5V5h10v4z"/>
+            </svg>
+            Saved Filters
+            {savedFilters.length > 0 && <span className={styles.filterCount}>{savedFilters.length}</span>}
+          </button>
+
+          {savedOpen && (
+            <div className={styles.savedDropdown}>
+              <div className={styles.savedDropdownHeader}>
+                <span className={styles.savedDropdownTitle}>Saved Filters</span>
+                <button className={styles.savedAddBtn} onClick={() => { setSaveMode(true); setSavedOpen(false) }}>
+                  + Save current
+                </button>
+              </div>
+
+              {savedFilters.length === 0 ? (
+                <div className={styles.savedEmpty}>No saved filters yet.</div>
+              ) : (
+                savedFilters.map(sf => (
+                  <div key={sf.id} className={styles.savedItem}>
+                    <button className={styles.savedItemName} onClick={() => { onApplyFilter?.(sf); setSavedOpen(false) }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{opacity:.5,flexShrink:0}}>
+                        <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16a3 3 0 110-6 3 3 0 010 6zm3-10H5V5h10v4z"/>
+                      </svg>
+                      {sf.name}
+                    </button>
+                    <div className={styles.savedItemMeta}>
+                      {[...sf.types, ...sf.creators, ...sf.tags, ...sf.themes, ...sf.languages, ...sf.owners]
+                        .slice(0, 3).map(v => <span key={v} className={styles.savedItemTag}>{v}</span>)}
+                    </div>
+                    <button className={styles.savedItemDelete} title="Delete" onClick={() => onDeleteFilter?.(sf.id)}>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                      </svg>
+                    </button>
+                  </div>
+                ))
+              )}
+
+              <div className={styles.savedDropdownFooter}>
+                <button className={styles.savedCreateBtn} onClick={() => { setSaveMode(true); setSavedOpen(false) }}>
+                  + Create custom filter
+                </button>
+              </div>
+            </div>
+          )}
+
+          {saveMode && (
+            <div className={styles.savePanel}>
+              <div className={styles.savePanelTitle}>Save current filters</div>
+              <div className={styles.savePanelFields}>
+                <input
+                  className={styles.savePanelInput}
+                  placeholder="Filter name…"
+                  value={saveName}
+                  autoFocus
+                  onChange={e => setSaveName(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && saveName.trim()) {
+                      onSaveFilter?.(saveName.trim()); setSaveMode(false); setSaveName('')
+                    }
+                    if (e.key === 'Escape') { setSaveMode(false); setSaveName('') }
+                  }}
+                />
+              </div>
+              <div className={styles.savePanelMeta}>
+                {totalApplied === 0
+                  ? <span className={styles.savePanelHint}>No filters currently applied.</span>
+                  : <span className={styles.savePanelHint}>{totalApplied} filter{totalApplied !== 1 ? 's' : ''} will be saved.</span>
+                }
+              </div>
+              <div className={styles.savePanelActions}>
+                <button className={styles.savePanelCancel} onClick={() => { setSaveMode(false); setSaveName('') }}>Cancel</button>
+                <button
+                  className={styles.savePanelSave}
+                  disabled={!saveName.trim()}
+                  onClick={() => { onSaveFilter?.(saveName.trim()); setSaveMode(false); setSaveName('') }}
+                >Save</button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <div className={styles.filterRight}>
         <div className={styles.scopeWrap} ref={scopeRef}>
