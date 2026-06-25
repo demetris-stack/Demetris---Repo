@@ -3114,6 +3114,17 @@
   color: #DE5321;
 }
 
+/* ── Download button ── */
+:global([data-theme="consensus"]) .downloadBtn {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+  color: #172537;
+}
+:global([data-theme="consensus"]) .downloadBtn:hover {
+  background: #D0CBC6;
+  border-color: #A8A39C;
+}
+
 /* ── Column selector button ── */
 :global([data-theme="consensus"]) .colSelectorBtn {
   background: #EEEBE8;
