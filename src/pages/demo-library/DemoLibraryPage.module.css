@@ -3346,19 +3346,60 @@
   padding: 0;
 }
 .savedItemName:hover { color: #6366f1; }
-.savedItemMeta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 3px;
-  flex: 1;
+.savedItemInfo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+  flex-shrink: 0;
 }
-.savedItemTag {
+.savedItemTooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-width: 180px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  z-index: 200;
+  white-space: nowrap;
+}
+.savedItemTooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1f2937;
+}
+.savedItemInfo:hover .savedItemTooltip { display: block; }
+.savedTooltipRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  padding: 2px 0;
+}
+.savedTooltipGroup {
+  color: #9ca3af;
   font-size: 11px;
-  background: #f3f4f6;
-  color: #6b7280;
-  border-radius: 4px;
-  padding: 1px 6px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.savedTooltipVal {
+  color: #fff;
+  font-weight: 500;
+}
+.savedTooltipExtra {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: right;
 }
 .savedItemDelete {
   background: none;
@@ -3463,4 +3504,5 @@
 :global([data-theme="consensus"]) .savePanelSave:hover { background: #DE5321; }
 :global([data-theme="consensus"]) .savedDropdown { border-color: #D0CBC6; }
 :global([data-theme="consensus"]) .savePanel { border-color: #D0CBC6; }
-:global([data-theme="consensus"]) .savedItemTag { background: #EEEBE8; color: #6F6F6F; }
+:global([data-theme="consensus"]) .savedItemTooltip { background: #172537; }
+:global([data-theme="consensus"]) .savedItemTooltip::after { border-top-color: #172537; }

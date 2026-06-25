@@ -564,10 +564,35 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
                       </svg>
                       {sf.name}
                     </button>
-                    <div className={styles.savedItemMeta}>
-                      {[...sf.types, ...sf.creators, ...sf.tags, ...sf.themes, ...sf.languages, ...sf.owners]
-                        .slice(0, 3).map(v => <span key={v} className={styles.savedItemTag}>{v}</span>)}
-                    </div>
+                    {/* Tooltip showing filters on hover */}
+                    {(() => {
+                      const all = [
+                        ...sf.types.map(v => ({ label: v, group: 'Type' })),
+                        ...sf.creators.map(v => ({ label: v, group: 'Creator' })),
+                        ...sf.tags.map(v => ({ label: v, group: 'Tag' })),
+                        ...sf.themes.map(v => ({ label: v, group: 'Theme' })),
+                        ...sf.languages.map(v => ({ label: v, group: 'Language' })),
+                        ...sf.owners.map(v => ({ label: v, group: 'Owner' })),
+                      ]
+                      const preview = all.slice(0, 4)
+                      const extra = all.length - preview.length
+                      return all.length > 0 ? (
+                        <span className={styles.savedItemInfo}>
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{opacity:.4}}>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                          </svg>
+                          <div className={styles.savedItemTooltip}>
+                            {preview.map((f, i) => (
+                              <div key={i} className={styles.savedTooltipRow}>
+                                <span className={styles.savedTooltipGroup}>{f.group}</span>
+                                <span className={styles.savedTooltipVal}>{f.label}</span>
+                              </div>
+                            ))}
+                            {extra > 0 && <div className={styles.savedTooltipExtra}>+{extra} more</div>}
+                          </div>
+                        </span>
+                      ) : null
+                    })()}
                     <button className={styles.savedItemDelete} title="Delete" onClick={() => onDeleteFilter?.(sf.id)}>
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
