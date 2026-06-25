@@ -537,7 +537,7 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
             className={`${styles.filterBtn} ${savedOpen ? styles.filterBtnActive : ''}`}
             onClick={() => { setSavedOpen(o => !o); setSaveMode(false); setSaveName('') }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0}}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0}}>
               <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16a3 3 0 110-6 3 3 0 010 6zm3-10H5V5h10v4z"/>
             </svg>
             Saved Filters
@@ -650,7 +650,7 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
         <div className={styles.scopeWrap} ref={scopeRef}>
           <div className={styles.comboPill}>
             <div className={styles.comboSearch}>
-              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
+              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
                 <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
                 <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
               </svg>
@@ -2134,7 +2134,7 @@ function ColumnSelector({
         onClick={() => setOpen((o) => !o)}
         title="Customize columns"
       >
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
           <rect x="1" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
           <rect x="5.25" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
           <rect x="9.5" y="1" width="3.5" height="12" rx="1" stroke="currentColor" strokeWidth="1.3"/>
@@ -2291,20 +2291,20 @@ function HistoryDrawer({ row, onClose }: { row: DemoRow | null; onClose: () => v
 
 function CircleIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+    <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
       <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
       <polygon points="5.5,4.5 10,7 5.5,9.5" fill="currentColor"/>
     </svg>
   )
 }
 function PersonIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
 }
 function TagIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/><circle cx="4.5" cy="4.5" r="1" fill="currentColor"/></svg>
+  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/><circle cx="4.5" cy="4.5" r="1" fill="currentColor"/></svg>
 }
 function FunnelIcon() {
-  return <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
 }
 function DemoTypeIcon({ type, size = 14 }: { type: string; size?: number }) {
   if (type === T1) return <img src={discoveryDemoIconUrl} alt={type} width={size} height={size} style={{ objectFit: 'contain', display: 'block' }} />

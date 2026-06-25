@@ -1,0 +1,14 @@
+---
+description: Never deploy to Vercel or push to git unless explicitly asked
+alwaysApply: true
+---
+
+# Deployment Policy
+
+**Never** run `vercel`, `vercel deploy`, `git push`, or any deployment command unless the user explicitly says to deploy or push.
+
+- Make code changes locally only
+- Do NOT commit or push to git after edits unless the user asks
+- Do NOT trigger a Vercel deployment unless the user says something like "deploy", "push to Vercel", or "ship this"
+
+Wait for an explicit instruction before any action that results in a deployment.
