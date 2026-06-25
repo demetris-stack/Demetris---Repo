@@ -1876,13 +1876,10 @@ function Sidebar() {
 
         <nav className={styles.sidebarNav}>
           {/* Dashboard */}
-          <div className={`${styles.navRow} ${styles.navRowActive}`}>
+          <div className={styles.navRow}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M13.5 8a5.5 5.5 0 10-5.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              <path d="M10 2.8A5.5 5.5 0 0113.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 2"/>
-              <path d="M11.5 5.5l2-2.8 1 3-3-1z" fill="currentColor"/>
-              <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-              <path d="M8 6.5L10 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              <path d="M13 8A5 5 0 113.1 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M3 2.5v3h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span className={styles.navLabel}>Dashboard</span>
           </div>
