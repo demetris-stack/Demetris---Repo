@@ -1878,10 +1878,11 @@ function Sidebar() {
           {/* Dashboard */}
           <div className={`${styles.navRow} ${styles.navRowActive}`}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="6" rx="1.2" fill="currentColor"/>
-              <rect x="9" y="1" width="6" height="6" rx="1.2" fill="currentColor"/>
-              <rect x="1" y="9" width="6" height="6" rx="1.2" fill="currentColor"/>
-              <rect x="9" y="9" width="6" height="6" rx="1.2" fill="currentColor"/>
+              <path d="M13.5 8a5.5 5.5 0 10-5.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M10 2.8A5.5 5.5 0 0113.5 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 2"/>
+              <path d="M11.5 5.5l2-2.8 1 3-3-1z" fill="currentColor"/>
+              <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+              <path d="M8 6.5L10 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
             </svg>
             <span className={styles.navLabel}>Dashboard</span>
           </div>
@@ -1900,7 +1901,7 @@ function Sidebar() {
           {/* Share */}
           <div className={styles.navRow}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 2l4 4-4 4M14 6H6a3 3 0 000 6h1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 3.5l7 4.5-7 4.5V3.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
             </svg>
             <span className={styles.navLabel}>Share</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -1911,8 +1912,9 @@ function Sidebar() {
           {/* Library (expandable, active) */}
           <div className={`${styles.navRow} ${styles.navRowAccent}`} onClick={() => setLibraryOpen(o => !o)} style={{cursor:'pointer'}}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="4" width="9" height="11" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M5 1h7a1.2 1.2 0 011.2 1.2V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <rect x="2.5" y="4" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M5.5 4V3a2 2 0 014 0v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M5.5 8h5M5.5 10.5h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
             </svg>
             <span className={styles.navLabel}>Library</span>
             <svg className={styles.navChevron} width="12" height="12" viewBox="0 0 12 12" fill="none" style={{transform: libraryOpen ? 'rotate(90deg)' : 'none', transition:'transform .2s'}}>
@@ -1929,7 +1931,7 @@ function Sidebar() {
           {/* Leads */}
           <div className={styles.navRow}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M2 3.5h12l-4.5 5.5v4l-3-1.5V9L2 3.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span className={styles.navLabel}>Leads</span>
           </div>
@@ -1937,8 +1939,9 @@ function Sidebar() {
           {/* DemoBoards */}
           <div className={styles.navRow}>
             <svg className={styles.navIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="1" y="1" width="6" height="14" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
-              <rect x="9" y="1" width="6" height="9" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="1.5" y="1.5" width="5.5" height="13" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="9" y="1.5" width="5.5" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="9" y="9.5" width="5.5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.5"/>
             </svg>
             <span className={styles.navLabel}>DemoBoards</span>
           </div>
