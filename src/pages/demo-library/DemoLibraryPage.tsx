@@ -537,9 +537,7 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
             className={`${styles.filterBtn} ${savedOpen ? styles.filterBtnActive : ''}`}
             onClick={() => { setSavedOpen(o => !o); setSaveMode(false); setSaveName('') }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{flexShrink:0}}>
-              <path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16a3 3 0 110-6 3 3 0 010 6zm3-10H5V5h10v4z"/>
-            </svg>
+            <span className="material-symbols-outlined" style={{fontSize:16,lineHeight:1}}>bookmark</span>
             Saved Filters
             {savedFilters.length > 0 && <span className={styles.filterCount}>{savedFilters.length}</span>}
           </button>
@@ -650,10 +648,7 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
         <div className={styles.scopeWrap} ref={scopeRef}>
           <div className={styles.comboPill}>
             <div className={styles.comboSearch}>
-              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className={styles.searchIcon}>
-                <circle cx="6" cy="6" r="4.5" stroke="#9ca3af" strokeWidth="1.4"/>
-                <path d="M9.5 9.5l2.5 2.5" stroke="#9ca3af" strokeWidth="1.4" strokeLinecap="round"/>
-              </svg>
+              <span className={`material-symbols-outlined ${styles.searchIcon}`} style={{fontSize:16,lineHeight:1}}>search</span>
               <input
                 ref={inputRef}
                 className={styles.searchInput}
@@ -674,9 +669,7 @@ function FilterBar({ filters, actions, onOpenDrawer, savedFilters = [], onSaveFi
               onClick={() => setScopeOpen((o) => !o)}
             >
               {scopeLabel}
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                <path d={scopeOpen ? 'M3 9l4-4 4 4' : 'M3 5l4 4 4-4'} stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <span className="material-symbols-outlined" style={{fontSize:14,lineHeight:1,transition:'transform .15s',transform:scopeOpen?'rotate(180deg)':'none'}}>expand_more</span>
             </button>
           </div>
           {scopeOpen && (
@@ -1197,9 +1190,7 @@ function AppliedFiltersDropdown({ totalApplied, groups, onClearAll }: { totalApp
       <button className={`${styles.filterBtn} ${hasAny ? styles.filterBtnActive : ''}`} onClick={() => setOpen((o) => !o)}>
         Applied Filters
         {hasAny && <span className={styles.filterCount}>{totalApplied}</span>}
-        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 2 }}>
-          <path d={open ? 'M2 8l4-4 4 4' : 'M2 4l4 4 4-4'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        <span className="material-symbols-outlined" style={{fontSize:14,lineHeight:1,transition:'transform .15s',transform:open?'rotate(180deg)':'none'}}>expand_more</span>
       </button>
       {open && (
         <div className={styles.dropdown} style={{ minWidth: 240 }}>
@@ -1265,9 +1256,7 @@ function FilterDropdown({ label, icon, options, selected, onToggle }: FilterDrop
       <button className={`${styles.filterBtn} ${selected.length > 0 ? styles.filterBtnActive : ''}`} onClick={handleOpen}>
         {icon}{label}
         {selected.length > 0 && <span className={styles.filterCount}>{selected.length}</span>}
-        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 2 }}>
-          <path d={open ? 'M2 8l4-4 4 4' : 'M2 4l4 4 4-4'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        <span className="material-symbols-outlined" style={{fontSize:14,lineHeight:1,transition:'transform .15s',transform:open?'rotate(180deg)':'none'}}>expand_more</span>
       </button>
       {open && (
         <div className={styles.dropdown}>
@@ -2290,21 +2279,16 @@ function HistoryDrawer({ row, onClose }: { row: DemoRow | null; onClose: () => v
 }
 
 function CircleIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-      <polygon points="5.5,4.5 10,7 5.5,9.5" fill="currentColor"/>
-    </svg>
-  )
+  return <span className="material-symbols-outlined" style={{fontSize:16,lineHeight:1}}>category</span>
 }
 function PersonIcon() {
-  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+  return <span className="material-symbols-outlined" style={{fontSize:16,lineHeight:1}}>person</span>
 }
 function TagIcon() {
-  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M1 1h6l6 6-6 6-6-6V1z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/><circle cx="4.5" cy="4.5" r="1" fill="currentColor"/></svg>
+  return <span className="material-symbols-outlined" style={{fontSize:16,lineHeight:1}}>sell</span>
 }
 function FunnelIcon() {
-  return <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+  return <span className="material-symbols-outlined" style={{fontSize:16,lineHeight:1}}>tune</span>
 }
 function DemoTypeIcon({ type, size = 14 }: { type: string; size?: number }) {
   if (type === T1) return <img src={discoveryDemoIconUrl} alt={type} width={size} height={size} style={{ objectFit: 'contain', display: 'block' }} />

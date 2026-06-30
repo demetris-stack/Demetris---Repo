@@ -1610,6 +1610,10 @@
   flex-wrap: wrap;
 }
 
+.suggestedHeader .suggestedTabs {
+  margin-left: auto;
+}
+
 .suggestedToggle {
   display: flex;
   align-items: center;
@@ -1630,17 +1634,25 @@
 }
 
 .suggestedTabs {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: inline-flex;
+  align-items: stretch;
+  gap: 8px;
+  background: #f3f4f6;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 0;
 }
 
 .suggestedTab {
-  padding: 4px 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
+  margin: -1.5px;
   background: transparent;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 500;
   color: #6b7280;
   cursor: pointer;
@@ -1648,12 +1660,15 @@
 }
 .suggestedTab:hover {
   color: #111;
-  background: #f3f4f6;
+  border-color: transparent;
+  background: #FFF0EB;
 }
 .suggestedTabActive {
-  border-color: #d1d5db;
+  border-color: #FC6839;
   color: #111;
-  background: #fff;
+  font-weight: 600;
+  background: #FFF0EB;
+  z-index: 1;
 }
 
 
@@ -3181,13 +3196,23 @@
 }
 
 /* ── Suggested demos tabs ── */
+:global([data-theme="consensus"]) .suggestedTabs {
+  background: #EEEBE8;
+  border-color: #D0CBC6;
+  padding: 0;
+}
 :global([data-theme="consensus"]) .suggestedTab {
   color: #6F6F6F;
+}
+:global([data-theme="consensus"]) .suggestedTab:hover {
   border-color: transparent;
+  background: #FFF0EB;
+  color: #172537;
 }
 :global([data-theme="consensus"]) .suggestedTabActive {
-  color: #FC6839;
-  border-bottom-color: #FC6839;
+  border-color: #FC6839;
+  color: #172537;
+  background: #FFF0EB;
 }
 
 /* ── Tile view ── */
